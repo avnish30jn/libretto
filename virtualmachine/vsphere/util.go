@@ -5,6 +5,7 @@ package vsphere
 import (
 	"archive/tar"
 	"crypto/tls"
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -16,8 +17,6 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
-
-	"golang.org/x/net/context"
 
 	"github.com/vmware/govmomi"
 	"github.com/vmware/govmomi/find"
@@ -277,8 +276,8 @@ var createNetworkMapping = func(vm *VM, networks map[string]string, networkMors 
 var resetUnitNumbers = func(spec *types.OvfCreateImportSpecResult) {
 	s := &spec.ImportSpec.(*types.VirtualMachineImportSpec).ConfigSpec
 	for _, d := range s.DeviceChange {
-		n := &d.GetVirtualDeviceConfigSpec().Device.GetVirtualDevice().UnitNumber
-		if *n == 0 {
+		n := d.GetVirtualDeviceConfigSpec().Device.GetVirtualDevice().UnitNumber
+		if n != nil && *n == 0 {
 			*n = -1
 		}
 	}
@@ -380,7 +379,7 @@ func searchTree(vm *VM, mor types.ManagedObjectReference, name string) (*mo.Virt
 	case "VirtualMachine":
 		// Base recursive case, compare for value
 		vmMo := mo.VirtualMachine{}
-		err := vm.collector.RetrieveOne(vm.ctx, mor, []string{"name", "guest.ipAddress", "guest.guestState", "guest.net", "runtime.question", "snapshot.currentSnapshot"}, &vmMo)
+		err := vm.collector.RetrieveOne(vm.ctx, mor, []string{"name", "config", "guest.ipAddress", "guest.guestState", "guest.net", "runtime.question", "snapshot.currentSnapshot"}, &vmMo)
 		if err != nil {
 			return nil, NewErrorObjectNotFound(errors.New("could not find the vm"), name)
 		}
@@ -395,7 +394,16 @@ func searchTree(vm *VM, mor types.ManagedObjectReference, name string) (*mo.Virt
 var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) error {
 	vmObj := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
 
-	var add []types.BaseVirtualDevice
+	dcMo, err := GetDatacenter(vm)
+	if err != nil {
+		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
+	}
+
+	dsMo, err := findDatastore(vm, dcMo, vm.Datastores[0])
+	if err != nil {
+		return fmt.Errorf("Datastore not found", vm.Datastores[0], err)
+	}
+
 	for _, disk := range vm.Disks {
 		devices, err := vmObj.Device(vm.ctx)
 		if err != nil {
@@ -405,11 +413,14 @@ var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) error {
 		if err != nil {
 			return err
 		}
-		d := devices.CreateDisk(controller, "")
+		d := devices.CreateDisk(controller, dsMo.Reference(), "")
 		d.CapacityInKB = disk.Size
-		add = append(add, d)
+		err = vmObj.AddDevice(vm.ctx, d)
+		if err != nil {
+			return err
+		}
 	}
-	return vmObj.AddDevice(vm.ctx, add...)
+	return nil
 }
 
 var waitForIP = func(vm *VM, vmMo *mo.VirtualMachine) error {
@@ -616,7 +627,7 @@ var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string)
 	// Create an import spec
 	cisp := types.OvfCreateImportSpecParams{
 		HostSystem:       &l.Host,
-		EntityName:       template,
+		EntityName:       vm.Name,
 		DiskProvisioning: "thin",
 		PropertyMapping:  nil,
 		NetworkMapping:   networkMapping,
@@ -652,12 +663,12 @@ var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string)
 		return fmt.Errorf("error uploading the ovf template: %s", err)
 	}
 
-	vmMo, err := findVM(vm, dcMo, template)
+	vmMo, err := findVM(vm, dcMo, vm.Name)
 	if err != nil {
 		return fmt.Errorf("error getting the uploaded VM: %s", err)
 	}
 	if len(vm.Disks) > 0 {
-                if err = reconfigureVM(vm, vmMo, dsMo); err != nil {
+                if err = reconfigureVM(vm, vmMo); err != nil {
                         return err
                 }
         }

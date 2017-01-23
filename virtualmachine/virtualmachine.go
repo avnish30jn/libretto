@@ -7,7 +7,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/apcera/libretto/ssh"
+	"github.com/avnish30jn/libretto/ssh"
 )
 
 // VirtualMachine represents a VM which can be provisioned using this library.
