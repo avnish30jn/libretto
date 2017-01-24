@@ -148,12 +148,12 @@ var extractOva = func(basePath string, body io.Reader) (string, error) {
         if ovfFileName == "" {
                 return "", errors.New("no ovf file found in the archive")
         }
-        fmt.Println("Ova extracted successfully")
+        fmt.Println("\nOva extracted successfully")
         return filepath.Join(basePath, ovfFileName), nil
 }
 
 var downloadOva = func(basePath, url string) (string, error) {
-        fmt.Println("Downloading ova file from url: %s", url)
+        fmt.Printf("Downloading ova file from url: %s\n", url)
         resp, err := http.Get(url)
         if err != nil {
                 return "", err

@@ -488,7 +488,6 @@ func (vm *VM) RemoveDisk() (err error) {
         for _, d := range vmMo.Config.Hardware.Device {
                 switch device := d.(type) {
                 case *types.VirtualDisk:
-                        fmt.Println(device)
                         deviceMo = device
                 }
         }
