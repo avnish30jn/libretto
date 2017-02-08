@@ -325,6 +325,7 @@ type VM struct {
 	Datacenter string
 	// OvfPath represents the location of the OVF file on disk.
 	OvfPath string
+	OvaPathUrl string
 	// Networks defines a mapping from each network label inside the ovf file
 	// to a vSphere network. Must be available on the host or deploy will fail.
 	Networks map[string]string

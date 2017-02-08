@@ -3,6 +3,7 @@
 package vsphere
 
 import (
+	"archive/tar"
 	"crypto/tls"
 	"errors"
 	"fmt"
@@ -106,6 +107,78 @@ var open = func(name string) (file *os.File, err error) {
 
 var readAll = func(r io.Reader) ([]byte, error) {
 	return ioutil.ReadAll(r)
+}
+
+var extractOva = func(basePath string, body io.Reader) (string, error) {
+        fmt.Printf("Extracting ova to path: %s\n", basePath)
+        tarBallReader := tar.NewReader(body)
+        var ovfFileName string
+
+        for {
+                header, err := tarBallReader.Next()
+                if err != nil {
+                        if err == io.EOF {
+                                break
+                        }
+                        return "", err
+                }
+                filename := header.Name
+                if filepath.Ext(filename) == ".ovf" {
+                        ovfFileName = filename
+                }
+                fmt.Printf("\nWriting file %s", filename) /*
+                        if filepath.Ext(filename) == ".vmdk" {
+                                break;
+                        }*/
+                err = func() error {
+                        writer, err := os.Create(filepath.Join(basePath, filename))
+                        defer writer.Close()
+                        if err != nil {
+                                return err
+                        }
+                        _, err = io.Copy(writer, tarBallReader)
+                        if err != nil {
+                                return err
+                        }
+                        return nil
+		}()
+                if err != nil {
+                        return "", err
+                }
+        }
+        if ovfFileName == "" {
+                return "", errors.New("no ovf file found in the archive")
+        }
+        fmt.Println("\nOva extracted successfully")
+        return filepath.Join(basePath, ovfFileName), nil
+}
+
+var downloadOva = func(basePath, url string) (string, error) {
+        fmt.Printf("Downloading ova file from url: %s\n", url)
+	var ovaReader io.Reader
+	if strings.HasPrefix(url, "http://") {
+		resp, err := http.Get(url)
+		if err != nil {
+			return "", err
+		}
+		ovaReader = resp.Body
+		if resp.StatusCode != http.StatusOK {
+			return "", errors.New(fmt.Sprintf("can't download ova file from url: %s, status: %d", url, resp.StatusCode))
+		}
+		defer resp.Body.Close()
+	} else {
+		resp, err := os.Open(url)
+		if err != nil {
+			return "", err
+		}
+		ovaReader = resp
+		defer resp.Close()
+	}
+        ovfFilePath, err := extractOva(basePath, ovaReader)
+        if err != nil {
+                return "", err
+        }
+        return ovfFilePath, nil
 }
 
 var parseOvf = func(ovfLocation string) (string, error) {
@@ -602,8 +675,26 @@ var createTemplateName = func(t string, ds string) string {
 
 var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string) error {
 	template := createTemplateName(vm.Template, selectedDatastore)
+	if vm.Destination.DestinationType == DestinationTypeHost {
+		template = vm.Name
+	}
 	vm.datastore = selectedDatastore
+	basePath, err := ioutil.TempDir("", "")
+	if err != nil {
+		return err
+	}
+	defer func() {
+                if err := os.RemoveAll(basePath); err != nil {
+                        fmt.Errorf("can't remove temp directory, error: %s", err.Error())
+                }
+        }()
 	// Read the ovf file
+	if vm.OvaPathUrl != "" {
+                vm.OvfPath, err = downloadOva(basePath, vm.OvaPathUrl)
+                if err != nil {
+                        return err
+                }
+        }
 	ovfContent, err := parseOvf(vm.OvfPath)
 	if err != nil {
 		return err
@@ -693,6 +784,22 @@ var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string)
 			return fmt.Errorf("snapshot task returned an error: %s", err)
 		}
 	} else {
+		if vm.Destination.DestinationType == DestinationTypeHost {
+			if len(vm.Disks) > 0 {
+				if err = reconfigureVM(vm, vmMo); err != nil {
+					return err
+				}
+			}
+			// power on
+			if err = start(vm); err != nil {
+				return err
+			}
+			fmt.Println("VM is powered on, waiting for ip")
+			if err = waitForIP(vm, vmMo); err != nil {
+				return err
+			}
+			return nil
+		}
 		err = vmo.MarkAsTemplate(vm.ctx)
 		if err != nil {
 			return fmt.Errorf("error converting the uploaded VM to a template: %s", err)
