@@ -110,7 +110,6 @@ var readAll = func(r io.Reader) ([]byte, error) {
 }
 
 var extractOva = func(basePath string, body io.Reader) (string, error) {
-        fmt.Printf("Extracting ova to path: %s\n", basePath)
         tarBallReader := tar.NewReader(body)
         var ovfFileName string
 
@@ -126,10 +125,6 @@ var extractOva = func(basePath string, body io.Reader) (string, error) {
                 if filepath.Ext(filename) == ".ovf" {
                         ovfFileName = filename
                 }
-                fmt.Printf("\nWriting file %s", filename) /*
-                        if filepath.Ext(filename) == ".vmdk" {
-                                break;
-                        }*/
                 err = func() error {
                         writer, err := os.Create(filepath.Join(basePath, filename))
                         defer writer.Close()
@@ -149,14 +144,12 @@ var extractOva = func(basePath string, body io.Reader) (string, error) {
         if ovfFileName == "" {
                 return "", errors.New("no ovf file found in the archive")
         }
-        fmt.Println("\nOva extracted successfully")
         return filepath.Join(basePath, ovfFileName), nil
 }
 
 var downloadOva = func(basePath, url string) (string, error) {
-        fmt.Printf("Downloading ova file from url: %s\n", url)
 	var ovaReader io.Reader
-	if strings.HasPrefix(url, "http://") {
+	if strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://") {
 		resp, err := http.Get(url)
 		if err != nil {
 			return "", err
@@ -675,9 +668,6 @@ var createTemplateName = func(t string, ds string) string {
 
 var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string) error {
 	template := createTemplateName(vm.Template, selectedDatastore)
-	if vm.Destination.DestinationType == DestinationTypeHost {
-		template = vm.Name
-	}
 	vm.datastore = selectedDatastore
 	basePath, err := ioutil.TempDir("", "")
 	if err != nil {
@@ -784,22 +774,6 @@ var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string)
 			return fmt.Errorf("snapshot task returned an error: %s", err)
 		}
 	} else {
-		if vm.Destination.DestinationType == DestinationTypeHost {
-			if len(vm.Disks) > 0 {
-				if err = reconfigureVM(vm, vmMo); err != nil {
-					return err
-				}
-			}
-			// power on
-			if err = start(vm); err != nil {
-				return err
-			}
-			fmt.Println("VM is powered on, waiting for ip")
-			if err = waitForIP(vm, vmMo); err != nil {
-				return err
-			}
-			return nil
-		}
 		err = vmo.MarkAsTemplate(vm.ctx)
 		if err != nil {
 			return fmt.Errorf("error converting the uploaded VM to a template: %s", err)
