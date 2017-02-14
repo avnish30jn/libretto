@@ -109,46 +109,52 @@ var readAll = func(r io.Reader) ([]byte, error) {
 	return ioutil.ReadAll(r)
 }
 
+//Extract the tar pointed by 'body' to 'basePath' directory
 var extractOva = func(basePath string, body io.Reader) (string, error) {
-        tarBallReader := tar.NewReader(body)
-        var ovfFileName string
+	tarBallReader := tar.NewReader(body)
+	var ovfFileName string
 
-        for {
-                header, err := tarBallReader.Next()
-                if err != nil {
-                        if err == io.EOF {
-                                break
-                        }
-                        return "", err
-                }
-                filename := header.Name
-                if filepath.Ext(filename) == ".ovf" {
-                        ovfFileName = filename
-                }
-                err = func() error {
-                        writer, err := os.Create(filepath.Join(basePath, filename))
-                        defer writer.Close()
-                        if err != nil {
-                                return err
-                        }
-                        _, err = io.Copy(writer, tarBallReader)
-                        if err != nil {
-                                return err
-                        }
-                        return nil
+	//iterates through the files in .ova file[tar file]
+	for {
+		header, err := tarBallReader.Next()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			return "", err
+		}
+		filename := header.Name
+		if filepath.Ext(filename) == ".ovf" {
+			ovfFileName = filename
+		}
+		// writes the content of the file pointed to by tarBallReader to a local file with same name
+		err = func() error {
+			writer, err := os.Create(filepath.Join(basePath, filename))
+			defer writer.Close()
+			if err != nil {
+				return err
+			}
+			_, err = io.Copy(writer, tarBallReader)
+			if err != nil {
+				return err
+			}
+			return nil
 		}()
-                if err != nil {
-                        return "", err
-                }
-        }
-        if ovfFileName == "" {
-                return "", errors.New("no ovf file found in the archive")
-        }
-        return filepath.Join(basePath, ovfFileName), nil
+		if err != nil {
+			return "", err
+		}
+	}
+	if ovfFileName == "" {
+		return "", errors.New("no ovf file found in the archive")
+	}
+	return filepath.Join(basePath, ovfFileName), nil
 }
 
+// Downloads the ova file from the 'url' (can be local path/remote http server) to 'basePath' directory
+// and returns the path to extracted ovf file
 var downloadOva = func(basePath, url string) (string, error) {
 	var ovaReader io.Reader
+	// if url is a remote url
 	if strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://") {
 		resp, err := http.Get(url)
 		if err != nil {
@@ -156,7 +162,7 @@ var downloadOva = func(basePath, url string) (string, error) {
 		}
 		ovaReader = resp.Body
 		if resp.StatusCode != http.StatusOK {
-			return "", errors.New(fmt.Sprintf("can't download ova file from url: %s, status: %d", url, resp.StatusCode))
+			return "", fmt.Errorf("can't download ova file from url: %s %s %d", url, "status: ", resp.StatusCode)
 		}
 		defer resp.Body.Close()
 	} else {
@@ -167,11 +173,11 @@ var downloadOva = func(basePath, url string) (string, error) {
 		ovaReader = resp
 		defer resp.Close()
 	}
-        ovfFilePath, err := extractOva(basePath, ovaReader)
-        if err != nil {
-                return "", err
-        }
-        return ovfFilePath, nil
+	ovfFilePath, err := extractOva(basePath, ovaReader)
+	if err != nil {
+		return "", err
+	}
+	return ovfFilePath, nil
 }
 
 var parseOvf = func(ovfLocation string) (string, error) {
@@ -669,22 +675,22 @@ var createTemplateName = func(t string, ds string) string {
 var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string) error {
 	template := createTemplateName(vm.Template, selectedDatastore)
 	vm.datastore = selectedDatastore
-	basePath, err := ioutil.TempDir("", "")
+	downloadOvaPath, err := ioutil.TempDir("", "")
 	if err != nil {
 		return err
 	}
 	defer func() {
-                if err := os.RemoveAll(basePath); err != nil {
-                        fmt.Errorf("can't remove temp directory, error: %s", err.Error())
-                }
-        }()
+		if err := os.RemoveAll(downloadOvaPath); err != nil {
+			fmt.Errorf("can't remove temp directory, error: %s", err.Error())
+		}
+	}()
 	// Read the ovf file
 	if vm.OvaPathUrl != "" {
-                vm.OvfPath, err = downloadOva(basePath, vm.OvaPathUrl)
-                if err != nil {
-                        return err
-                }
-        }
+		vm.OvfPath, err = downloadOva(downloadOvaPath, vm.OvaPathUrl)
+		if err != nil {
+			return err
+		}
+	}
 	ovfContent, err := parseOvf(vm.OvfPath)
 	if err != nil {
 		return err
