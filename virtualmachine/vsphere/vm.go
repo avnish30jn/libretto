@@ -433,67 +433,69 @@ func (vm *VM) GetName() string {
 }
 
 func (vm *VM) AddDisk() (err error) {
-        if err := SetupSession(vm); err != nil {
-                return fmt.Errorf("Error setting up vSphere session: %s", err)
-        }
+	if err := SetupSession(vm); err != nil {
+		return fmt.Errorf("Error setting up vSphere session: %s", err)
+	}
 
-        // Cancel the sdk context
-        defer vm.cancel()
+	// Cancel the sdk context
+	defer vm.cancel()
 
-        // Get a reference to the datacenter with host and vm folders populated
-        dcMo, err := GetDatacenter(vm)
-        if err != nil {
-                return fmt.Errorf("Failed to retrieve datacenter: %s", err)
-        }
+	// Get a reference to the datacenter with host and vm folders populated
+	dcMo, err := GetDatacenter(vm)
+	if err != nil {
+		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
+	}
 
-        vmMo, err := findVM(vm, dcMo, vm.Name)
-        if err != nil {
-                return fmt.Errorf("VM not found", vm.Name, err)
-        }
+	vmMo, err := findVM(vm, dcMo, vm.Name)
+	if err != nil {
+		return fmt.Errorf("VM not found", vm.Name, err)
+	}
 
-        if err := reconfigureVM(vm, vmMo); err != nil {
-                return fmt.Errorf("Reconfigure failed : ", err)
-        }
-        return nil
+	n := util.Random(1, len(vm.Datastores))
+	vm.datastore = vm.Datastores[n-1]
+	if err := reconfigureVM(vm, vmMo); err != nil {
+		return fmt.Errorf("Reconfigure failed : ", err)
+	}
+	return nil
 }
 
 func (vm *VM) RemoveDisk() (err error) {
-        if err := SetupSession(vm); err != nil {
-                return fmt.Errorf("Error setting up vSphere session: %s", err)
-        }
+	if err := SetupSession(vm); err != nil {
+		return fmt.Errorf("Error setting up vSphere session: %s", err)
+	}
 
-        // Cancel the sdk context
-        defer vm.cancel()
+	// Cancel the sdk context
+	defer vm.cancel()
 
-        // Get a reference to the datacenter with host and vm folders populated
-        dcMo, err := GetDatacenter(vm)
-        if err != nil {
-                return fmt.Errorf("Failed to retrieve datacenter: %s", err)
-        }
+	// Get a reference to the datacenter with host and vm folders populated
+	dcMo, err := GetDatacenter(vm)
+	if err != nil {
+		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
+	}
 
-        vmMo, err := findVM(vm, dcMo, vm.Name)
-        if err != nil {
-                return fmt.Errorf("VM not found", vm.Name, err)
-        }
-        var deviceMo *types.VirtualDisk
-        spec := new(types.VirtualMachineConfigSpec)
-        for _, d := range vmMo.Config.Hardware.Device {
-                switch device := d.(type) {
-                case *types.VirtualDisk:
-                        deviceMo = device
-                }
-        }
-        removeOp := &types.VirtualDeviceConfigSpec{
-                Operation: types.VirtualDeviceConfigSpecOperationRemove,
-                Device:    deviceMo.GetVirtualDevice(),
-        }
-        spec.DeviceChange = append(spec.DeviceChange, removeOp)
+	vmMo, err := findVM(vm, dcMo, vm.Name)
+	if err != nil {
+		return fmt.Errorf("VM not found", vm.Name, err)
+	}
+	var deviceMo *types.VirtualDisk
+	spec := new(types.VirtualMachineConfigSpec)
+	for _, d := range vmMo.Config.Hardware.Device {
+		switch device := d.(type) {
+		case *types.VirtualDisk:
+			deviceMo = device
+		}
+	}
+	removeOp := &types.VirtualDeviceConfigSpec{
+		Operation: types.VirtualDeviceConfigSpecOperationRemove,
+		Device:    deviceMo.GetVirtualDevice(),
+	}
+	spec.DeviceChange = append(spec.DeviceChange, removeOp)
 
 	vmo := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
-        if err = vmo.RemoveDevice(vm.ctx, false, deviceMo); err != nil {
-                fmt.Errorf("Delete disk task returned an error : ", err)
-        }
-        return nil
+	if err = vmo.RemoveDevice(vm.ctx, false, deviceMo); err != nil {
+		fmt.Errorf("Delete disk task returned an error : ", err)
+	}
+	return nil
 }
 
 // GetIPs returns the IPs of this VM. Returns all the IPs known to the API for
