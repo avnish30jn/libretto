@@ -429,10 +429,21 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		Datastore: &dsMor,
 	}
 
+        MemoryHotAddEnabled := true
+        CpuHotAddEnabled := true
+
+        config := types.VirtualMachineConfigSpec{
+                NumCPUs:        vm.Flavor.NumCPUs,
+                MemoryMB:       vm.Flavor.MemoryMB,
+                MemoryHotAddEnabled:    &MemoryHotAddEnabled,
+                CpuHotAddEnabled:       &CpuHotAddEnabled,
+        }
+
 	cisp := types.VirtualMachineCloneSpec{
 		Location: relocateSpec,
 		Template: false,
 		PowerOn:  false,
+		Config:   &config,
 	}
 
 	// To create a linked clone, we need to set the DiskMoveType and reference
@@ -448,6 +459,7 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 			Location: relocateSpec,
 			Template: false,
 			PowerOn:  false,
+			Config:   &config,
 			Snapshot: vmMo.Snapshot.CurrentSnapshot,
 		}
 	}

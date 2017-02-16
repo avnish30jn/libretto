@@ -307,6 +307,13 @@ type Lease interface {
 	Complete() error
 }
 
+type Flavor struct {
+        // Represents the number of CPUs
+        NumCPUs int32
+        // Represents the size of main memory in MB
+        MemoryMB int64
+}
+
 var _ lvm.VirtualMachine = (*VM)(nil)
 
 // VM represents a vSphere VM.
@@ -323,6 +330,8 @@ type VM struct {
 	Insecure bool
 	// Datacenter configures the datacenter onto which to import the VM.
 	Datacenter string
+        //Flavor for the number of CPUs and size of main memory
+        Flavor Flavor
 	// OvfPath represents the location of the OVF file on disk.
 	OvfPath string
 	// OvaPathUrl represents the location of local/remote ova file
