@@ -354,3 +354,11 @@ func (vm *VM) Suspend() error {
 func (vm *VM) Resume() error {
 	return lvm.ErrResumeNotSupported
 }
+
+func (vm *VM) AddDisk() error {
+        return errors.New("TO-DO")
+}
+
+func (vm *VM) RemoveDisk(diskName string) error {
+        return errors.New("TO-DO")
+}

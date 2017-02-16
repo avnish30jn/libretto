@@ -388,7 +388,7 @@ func searchTree(vm *VM, mor types.ManagedObjectReference, name string) (*mo.Virt
 	case "VirtualMachine":
 		// Base recursive case, compare for value
 		vmMo := mo.VirtualMachine{}
-		err := vm.collector.RetrieveOne(vm.ctx, mor, []string{"name", "guest.ipAddress", "guest.guestState", "guest.net", "runtime.question", "snapshot.currentSnapshot"}, &vmMo)
+		err := vm.collector.RetrieveOne(vm.ctx, mor, []string{"name", "config", "guest.ipAddress", "guest.guestState", "guest.net", "runtime.question", "snapshot.currentSnapshot"}, &vmMo)
 		if err != nil {
 			return nil, NewErrorObjectNotFound(errors.New("could not find the vm"), name)
 		}
@@ -485,10 +485,6 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 
 var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) error {
 	vmObj := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
-	devices, err := vmObj.Device(vm.ctx)
-	if err != nil {
-		return err
-	}
 
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
@@ -500,17 +496,22 @@ var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) error {
 		return err
 	}
 
-	var add []types.BaseVirtualDevice
 	for _, disk := range vm.Disks {
+		devices, err := vmObj.Device(vm.ctx)
+		if err != nil {
+			return err
+		}
 		controller, err := devices.FindDiskController(disk.Controller)
 		if err != nil {
 			return err
 		}
 		d := devices.CreateDisk(controller, dsMo.Reference(), "")
 		d.CapacityInKB = disk.Size
-		add = append(add, d)
+		if err := vmObj.AddDevice(vm.ctx, d); err != nil {
+			return err
+		}
 	}
-	return vmObj.AddDevice(vm.ctx, add...)
+	return nil
 }
 
 var waitForIP = func(vm *VM, vmMo *mo.VirtualMachine) error {

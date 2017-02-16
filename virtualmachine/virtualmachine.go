@@ -23,7 +23,7 @@ type VirtualMachine interface {
 	Start() error
 	GetSSH(ssh.Options) (ssh.Client, error)
 	AddDisk() error
-	RemoveDisk() error
+	RemoveDisk(string) error
 }
 
 const (

@@ -104,3 +104,11 @@ func (vm *VM) Provision() error {
 	}
 	return lvm.ErrNotImplemented
 }
+
+func (vm *VM) AddDisk() error {
+        return errors.New("TO-DO")
+}
+
+func (vm *VM) RemoveDisk(diskName string) error {
+        return errors.New("TO-DO")
+}
