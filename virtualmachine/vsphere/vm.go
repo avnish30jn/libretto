@@ -726,3 +726,38 @@ func (vm *VM) GetSSH(options ssh.Options) (ssh.Client, error) {
 	client := ssh.SSHClient{Creds: &vm.Credentials, IP: ips[0], Port: 22, Options: options}
 	return &client, nil
 }
+
+func DeleteTemplate(vm *VM) error {
+	templates := make([]string, 0)
+	if err := SetupSession(vm); err != nil {
+		return err
+	}
+	dcMo, err := GetDatacenter(vm)
+	if err != nil {
+		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
+	}
+	for _, datastore := range vm.Datastores {
+		template := createTemplateName(vm.Template, datastore)
+		temp, err := findVM(vm, dcMo, template)
+		if err != nil {
+			templates = append(templates, template)
+			continue
+		}
+		vmo := object.NewVirtualMachine(vm.client.Client, temp.Reference())
+		task, err := vmo.Destroy(vm.ctx);
+		if err != nil {
+			return err
+		}
+		tInfo, err := task.WaitForResult(vm.ctx, nil)
+		if err != nil {
+			return fmt.Errorf("Error waiting for tast : %s", err)
+		}
+		if tInfo.Error != nil {
+			return fmt.Errorf("Destroy task returned error : %s", tInfo.Error)
+		}
+	}
+	if len(templates) != 0 {
+		return fmt.Errorf("[ %s ] templates not found.", strings.Join(templates, ", "))
+	}
+	return nil
+}
