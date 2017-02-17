@@ -429,14 +429,14 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		Datastore: &dsMor,
 	}
 
-        MemoryHotAddEnabled := true
-        CpuHotAddEnabled := true
+        hotAddMemory := true
+        hotAddCpu := true
 
         config := types.VirtualMachineConfigSpec{
                 NumCPUs:        vm.Flavor.NumCPUs,
                 MemoryMB:       vm.Flavor.MemoryMB,
-                MemoryHotAddEnabled:    &MemoryHotAddEnabled,
-                CpuHotAddEnabled:       &CpuHotAddEnabled,
+                MemoryHotAddEnabled:    &hotAddMemory,
+                CpuHotAddEnabled:       &hotAddCpu,
         }
 
 	cisp := types.VirtualMachineCloneSpec{
