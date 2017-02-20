@@ -23,7 +23,6 @@ import (
 	"github.com/vmware/govmomi"
 	"github.com/vmware/govmomi/find"
 	"github.com/vmware/govmomi/object"
-	"github.com/vmware/govmomi/property"
 	"github.com/vmware/govmomi/vim25/mo"
 	"github.com/vmware/govmomi/vim25/soap"
 	"github.com/vmware/govmomi/vim25/types"
@@ -441,18 +440,6 @@ type finder interface {
 	VirtualMachineList(context.Context, string) ([]*object.VirtualMachine, error)
 	NetworkList(context.Context, string) ([]object.NetworkReference, error)
 	SetDatacenter(*object.Datacenter) *find.Finder
-}
-
-type vmwareCollector struct {
-	collector *property.Collector
-}
-
-func (v vmwareCollector) RetrieveOne(c context.Context, mor types.ManagedObjectReference, ps []string, dst interface{}) error {
-	return v.collector.RetrieveOne(c, mor, ps, dst)
-}
-
-func (v vmwareCollector) Retrieve(c context.Context, mor []types.ManagedObjectReference, ps []string, dst interface{}) error {
-	return v.collector.Retrieve(c, mor, ps, dst)
 }
 
 type location struct {
