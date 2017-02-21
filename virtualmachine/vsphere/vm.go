@@ -766,7 +766,7 @@ func DeleteTemplate(vm *VM) error {
 	}
 	//  If there are any missing templates, return error
 	if len(missingTemplates) != 0 {
-		return fmt.Errorf("Following templates not found [ %s ]. However any found templates are deleted", strings.Join(missingTemplates, ", "))
+		return fmt.Errorf("Following templates not found.\n[ %s ].\nHowever any found templates are deleted", strings.Join(missingTemplates, ", "))
 	}
 	return nil
 }
