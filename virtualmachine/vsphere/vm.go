@@ -727,10 +727,10 @@ func (vm *VM) GetSSH(options ssh.Options) (ssh.Client, error) {
 	return &client, nil
 }
 
-// Deletes the template created during vm Provisioning
+// DeleteTemplate deletes the vm-template, created during vm provisioning
 func DeleteTemplate(vm *VM) error {
 	// for the templates that do not exist in server
-	templates := make([]string, 0)
+	missingTemplates := make([]string, 0)
 	if err := SetupSession(vm); err != nil {
 		return err
 	}
@@ -738,18 +738,19 @@ func DeleteTemplate(vm *VM) error {
 	if err != nil {
 		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
 	}
-	// for all the datastores passed in generate the template name and delete it
+	// find and delete vm-templates from all provided datastores
 	for _, datastore := range vm.Datastores {
+		// generate template name <provided-name>-<datastore-name>
 		template := createTemplateName(vm.Template, datastore)
-		// finds the template vm
-		temp, err := findVM(vm, dcMo, template)
+		// finds the template vm in Host specified in vm.Destination in Datacenter dcMo
+		templateVm, err := findVM(vm, dcMo, template)
 		if err != nil {
-			// adds the template name if it doesn't exist or in case of error
-			templates = append(templates, template)
+			// add to missing templates list if it doesn't exist or in case of error
+			missingTemplates = append(missingTemplates, template)
 			continue
 		}
-		// creates the vm object and calls destroy function on the vm
-		vmo := object.NewVirtualMachine(vm.client.Client, temp.Reference())
+		// create vm object for found vm-template and calls destroy function on the vm
+		vmo := object.NewVirtualMachine(vm.client.Client, templateVm.Reference())
 		task, err := vmo.Destroy(vm.ctx)
 		if err != nil {
 			return err
@@ -763,9 +764,9 @@ func DeleteTemplate(vm *VM) error {
 			return fmt.Errorf("Destroy task returned error : %s", tInfo.Error)
 		}
 	}
-	// if length of templates > 0 return as error else return nill as error
-	if len(templates) != 0 {
-		return fmt.Errorf("[ %s ] templates not found.", strings.Join(templates, ", "))
+	//  If there are any missing templates, return error
+	if len(missingTemplates) != 0 {
+		return fmt.Errorf("Following templates not found [ %s ]. However any found templates are deleted", strings.Join(missingTemplates, ", "))
 	}
 	return nil
 }
