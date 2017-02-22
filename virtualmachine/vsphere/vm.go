@@ -894,3 +894,36 @@ func GetDcImageList(vm *VM) (map[string][]string, error) {
 	}
 	return imageList, nil
 }
+
+func GetDcClusterList(vm *VM) ([]string, error) {
+	dcClusterList := make([]string, 0)
+	if err := SetupSession(vm); err != nil {
+		return nil, err
+	}
+
+	dcList, err := vm.finder.DatacenterList(vm.ctx, "*")
+	if err != nil {
+		return nil, err
+	}
+
+	for _, dc := range dcList {
+		vm.finder.SetDatacenter(dc)
+		allClusters, err := vm.finder.ClusterComputeResourceList(vm.ctx, "*")
+		if err != nil {
+			return nil, err
+		}
+		var clustersMor []types.ManagedObjectReference
+		for _, cluster := range allClusters {
+			clustersMor = append(clustersMor, cluster.Reference())
+		}
+		var allClustersMo []mo.ClusterComputeResource
+		err = vm.collector.Retrieve(vm.ctx, clustersMor, []string{"name"}, &allClustersMo)
+		if err != nil {
+			return nil, err
+		}
+		for _, cluster := range allClustersMo {
+			dcClusterList = append(dcClusterList, joinNames(dc.Name(), cluster.Name))
+		}
+	}
+	return dcClusterList, err
+}
