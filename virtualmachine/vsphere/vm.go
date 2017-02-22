@@ -22,6 +22,7 @@ import (
 	"github.com/vmware/govmomi/find"
 	"github.com/vmware/govmomi/object"
 	"github.com/vmware/govmomi/property"
+	"github.com/vmware/govmomi/vim25/mo"
 	"github.com/vmware/govmomi/vim25/types"
 )
 
@@ -29,8 +30,24 @@ type vmwareFinder struct {
 	finder *find.Finder
 }
 
+func (v vmwareFinder) SetDatacenter(dc *object.Datacenter) *find.Finder {
+	return v.finder.SetDatacenter(dc)
+}
+
 func (v vmwareFinder) DatacenterList(c context.Context, p string) ([]*object.Datacenter, error) {
 	return v.finder.DatacenterList(c, p)
+}
+
+func (v vmwareFinder) VirtualMachineList(c context.Context, p string) ([]*object.VirtualMachine, error) {
+	return v.finder.VirtualMachineList(c, p)
+}
+
+func (v vmwareFinder) ClusterComputeResourceList(c context.Context, p string) ([]*object.ClusterComputeResource, error) {
+	return v.finder.ClusterComputeResourceList(c, p)
+}
+
+func (v vmwareFinder) NetworkList(c context.Context, p string) ([]object.NetworkReference, error) {
+	return v.finder.NetworkList(c, p)
 }
 
 // NewLease creates a VMwareLease.
@@ -254,6 +271,7 @@ const (
 
 type collector interface {
 	RetrieveOne(context.Context, types.ManagedObjectReference, []string, interface{}) error
+	Retrieve(context.Context, []types.ManagedObjectReference, []string, interface{}) error
 }
 
 // Disk represents a vSphere Disk to attach to the VM
@@ -272,6 +290,10 @@ type snapshot struct {
 
 type finder interface {
 	DatacenterList(context.Context, string) ([]*object.Datacenter, error)
+	ClusterComputeResourceList(context.Context, string) ([]*object.ClusterComputeResource, error)
+	VirtualMachineList(context.Context, string) ([]*object.VirtualMachine, error)
+	NetworkList(context.Context, string) ([]object.NetworkReference, error)
+	SetDatacenter(*object.Datacenter) *find.Finder
 }
 
 type vmwareCollector struct {
@@ -280,6 +302,10 @@ type vmwareCollector struct {
 
 func (v vmwareCollector) RetrieveOne(c context.Context, mor types.ManagedObjectReference, ps []string, dst interface{}) error {
 	return v.collector.RetrieveOne(c, mor, ps, dst)
+}
+
+func (v vmwareCollector) Retrieve(c context.Context, mor []types.ManagedObjectReference, ps []string, dst interface{}) error {
+	return v.collector.Retrieve(c, mor, ps, dst)
 }
 
 type location struct {
@@ -308,10 +334,10 @@ type Lease interface {
 }
 
 type Flavor struct {
-        // Represents the number of CPUs
-        NumCPUs int32
-        // Represents the size of main memory in MB
-        MemoryMB int64
+	// Represents the number of CPUs
+	NumCPUs int32
+	// Represents the size of main memory in MB
+	MemoryMB int64
 }
 
 var _ lvm.VirtualMachine = (*VM)(nil)
@@ -330,8 +356,8 @@ type VM struct {
 	Insecure bool
 	// Datacenter configures the datacenter onto which to import the VM.
 	Datacenter string
-        //Flavor for the number of CPUs and size of main memory
-        Flavor Flavor
+	//Flavor for the number of CPUs and size of main memory
+	Flavor Flavor
 	// OvfPath represents the location of the OVF file on disk.
 	OvfPath string
 	// OvaPathUrl represents the location of local/remote ova file
@@ -778,4 +804,43 @@ func DeleteTemplate(vm *VM) error {
 		return fmt.Errorf("Following templates not found.\n[ %s ].\nHowever any found templates are deleted", strings.Join(missingTemplates, ", "))
 	}
 	return nil
+}
+
+func joinNames(name ...string) string {
+	return strings.Join(name, ".")
+}
+
+func GetDcNetworkList(vm *VM) ([]string, error) {
+	networkList := make([]string, 0)
+	if err := SetupSession(vm); err != nil {
+		return nil, err
+	}
+	dcList, err := vm.finder.DatacenterList(vm.ctx, "*")
+	if err != nil {
+		return nil, err
+	}
+
+	for _, dc := range dcList {
+		vm.finder.SetDatacenter(dc)
+		allNetworks, err := vm.finder.NetworkList(vm.ctx, "*")
+		if err != nil {
+			return nil, err
+		}
+
+		var networksMor []types.ManagedObjectReference
+		for _, network := range allNetworks {
+			networksMor = append(networksMor, network.Reference())
+		}
+
+		var allNetworksMo []mo.Network
+		err = vm.collector.Retrieve(vm.ctx, networksMor, []string{"name"}, &allNetworksMo)
+		if err != nil {
+			return nil, err
+		}
+
+		for _, network := range allNetworksMo {
+			networkList = append(networkList, joinNames(dc.Name(), network.Name))
+		}
+	}
+	return networkList, nil
 }
