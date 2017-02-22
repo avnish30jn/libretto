@@ -850,3 +850,37 @@ func GetDcNetworkList(vm *VM) (map[string][]string, error) {
 	}
 	return networkList, nil
 }
+
+func GetDcImageList(vm *VM) ([]string, error) {
+	imageList := make([]string, 0)
+	if err := SetupSession(vm); err != nil {
+		return nil, err
+	}
+	dcList, err := vm.finder.DatacenterList(vm.ctx, "*")
+	if err != nil {
+		return nil, err
+	}
+
+	for _, dc := range dcList {
+		vm.finder.SetDatacenter(dc)
+		allVms, err := vm.finder.VirtualMachineList(vm.ctx, "*")
+		if err != nil {
+			return nil, err
+		}
+		var vmsMor []types.ManagedObjectReference
+		for _, vm := range allVms {
+			vmsMor = append(vmsMor, vm.Reference())
+		}
+		var allVmsMo []mo.VirtualMachine
+		err = vm.collector.Retrieve(vm.ctx, vmsMor, []string{"name", "config"}, &allVmsMo)
+		if err != nil {
+			return nil, err
+		}
+		for _, vm := range allVmsMo {
+			if vm.Config.Template {
+				imageList = append(imageList, joinNames(dc.Name(), vm.Name))
+			}
+		}
+	}
+	return imageList, nil
+}
