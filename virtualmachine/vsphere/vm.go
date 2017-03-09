@@ -806,22 +806,25 @@ func DeleteTemplate(vm *VM) error {
 	return nil
 }
 
-func joinNames(name ...string) string {
-	return strings.Join(name, ".")
-}
-
-func GetDcNetworkList(vm *VM) ([]string, error) {
-	networkList := make([]string, 0)
+// GetDcNetworkList : GetDcNetworkList returns the list of networks in
+// all the datacenters in vcenter server
+func GetDcNetworkList(vm *VM) (map[string][]string, error) {
+	networkList := map[string][]string{}
+	// set up session to vcenter server
 	if err := SetupSession(vm); err != nil {
 		return nil, err
 	}
+	// get datacenter list in the vcenter server
 	dcList, err := vm.finder.DatacenterList(vm.ctx, "*")
 	if err != nil {
 		return nil, err
 	}
 
+	// for all datacenters in the vcenter server
 	for _, dc := range dcList {
+		// Set datacenter
 		vm.finder.SetDatacenter(dc)
+		// find the networks in selected datacenter
 		allNetworks, err := vm.finder.NetworkList(vm.ctx, "*")
 		if err != nil {
 			return nil, err
@@ -832,14 +835,17 @@ func GetDcNetworkList(vm *VM) ([]string, error) {
 			networksMor = append(networksMor, network.Reference())
 		}
 
+		// get the network names
 		var allNetworksMo []mo.Network
 		err = vm.collector.Retrieve(vm.ctx, networksMor, []string{"name"}, &allNetworksMo)
 		if err != nil {
 			return nil, err
 		}
 
+		// generate response for the networks in datacenter. In the response map
+		// the key is the datacenter name and value is the list of images in datacenter
 		for _, network := range allNetworksMo {
-			networkList = append(networkList, joinNames(dc.Name(), network.Name))
+			networkList[dc.Name()] = append(networkList[dc.Name()], network.Name)
 		}
 	}
 	return networkList, nil
