@@ -400,6 +400,34 @@ func searchTree(vm *VM, mor types.ManagedObjectReference, name string) (*mo.Virt
 	return nil, NewErrorObjectNotFound(errors.New("could not find the vm"), name)
 }
 
+// createNetworkDeviceSpec : createNetworkDeviceSpec creates the device spec for the network nwMor
+func addNetworkDeviceSpec(nwMor types.ManagedObjectReference, name string) (*types.VirtualDeviceConfigSpec, error) {
+	// create backing object
+	backing := &types.VirtualEthernetCardNetworkBackingInfo{
+		VirtualDeviceDeviceBackingInfo: types.VirtualDeviceDeviceBackingInfo{
+			DeviceName: name,
+		},
+		Network: &nwMor,
+	}
+	// create ehternet card with the backing info
+	device, err := object.EthernetCardTypes().CreateEthernetCard("e1000", backing)
+	if err != nil {
+		return nil, err
+	}
+	// connect to the newtork when the nic is connected to vm
+	device.GetVirtualDevice().Connectable = &types.VirtualDeviceConnectInfo{
+		StartConnected:    true,
+		AllowGuestControl: true,
+	}
+	// create spec to add the device to the vm
+	spec := &types.VirtualDeviceConfigSpec{
+		Operation: types.VirtualDeviceConfigSpecOperationAdd,
+		Device:    device,
+	}
+
+	return spec, nil
+}
+
 // reconfigureNetworks : reconfigureNetworks configures the vm and attach it to the
 // netowrks in the vm structure
 func reconfigureNetworks(vm *VM) ([]types.BaseVirtualDeviceConfigSpec, error) {
@@ -421,27 +449,9 @@ func reconfigureNetworks(vm *VM) ([]types.BaseVirtualDeviceConfigSpec, error) {
 	// for all the mappings create a nic and add network backing info to it
 	// create deviceSpec array from  the mapping
 	for _, mapping := range networkMapping {
-		// create backing object
-		backing := &types.VirtualEthernetCardNetworkBackingInfo{
-			VirtualDeviceDeviceBackingInfo: types.VirtualDeviceDeviceBackingInfo{
-				DeviceName: mapping.Name,
-			},
-			Network: &mapping.Network,
-		}
-		// create ehternet car with the backing info
-		device, err := object.EthernetCardTypes().CreateEthernetCard("e1000", backing)
+		spec, err := addNetworkDeviceSpec(mapping.Network, mapping.Name)
 		if err != nil {
 			return nil, err
-		}
-		// connect to the newtork when the nic is connected to vm
-		device.GetVirtualDevice().Connectable = &types.VirtualDeviceConnectInfo{
-			StartConnected:    true,
-			AllowGuestControl: true,
-		}
-		// create spec to add the device to the vm
-		spec := &types.VirtualDeviceConfigSpec{
-			Operation: types.VirtualDeviceConfigSpecOperationAdd,
-			Device:    device,
 		}
 		// add spec to array of the devices to be added/removed
 		deviceSpecs = append(deviceSpecs, spec)
