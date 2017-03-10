@@ -895,19 +895,25 @@ func GetDcImageList(vm *VM) (map[string][]string, error) {
 	return imageList, nil
 }
 
-func GetDcClusterList(vm *VM) ([]string, error) {
-	dcClusterList := make([]string, 0)
+// GetDcClusterList : GetDcClusterList returns the datacenter and the clusters in the datacenter
+func GetDcClusterList(vm *VM) (map[string][]string, error) {
+	dcClusterList := map[string][]string{}
+	// setupSession
 	if err := SetupSession(vm); err != nil {
 		return nil, err
 	}
 
+	// get datacenter list in the vcenter server
 	dcList, err := vm.finder.DatacenterList(vm.ctx, "*")
 	if err != nil {
 		return nil, err
 	}
 
+	// for all datacenters in the vcenter server
 	for _, dc := range dcList {
+		// Set datacenter
 		vm.finder.SetDatacenter(dc)
+		// find the clusters in selected datacenter
 		allClusters, err := vm.finder.ClusterComputeResourceList(vm.ctx, "*")
 		if err != nil {
 			return nil, err
@@ -916,13 +922,16 @@ func GetDcClusterList(vm *VM) ([]string, error) {
 		for _, cluster := range allClusters {
 			clustersMor = append(clustersMor, cluster.Reference())
 		}
+		// get the cluster names
 		var allClustersMo []mo.ClusterComputeResource
 		err = vm.collector.Retrieve(vm.ctx, clustersMor, []string{"name"}, &allClustersMo)
 		if err != nil {
 			return nil, err
 		}
+		// generate response for the cluster in datacenter. In the response map
+		// the key is the datacenter name and value is the list of clusters in datacenter
 		for _, cluster := range allClustersMo {
-			dcClusterList = append(dcClusterList, joinNames(dc.Name(), cluster.Name))
+			dcClusterList[dc.Name()] = append(dcClusterList[dc.Name()], cluster.Name)
 		}
 	}
 	return dcClusterList, err
