@@ -163,6 +163,22 @@ func handleSendError(r *request.Request, err error) {
 			}
 			return
 		}
+<<<<<<< HEAD
+=======
+		// Catch all other request errors.
+		r.Error = awserr.New("RequestError", "send request failed", err)
+		r.Retryable = aws.Bool(true) // network errors are retryable
+
+		// Override the error with a context canceled error, if that was canceled.
+		ctx := r.Context()
+		select {
+		case <-ctx.Done():
+			r.Error = awserr.New(request.CanceledErrorCode,
+				"request context canceled", ctx.Err())
+			r.Retryable = aws.Bool(false)
+		default:
+		}
+>>>>>>> Revendor using dep tool
 	}
 	if r.HTTPResponse == nil {
 		// Add a dummy request response object to ensure the HTTPResponse

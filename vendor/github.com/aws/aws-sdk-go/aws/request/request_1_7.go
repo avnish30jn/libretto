@@ -16,6 +16,7 @@ func (noBody) Read([]byte) (int, error)         { return 0, io.EOF }
 func (noBody) Close() error                     { return nil }
 func (noBody) WriteTo(io.Writer) (int64, error) { return 0, nil }
 
+<<<<<<< HEAD
 // NoBody is an empty reader that will trigger the Go HTTP client to not include
 // and body in the HTTP request.
 var NoBody = noBody{}
@@ -37,3 +38,8 @@ func (r *Request) ResetBody() {
 
 	r.HTTPRequest.Body = body
 }
+=======
+// Is an empty reader that will trigger the Go HTTP client to not include
+// and body in the HTTP request.
+var noBodyReader = noBody{}
+>>>>>>> Revendor using dep tool

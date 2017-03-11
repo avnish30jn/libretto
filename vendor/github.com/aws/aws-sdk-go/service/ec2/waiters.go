@@ -1026,11 +1026,14 @@ func (c *EC2) WaitUntilSpotInstanceRequestFulfilledWithContext(ctx aws.Context, 
 				Expected: "fulfilled",
 			},
 			{
+<<<<<<< HEAD
 				State:   request.SuccessWaiterState,
 				Matcher: request.PathAllWaiterMatch, Argument: "SpotInstanceRequests[].Status.Code",
 				Expected: "request-canceled-and-instance-running",
 			},
 			{
+=======
+>>>>>>> Revendor using dep tool
 				State:   request.FailureWaiterState,
 				Matcher: request.PathAnyWaiterMatch, Argument: "SpotInstanceRequests[].Status.Code",
 				Expected: "schedule-expired",
@@ -1055,6 +1058,18 @@ func (c *EC2) WaitUntilSpotInstanceRequestFulfilledWithContext(ctx aws.Context, 
 				Matcher:  request.ErrorWaiterMatch,
 				Expected: "InvalidSpotInstanceRequestID.NotFound",
 			},
+		},
+		Logger: c.Config.Logger,
+		NewRequest: func(opts []request.Option) (*request.Request, error) {
+			var inCpy *DescribeSpotInstanceRequestsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeSpotInstanceRequestsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
 		},
 		Logger: c.Config.Logger,
 		NewRequest: func(opts []request.Option) (*request.Request, error) {
@@ -1412,6 +1427,7 @@ func (c *EC2) WaitUntilVpcExistsWithContext(ctx aws.Context, input *DescribeVpcs
 		},
 	}
 	w.ApplyOptions(opts...)
+<<<<<<< HEAD
 
 	return w.WaitWithContext(ctx)
 }
@@ -1419,6 +1435,15 @@ func (c *EC2) WaitUntilVpcExistsWithContext(ctx aws.Context, input *DescribeVpcs
 // WaitUntilVpcPeeringConnectionDeleted uses the Amazon EC2 API operation
 // DescribeVpcPeeringConnections to wait for a condition to be met before returning.
 // If the condition is not met within the max attempt window, an error will
+=======
+
+	return w.WaitWithContext(ctx)
+}
+
+// WaitUntilVpcPeeringConnectionDeleted uses the Amazon EC2 API operation
+// DescribeVpcPeeringConnections to wait for a condition to be met before returning.
+// If the condition is not meet within the max attempt window an error will
+>>>>>>> Revendor using dep tool
 // be returned.
 func (c *EC2) WaitUntilVpcPeeringConnectionDeleted(input *DescribeVpcPeeringConnectionsInput) error {
 	return c.WaitUntilVpcPeeringConnectionDeletedWithContext(aws.BackgroundContext(), input)

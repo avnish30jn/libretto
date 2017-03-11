@@ -2,6 +2,7 @@
 
 package request
 
+<<<<<<< HEAD
 import (
 	"net/http"
 )
@@ -31,3 +32,10 @@ func (r *Request) ResetBody() {
 	r.HTTPRequest.Body = body
 	r.HTTPRequest.GetBody = r.getNextRequestBody
 }
+=======
+import "net/http"
+
+// Is a http.NoBody reader instructing Go HTTP client to not include
+// and body in the HTTP request.
+var noBodyReader = http.NoBody
+>>>>>>> Revendor using dep tool

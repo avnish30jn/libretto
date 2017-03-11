@@ -33,6 +33,10 @@ type Element struct {
 	Object mo.Reference
 }
 
+func (e Element) String() string {
+	return fmt.Sprintf("%s @ %s", e.Object.Reference(), e.Path)
+}
+
 func ToElement(r mo.Reference, prefix string) Element {
 	var name string
 
@@ -112,6 +116,7 @@ type Lister struct {
 	All       bool
 }
 
+<<<<<<< HEAD
 func traversable(ref types.ManagedObjectReference) bool {
 	switch ref.Type {
 	case "Folder":
@@ -129,6 +134,8 @@ func traversable(ref types.ManagedObjectReference) bool {
 	return true
 }
 
+=======
+>>>>>>> Revendor using dep tool
 func (l Lister) retrieveProperties(ctx context.Context, req types.RetrieveProperties, dst *[]interface{}) error {
 	res, err := l.Collector.RetrieveProperties(ctx, req)
 	if err != nil {
@@ -225,6 +232,8 @@ func (l Lister) ListFolder(ctx context.Context) ([]Element, error) {
 
 			// Additional basic properties.
 			switch t {
+			case "Folder":
+				pspec.PathSet = append(pspec.PathSet, "childType")
 			case "ComputeResource", "ClusterComputeResource":
 				// The ComputeResource and ClusterComputeResource are dereferenced in
 				// the ResourcePoolFlag. Make sure they always have their resourcePool
@@ -286,7 +295,7 @@ func (l Lister) ListDatacenter(ctx context.Context) ([]Element, error) {
 	if l.All {
 		pspec.All = types.NewBool(true)
 	} else {
-		pspec.PathSet = []string{"name"}
+		pspec.PathSet = []string{"name", "childType"}
 	}
 
 	req := types.RetrieveProperties{

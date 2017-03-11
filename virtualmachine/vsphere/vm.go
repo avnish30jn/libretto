@@ -78,8 +78,8 @@ type VMwareLease struct {
 
 // HTTPNfcLeaseProgress takes a percentage as an int and sets that percentage as
 // the completed percent.
-func (v VMwareLease) HTTPNfcLeaseProgress(p int32) {
-	v.Lease.HttpNfcLeaseProgress(v.Ctx, p)
+func (v VMwareLease) HTTPNfcLeaseProgress(p int) {
+	v.Lease.HttpNfcLeaseProgress(v.Ctx, int32(p))
 }
 
 // Wait waits for the underlying lease to finish.

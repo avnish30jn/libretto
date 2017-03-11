@@ -268,7 +268,10 @@ var awsPartition = partition{
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
 				"eu-west-2":      endpoint{},
+<<<<<<< HEAD
 				"sa-east-1":      endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-1":      endpoint{},
@@ -351,6 +354,7 @@ var awsPartition = partition{
 		"batch": service{
 
 			Endpoints: endpoints{
+<<<<<<< HEAD
 				"ap-northeast-1": endpoint{},
 				"ap-southeast-1": endpoint{},
 				"ap-southeast-2": endpoint{},
@@ -360,6 +364,9 @@ var awsPartition = partition{
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-2":      endpoint{},
+=======
+				"us-east-1": endpoint{},
+>>>>>>> Revendor using dep tool
 			},
 		},
 		"budgets": service{
@@ -381,7 +388,10 @@ var awsPartition = partition{
 				"ap-southeast-1": endpoint{},
 				"ap-southeast-2": endpoint{},
 				"eu-west-1":      endpoint{},
+<<<<<<< HEAD
 				"eu-west-2":      endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-2":      endpoint{},
@@ -491,6 +501,7 @@ var awsPartition = partition{
 				"ap-northeast-1": endpoint{},
 				"ap-southeast-1": endpoint{},
 				"ap-southeast-2": endpoint{},
+<<<<<<< HEAD
 				"ca-central-1":   endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
@@ -498,6 +509,12 @@ var awsPartition = partition{
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-1":      endpoint{},
+=======
+				"eu-central-1":   endpoint{},
+				"eu-west-1":      endpoint{},
+				"us-east-1":      endpoint{},
+				"us-east-2":      endpoint{},
+>>>>>>> Revendor using dep tool
 				"us-west-2":      endpoint{},
 			},
 		},
@@ -543,14 +560,20 @@ var awsPartition = partition{
 
 			Endpoints: endpoints{
 				"ap-northeast-1": endpoint{},
+<<<<<<< HEAD
 				"ap-northeast-2": endpoint{},
 				"ap-south-1":     endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"ap-southeast-1": endpoint{},
 				"ap-southeast-2": endpoint{},
 				"ca-central-1":   endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
+<<<<<<< HEAD
 				"eu-west-2":      endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"sa-east-1":      endpoint{},
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
@@ -577,8 +600,11 @@ var awsPartition = partition{
 			Endpoints: endpoints{
 				"ap-northeast-1": endpoint{},
 				"ap-northeast-2": endpoint{},
+<<<<<<< HEAD
 				"ap-south-1":     endpoint{},
 				"ap-southeast-1": endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
@@ -593,8 +619,11 @@ var awsPartition = partition{
 			Endpoints: endpoints{
 				"ap-northeast-1": endpoint{},
 				"ap-northeast-2": endpoint{},
+<<<<<<< HEAD
 				"ap-south-1":     endpoint{},
 				"ap-southeast-1": endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
@@ -609,8 +638,11 @@ var awsPartition = partition{
 			Endpoints: endpoints{
 				"ap-northeast-1": endpoint{},
 				"ap-northeast-2": endpoint{},
+<<<<<<< HEAD
 				"ap-south-1":     endpoint{},
 				"ap-southeast-1": endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
@@ -859,7 +891,10 @@ var awsPartition = partition{
 
 			Endpoints: endpoints{
 				"ap-southeast-2": endpoint{},
+<<<<<<< HEAD
 				"eu-central-1":   endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"eu-west-1":      endpoint{},
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
@@ -1177,7 +1212,10 @@ var awsPartition = partition{
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
 				"eu-west-2":      endpoint{},
+<<<<<<< HEAD
 				"sa-east-1":      endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-1":      endpoint{},
@@ -1237,6 +1275,7 @@ var awsPartition = partition{
 					Service: "aws-marketplace",
 				},
 			},
+<<<<<<< HEAD
 			Endpoints: endpoints{
 				"ap-northeast-1": endpoint{},
 				"ap-northeast-2": endpoint{},
@@ -1258,6 +1297,23 @@ var awsPartition = partition{
 
 			Endpoints: endpoints{
 				"us-west-2": endpoint{},
+=======
+			Endpoints: endpoints{
+				"ap-northeast-1": endpoint{},
+				"ap-northeast-2": endpoint{},
+				"ap-south-1":     endpoint{},
+				"ap-southeast-1": endpoint{},
+				"ap-southeast-2": endpoint{},
+				"ca-central-1":   endpoint{},
+				"eu-central-1":   endpoint{},
+				"eu-west-1":      endpoint{},
+				"eu-west-2":      endpoint{},
+				"sa-east-1":      endpoint{},
+				"us-east-1":      endpoint{},
+				"us-east-2":      endpoint{},
+				"us-west-1":      endpoint{},
+				"us-west-2":      endpoint{},
+>>>>>>> Revendor using dep tool
 			},
 		},
 		"mobileanalytics": service{
@@ -1567,7 +1623,10 @@ var awsPartition = partition{
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
 				"eu-west-2":      endpoint{},
+<<<<<<< HEAD
 				"sa-east-1":      endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-1":      endpoint{},
@@ -1642,7 +1701,10 @@ var awsPartition = partition{
 
 			Endpoints: endpoints{
 				"ap-northeast-1": endpoint{},
+<<<<<<< HEAD
 				"ap-southeast-2": endpoint{},
+=======
+>>>>>>> Revendor using dep tool
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
 				"eu-west-2":      endpoint{},
@@ -1820,6 +1882,17 @@ var awsPartition = partition{
 				"eu-west-1":      endpoint{},
 				"us-east-1":      endpoint{},
 				"us-west-1":      endpoint{},
+				"us-west-2":      endpoint{},
+			},
+		},
+		"workdocs": service{
+
+			Endpoints: endpoints{
+				"ap-northeast-1": endpoint{},
+				"ap-southeast-1": endpoint{},
+				"ap-southeast-2": endpoint{},
+				"eu-west-1":      endpoint{},
+				"us-east-1":      endpoint{},
 				"us-west-2":      endpoint{},
 			},
 		},

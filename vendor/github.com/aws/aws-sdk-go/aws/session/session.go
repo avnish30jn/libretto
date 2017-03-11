@@ -155,10 +155,13 @@ type Options struct {
 	// and enable or disable the shared config functionality.
 	SharedConfigState SharedConfigState
 
+<<<<<<< HEAD
 	// Ordered list of files the session will load configuration from.
 	// It will override environment variable AWS_SHARED_CREDENTIALS_FILE, AWS_CONFIG_FILE.
 	SharedConfigFiles []string
 
+=======
+>>>>>>> Revendor using dep tool
 	// When the SDK's shared config is configured to assume a role with MFA
 	// this option is required in order to provide the mechanism that will
 	// retrieve the MFA token. There is no default value for this field. If
@@ -222,7 +225,11 @@ type Options struct {
 //
 //     // Force enable Shared Config support
 //     sess := session.Must(session.NewSessionWithOptions(session.Options{
+<<<<<<< HEAD
 //         SharedConfigState: session.SharedConfigEnable,
+=======
+//         SharedConfigState: SharedConfigEnable,
+>>>>>>> Revendor using dep tool
 //     }))
 func NewSessionWithOptions(opts Options) (*Session, error) {
 	var envCfg envConfig
@@ -243,6 +250,7 @@ func NewSessionWithOptions(opts Options) (*Session, error) {
 		envCfg.EnableSharedConfig = true
 	}
 
+<<<<<<< HEAD
 	if len(envCfg.SharedCredentialsFile) == 0 {
 		envCfg.SharedCredentialsFile = defaults.SharedCredentialsFilename()
 	}
@@ -250,6 +258,8 @@ func NewSessionWithOptions(opts Options) (*Session, error) {
 		envCfg.SharedConfigFile = defaults.SharedConfigFilename()
 	}
 
+=======
+>>>>>>> Revendor using dep tool
 	// Only use AWS_CA_BUNDLE if session option is not provided.
 	if len(envCfg.CustomCABundle) != 0 && opts.CustomCABundle == nil {
 		f, err := os.Open(envCfg.CustomCABundle)

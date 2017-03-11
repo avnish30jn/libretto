@@ -28,7 +28,10 @@ func WithRetryer(cfg *aws.Config, retryer Retryer) *aws.Config {
 var retryableCodes = map[string]struct{}{
 	"RequestError":            {},
 	"RequestTimeout":          {},
+<<<<<<< HEAD
 	ErrCodeResponseTimeout:    {},
+=======
+>>>>>>> Revendor using dep tool
 	"RequestTimeoutException": {}, // Glacier's flavor of RequestTimeout
 }
 

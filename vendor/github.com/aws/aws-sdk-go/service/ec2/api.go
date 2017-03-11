@@ -682,6 +682,7 @@ const opAssociateIamInstanceProfile = "AssociateIamInstanceProfile"
 
 // AssociateIamInstanceProfileRequest generates a "aws/request.Request" representing the
 // client's request for the AssociateIamInstanceProfile operation. The "output" return
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -694,6 +695,21 @@ const opAssociateIamInstanceProfile = "AssociateIamInstanceProfile"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+=======
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See AssociateIamInstanceProfile for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the AssociateIamInstanceProfile method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+>>>>>>> Revendor using dep tool
 //
 //    // Example sending a request using the AssociateIamInstanceProfileRequest method.
 //    req, resp := client.AssociateIamInstanceProfileRequest(params)
@@ -1377,7 +1393,12 @@ func (c *EC2) AttachVpnGatewayRequest(input *AttachVpnGatewayInput) (req *reques
 // Attaches a virtual private gateway to a VPC. You can attach one virtual private
 // gateway to one VPC at a time.
 //
+<<<<<<< HEAD
 // For more information, see AWS Managed VPN Connections (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
+=======
+// For more information, see Adding a Hardware Virtual Private Gateway to Your
+// VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
+>>>>>>> Revendor using dep tool
 // in the Amazon Virtual Private Cloud User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -2302,6 +2323,7 @@ func (c *EC2) ConfirmProductInstanceWithContext(ctx aws.Context, input *ConfirmP
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opCopyFpgaImage = "CopyFpgaImage"
@@ -2376,6 +2398,8 @@ func (c *EC2) CopyFpgaImageWithContext(ctx aws.Context, input *CopyFpgaImageInpu
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opCopyImage = "CopyImage"
@@ -2647,6 +2671,7 @@ func (c *EC2) CreateCustomerGatewayWithContext(ctx aws.Context, input *CreateCus
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opCreateDefaultVpc = "CreateDefaultVpc"
@@ -2733,6 +2758,8 @@ func (c *EC2) CreateDefaultVpcWithContext(ctx aws.Context, input *CreateDefaultV
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opCreateDhcpOptions = "CreateDhcpOptions"
@@ -3006,6 +3033,7 @@ func (c *EC2) CreateFlowLogsWithContext(ctx aws.Context, input *CreateFlowLogsIn
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opCreateFpgaImage = "CreateFpgaImage"
@@ -3087,6 +3115,8 @@ func (c *EC2) CreateFpgaImageWithContext(ctx aws.Context, input *CreateFpgaImage
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opCreateImage = "CreateImage"
@@ -3739,6 +3769,7 @@ func (c *EC2) CreateNetworkInterfaceWithContext(ctx aws.Context, input *CreateNe
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opCreateNetworkInterfacePermission = "CreateNetworkInterfacePermission"
@@ -3817,6 +3848,8 @@ func (c *EC2) CreateNetworkInterfacePermissionWithContext(ctx aws.Context, input
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opCreatePlacementGroup = "CreatePlacementGroup"
@@ -5535,6 +5568,7 @@ func (c *EC2) DeleteFlowLogsWithContext(ctx aws.Context, input *DeleteFlowLogsIn
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opDeleteFpgaImage = "DeleteFpgaImage"
@@ -5609,6 +5643,8 @@ func (c *EC2) DeleteFpgaImageWithContext(ctx aws.Context, input *DeleteFpgaImage
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opDeleteInternetGateway = "DeleteInternetGateway"
@@ -6069,6 +6105,7 @@ func (c *EC2) DeleteNetworkInterfaceWithContext(ctx aws.Context, input *DeleteNe
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opDeleteNetworkInterfacePermission = "DeleteNetworkInterfacePermission"
@@ -6146,6 +6183,8 @@ func (c *EC2) DeleteNetworkInterfacePermissionWithContext(ctx aws.Context, input
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opDeletePlacementGroup = "DeletePlacementGroup"
@@ -8137,6 +8176,7 @@ func (c *EC2) DescribeEgressOnlyInternetGatewaysWithContext(ctx aws.Context, inp
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opDescribeElasticGpus = "DescribeElasticGpus"
@@ -8212,6 +8252,8 @@ func (c *EC2) DescribeElasticGpusWithContext(ctx aws.Context, input *DescribeEla
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opDescribeExportTasks = "DescribeExportTasks"
@@ -8362,6 +8404,7 @@ func (c *EC2) DescribeFlowLogsWithContext(ctx aws.Context, input *DescribeFlowLo
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opDescribeFpgaImageAttribute = "DescribeFpgaImageAttribute"
@@ -8512,6 +8555,8 @@ func (c *EC2) DescribeFpgaImagesWithContext(ctx aws.Context, input *DescribeFpga
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opDescribeHostReservationOfferings = "DescribeHostReservationOfferings"
@@ -8753,6 +8798,7 @@ const opDescribeIamInstanceProfileAssociations = "DescribeIamInstanceProfileAsso
 
 // DescribeIamInstanceProfileAssociationsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeIamInstanceProfileAssociations operation. The "output" return
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -8765,6 +8811,21 @@ const opDescribeIamInstanceProfileAssociations = "DescribeIamInstanceProfileAsso
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+=======
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See DescribeIamInstanceProfileAssociations for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the DescribeIamInstanceProfileAssociations method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+>>>>>>> Revendor using dep tool
 //
 //    // Example sending a request using the DescribeIamInstanceProfileAssociationsRequest method.
 //    req, resp := client.DescribeIamInstanceProfileAssociationsRequest(params)
@@ -10180,6 +10241,7 @@ func (c *EC2) DescribeNetworkInterfaceAttributeWithContext(ctx aws.Context, inpu
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opDescribeNetworkInterfacePermissions = "DescribeNetworkInterfacePermissions"
@@ -10254,6 +10316,8 @@ func (c *EC2) DescribeNetworkInterfacePermissionsWithContext(ctx aws.Context, in
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opDescribeNetworkInterfaces = "DescribeNetworkInterfaces"
@@ -12917,6 +12981,7 @@ const opDescribeVolumesModifications = "DescribeVolumesModifications"
 
 // DescribeVolumesModificationsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeVolumesModifications operation. The "output" return
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -12929,6 +12994,21 @@ const opDescribeVolumesModifications = "DescribeVolumesModifications"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+=======
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See DescribeVolumesModifications for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the DescribeVolumesModifications method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+>>>>>>> Revendor using dep tool
 //
 //    // Example sending a request using the DescribeVolumesModificationsRequest method.
 //    req, resp := client.DescribeVolumesModificationsRequest(params)
@@ -14399,6 +14479,7 @@ const opDisassociateIamInstanceProfile = "DisassociateIamInstanceProfile"
 
 // DisassociateIamInstanceProfileRequest generates a "aws/request.Request" representing the
 // client's request for the DisassociateIamInstanceProfile operation. The "output" return
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -14411,6 +14492,21 @@ const opDisassociateIamInstanceProfile = "DisassociateIamInstanceProfile"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+=======
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See DisassociateIamInstanceProfile for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the DisassociateIamInstanceProfile method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+>>>>>>> Revendor using dep tool
 //
 //    // Example sending a request using the DisassociateIamInstanceProfileRequest method.
 //    req, resp := client.DisassociateIamInstanceProfileRequest(params)
@@ -15824,6 +15920,7 @@ func (c *EC2) ImportVolumeWithContext(ctx aws.Context, input *ImportVolumeInput,
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opModifyFpgaImageAttribute = "ModifyFpgaImageAttribute"
@@ -15898,6 +15995,8 @@ func (c *EC2) ModifyFpgaImageAttributeWithContext(ctx aws.Context, input *Modify
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opModifyHosts = "ModifyHosts"
@@ -16836,6 +16935,7 @@ const opModifyVolume = "ModifyVolume"
 
 // ModifyVolumeRequest generates a "aws/request.Request" representing the
 // client's request for the ModifyVolume operation. The "output" return
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -16848,6 +16948,21 @@ const opModifyVolume = "ModifyVolume"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+=======
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See ModifyVolume for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the ModifyVolume method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+>>>>>>> Revendor using dep tool
 //
 //    // Example sending a request using the ModifyVolumeRequest method.
 //    req, resp := client.ModifyVolumeRequest(params)
@@ -17266,6 +17381,7 @@ func (c *EC2) ModifyVpcPeeringConnectionOptionsWithContext(ctx aws.Context, inpu
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opModifyVpcTenancy = "ModifyVpcTenancy"
@@ -17349,6 +17465,8 @@ func (c *EC2) ModifyVpcTenancyWithContext(ctx aws.Context, input *ModifyVpcTenan
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opMonitorInstances = "MonitorInstances"
@@ -18201,6 +18319,7 @@ const opReplaceIamInstanceProfileAssociation = "ReplaceIamInstanceProfileAssocia
 
 // ReplaceIamInstanceProfileAssociationRequest generates a "aws/request.Request" representing the
 // client's request for the ReplaceIamInstanceProfileAssociation operation. The "output" return
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -18213,6 +18332,21 @@ const opReplaceIamInstanceProfileAssociation = "ReplaceIamInstanceProfileAssocia
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+=======
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See ReplaceIamInstanceProfileAssociation for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the ReplaceIamInstanceProfileAssociation method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+>>>>>>> Revendor using dep tool
 //
 //    // Example sending a request using the ReplaceIamInstanceProfileAssociationRequest method.
 //    req, resp := client.ReplaceIamInstanceProfileAssociationRequest(params)
@@ -18844,6 +18978,7 @@ func (c *EC2) RequestSpotInstancesWithContext(ctx aws.Context, input *RequestSpo
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opResetFpgaImageAttribute = "ResetFpgaImageAttribute"
@@ -18919,6 +19054,8 @@ func (c *EC2) ResetFpgaImageAttributeWithContext(ctx aws.Context, input *ResetFp
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 const opResetImageAttribute = "ResetImageAttribute"
@@ -20226,6 +20363,7 @@ func (c *EC2) UnmonitorInstancesWithContext(ctx aws.Context, input *UnmonitorIns
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 const opUpdateSecurityGroupRuleDescriptionsEgress = "UpdateSecurityGroupRuleDescriptionsEgress"
@@ -20386,6 +20524,8 @@ func (c *EC2) UpdateSecurityGroupRuleDescriptionsIngressWithContext(ctx aws.Cont
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+=======
+>>>>>>> Revendor using dep tool
 }
 
 // Contains the parameters for accepting the quote.
@@ -30833,6 +30973,7 @@ func (s *DescribeFlowLogsOutput) SetNextToken(v string) *DescribeFlowLogsOutput 
 	return s
 }
 
+<<<<<<< HEAD
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFpgaImageAttributeRequest
 type DescribeFpgaImageAttributeInput struct {
 	_ struct{} `type:"structure"`
@@ -31080,6 +31221,8 @@ func (s *DescribeFpgaImagesOutput) SetNextToken(v string) *DescribeFpgaImagesOut
 	return s
 }
 
+=======
+>>>>>>> Revendor using dep tool
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeHostReservationOfferingsRequest
 type DescribeHostReservationOfferingsInput struct {
 	_ struct{} `type:"structure"`
@@ -45022,7 +45165,11 @@ func (s *InternetGatewayAttachment) SetVpcId(v string) *InternetGatewayAttachmen
 	return s
 }
 
+<<<<<<< HEAD
 // Describes a set of permissions for a security group rule.
+=======
+// Describes a security group rule.
+>>>>>>> Revendor using dep tool
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/IpPermission
 type IpPermission struct {
 	_ struct{} `type:"structure"`
@@ -57114,7 +57261,11 @@ type StateReason struct {
 	//
 	//    * Server.ScheduledStop: The instance was stopped due to a scheduled retirement.
 	//
+<<<<<<< HEAD
 	//    * Server.SpotInstanceTermination: A Spot Instance was terminated due to
+=======
+	//    * Server.SpotInstanceTermination: A Spot instance was terminated due to
+>>>>>>> Revendor using dep tool
 	//    an increase in the market price.
 	//
 	//    * Client.InternalError: A client error caused the instance to terminate
@@ -60664,6 +60815,7 @@ const (
 )
 
 const (
+<<<<<<< HEAD
 	// InstanceInterruptionBehaviorStop is a InstanceInterruptionBehavior enum value
 	InstanceInterruptionBehaviorStop = "stop"
 
@@ -60672,6 +60824,8 @@ const (
 )
 
 const (
+=======
+>>>>>>> Revendor using dep tool
 	// InstanceLifecycleTypeSpot is a InstanceLifecycleType enum value
 	InstanceLifecycleTypeSpot = "spot"
 

@@ -66,8 +66,13 @@ func WithWaiterRequestOptions(opts ...Option) WaiterOption {
 	}
 }
 
+<<<<<<< HEAD
 // A Waiter provides the functionality to perform a blocking call which will
 // wait for a resource state to be satisfied by a service.
+=======
+// A Waiter provides the functionality to performing blocking call which will
+// wait for an resource state to be satisfied a service.
+>>>>>>> Revendor using dep tool
 //
 // This type should not be used directly. The API operations provided in the
 // service packages prefixed with "WaitUntil" should be used instead.
@@ -79,9 +84,14 @@ type Waiter struct {
 	MaxAttempts int
 	Delay       WaiterDelay
 
+<<<<<<< HEAD
 	RequestOptions   []Option
 	NewRequest       func([]Option) (*Request, error)
 	SleepWithContext func(aws.Context, time.Duration) error
+=======
+	RequestOptions []Option
+	NewRequest     func([]Option) (*Request, error)
+>>>>>>> Revendor using dep tool
 }
 
 // ApplyOptions updates the waiter with the list of waiter options provided.
@@ -179,8 +189,19 @@ func (w Waiter) WaitWithContext(ctx aws.Context) error {
 
 		// See if any of the acceptors match the request's response, or error
 		for _, a := range w.Acceptors {
+<<<<<<< HEAD
 			if matched, matchErr := a.match(w.Name, w.Logger, req, err); matched {
 				return matchErr
+=======
+			var matched bool
+			matched, err = a.match(w.Name, w.Logger, req, err)
+			if err != nil {
+				// Error occurred during current waiter call
+				return err
+			} else if matched {
+				// Match was found can stop here and return
+				return nil
+>>>>>>> Revendor using dep tool
 			}
 		}
 
@@ -196,6 +217,7 @@ func (w Waiter) WaitWithContext(ctx aws.Context) error {
 		if sleepFn := req.Config.SleepDelay; sleepFn != nil {
 			// Support SleepDelay for backwards compatibility and testing
 			sleepFn(delay)
+<<<<<<< HEAD
 		} else {
 			sleepCtxFn := w.SleepWithContext
 			if sleepCtxFn == nil {
@@ -205,6 +227,10 @@ func (w Waiter) WaitWithContext(ctx aws.Context) error {
 			if err := sleepCtxFn(ctx, delay); err != nil {
 				return awserr.New(CanceledErrorCode, "waiter context canceled", err)
 			}
+=======
+		} else if err := aws.SleepWithContext(ctx, delay); err != nil {
+			return awserr.New(CanceledErrorCode, "waiter context canceled", err)
+>>>>>>> Revendor using dep tool
 		}
 	}
 
@@ -276,7 +302,11 @@ func (a *WaiterAcceptor) match(name string, l aws.Logger, req *Request, err erro
 		return true, nil
 	case FailureWaiterState:
 		// Waiter failure state triggered
+<<<<<<< HEAD
 		return true, awserr.New(WaiterResourceNotReadyErrorCode,
+=======
+		return false, awserr.New("ResourceNotReady",
+>>>>>>> Revendor using dep tool
 			"failed waiting for successful resource state", err)
 	case RetryWaiterState:
 		// clear the error and retry the operation

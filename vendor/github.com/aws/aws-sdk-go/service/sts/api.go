@@ -1031,6 +1031,7 @@ func (c *STS) GetSessionTokenRequest(input *GetSessionTokenInput) (req *request.
 func (c *STS) GetSessionToken(input *GetSessionTokenInput) (*GetSessionTokenOutput, error) {
 	req, out := c.GetSessionTokenRequest(input)
 	return out, req.Send()
+<<<<<<< HEAD
 }
 
 // GetSessionTokenWithContext is the same as GetSessionToken with the addition of
@@ -1049,6 +1050,26 @@ func (c *STS) GetSessionTokenWithContext(ctx aws.Context, input *GetSessionToken
 	return out, req.Send()
 }
 
+=======
+}
+
+// GetSessionTokenWithContext is the same as GetSessionToken with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetSessionToken for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *STS) GetSessionTokenWithContext(ctx aws.Context, input *GetSessionTokenInput, opts ...request.Option) (*GetSessionTokenOutput, error) {
+	req, out := c.GetSessionTokenRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+>>>>>>> Revendor using dep tool
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/sts-2011-06-15/AssumeRoleRequest
 type AssumeRoleInput struct {
 	_ struct{} `type:"structure"`
@@ -1078,7 +1099,11 @@ type AssumeRoleInput struct {
 	//
 	// The regex used to validated this parameter is a string of characters consisting
 	// of upper- and lower-case alphanumeric characters with no spaces. You can
+<<<<<<< HEAD
 	// also include underscores or any of the following characters: =,.@:/-
+=======
+	// also include underscores or any of the following characters: =,.@:\/-
+>>>>>>> Revendor using dep tool
 	ExternalId *string `min:"2" type:"string"`
 
 	// An IAM policy in JSON format.
@@ -2262,9 +2287,15 @@ type GetSessionTokenInput struct {
 	// You can find the device for an IAM user by going to the AWS Management Console
 	// and viewing the user's security credentials.
 	//
+<<<<<<< HEAD
 	// The regex used to validated this parameter is a string of characters consisting
 	// of upper- and lower-case alphanumeric characters with no spaces. You can
 	// also include underscores or any of the following characters: =,.@:/-
+=======
+	// The regex used to validate this parameter is a string of characters consisting
+	// of upper- and lower-case alphanumeric characters with no spaces. You can
+	// also include underscores or any of the following characters: =,.@-
+>>>>>>> Revendor using dep tool
 	SerialNumber *string `min:"9" type:"string"`
 
 	// The value provided by the MFA device, if MFA is required. If any policy requires

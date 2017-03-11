@@ -16,6 +16,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/client/metadata"
 )
 
+<<<<<<< HEAD
 const (
 	// ErrCodeSerialization is the serialization error code that is received
 	// during protocol unmarshaling.
@@ -33,6 +34,12 @@ const (
 	// return this error when canceled.
 	CanceledErrorCode = "RequestCanceled"
 )
+=======
+// CanceledErrorCode is the error code that will be returned by an
+// API request that was canceled. Requests given a aws.Context may
+// return this error when canceled.
+const CanceledErrorCode = "RequestCanceled"
+>>>>>>> Revendor using dep tool
 
 // A Request is the service request to be made.
 type Request struct {
@@ -59,6 +66,8 @@ type Request struct {
 	SignedHeaderVals       http.Header
 	LastSignedAt           time.Time
 	DisableFollowRedirects bool
+
+	context aws.Context
 
 	context aws.Context
 
@@ -366,6 +375,7 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	// Related golang/go#18257
 	l, err := computeBodyLength(r.Body)
 	if err != nil {
+<<<<<<< HEAD
 		return nil, awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
 	}
 
@@ -374,6 +384,16 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 		body = NoBody
 	} else if l > 0 {
 		body = r.safeBody
+=======
+		r.Error = awserr.New("SerializationError", "failed to compute request body size", err)
+		return
+	}
+
+	if l == 0 {
+		r.HTTPRequest.Body = noBodyReader
+	} else if l > 0 {
+		r.HTTPRequest.Body = r.safeBody
+>>>>>>> Revendor using dep tool
 	} else {
 		// Hack to prevent sending bodies for methods where the body
 		// should be ignored by the server. Sending bodies on these
@@ -385,6 +405,7 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 		// a io.Reader that was not also an io.Seeker.
 		switch r.Operation.HTTPMethod {
 		case "GET", "HEAD", "DELETE":
+<<<<<<< HEAD
 			body = NoBody
 		default:
 			body = r.safeBody
@@ -392,6 +413,13 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	}
 
 	return body, nil
+=======
+			r.HTTPRequest.Body = noBodyReader
+		default:
+			r.HTTPRequest.Body = r.safeBody
+		}
+	}
+>>>>>>> Revendor using dep tool
 }
 
 // Attempts to compute the length of the body of the reader using the
