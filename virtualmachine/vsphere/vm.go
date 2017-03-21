@@ -540,7 +540,6 @@ func (vm *VM) RemoveDisk(vmdkFiles []string) error {
 		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
 	}
 
-	errorMessage = ""
 	for _, vmdkName := range vmdkFiles {
 		// finds the virtualmachine with name vm.Name
 		vmMo, err := findVM(vm, dcMo, vm.Name)
@@ -572,10 +571,10 @@ func (vm *VM) RemoveDisk(vmdkFiles []string) error {
 			errorMessage += fmt.Errorf("%s : Delete disk task returned an error : %s \n", vmdkName, err).Error()
 		}
 	}
-	if errorMessage == "" {
-		return nil
+	if errorMessage != "" {
+		return errors.New(errorMessage)
 	}
-	return errors.New(errorMessage)
+	return nil
 }
 
 // GetIPs returns the IPs of this VM. Returns all the IPs known to the API for
