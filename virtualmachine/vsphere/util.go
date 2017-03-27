@@ -409,12 +409,12 @@ func addNetworkDeviceSpec(nwMor types.ManagedObjectReference, name string) (*typ
 		},
 		Network: &nwMor,
 	}
-	// create ehternet card with the backing info
+	// create ethernet card with the backing info
 	device, err := object.EthernetCardTypes().CreateEthernetCard("e1000", backing)
 	if err != nil {
 		return nil, err
 	}
-	// connect to the newtork when the nic is connected to vm
+	// connect to the network when the nic is connected to vm
 	device.GetVirtualDevice().Connectable = &types.VirtualDeviceConnectInfo{
 		StartConnected:    true,
 		AllowGuestControl: true,
@@ -429,7 +429,7 @@ func addNetworkDeviceSpec(nwMor types.ManagedObjectReference, name string) (*typ
 }
 
 // reconfigureNetworks : reconfigureNetworks configures the vm and attach it to the
-// netowrks in the vm structure
+// networks in the vm structure
 func reconfigureNetworks(vm *VM) ([]types.BaseVirtualDeviceConfigSpec, error) {
 	var deviceSpecs []types.BaseVirtualDeviceConfigSpec
 	dcMo, err := GetDatacenter(vm)
@@ -457,6 +457,25 @@ func reconfigureNetworks(vm *VM) ([]types.BaseVirtualDeviceConfigSpec, error) {
 		deviceSpecs = append(deviceSpecs, spec)
 	}
 	return deviceSpecs, nil
+}
+
+func removeExistingNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirtualDeviceConfigSpec, error) {
+	devices, err := vmObj.Device(vm.ctx)
+	if err != nil {
+		return nil, err
+	}
+	var removeSpecs []types.BaseVirtualDeviceConfigSpec
+	for _, device := range devices {
+		switch device.(type) {
+		case *types.VirtualE1000, *types.VirtualE1000e, *types.VirtualVmxnet3:
+			spec := &types.VirtualDeviceConfigSpec{
+				Operation: types.VirtualDeviceConfigSpecOperationRemove,
+				Device:    device,
+			}
+			removeSpecs = append(removeSpecs, spec)
+		}
+	}
+	return removeSpecs, nil
 }
 
 var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []string) error {
@@ -489,9 +508,11 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 	}
 
 	deviceChangeSpec, err := reconfigureNetworks(vm)
+	removeNetworkSpecs, err := removeExistingNetworks(vm, vmObj)
 	if err != nil {
 		return err
 	}
+	deviceChangeSpec = append(deviceChangeSpec, removeNetworkSpecs...)
 	hotAddMemory := true
 	hotAddCpu := true
 
@@ -822,19 +843,12 @@ var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string)
 	if err != nil {
 		return err
 	}
-
-	networkMapping, err := createNetworkMapping(vm, vm.Networks, l.Networks)
-	if err != nil {
-		return err
-	}
-
 	// Create an import spec
 	cisp := types.OvfCreateImportSpecParams{
 		HostSystem:       &l.Host,
 		EntityName:       template,
 		DiskProvisioning: "thin",
 		PropertyMapping:  nil,
-		NetworkMapping:   networkMapping,
 	}
 
 	ovfManager := object.NewOvfManager(vm.client.Client)
