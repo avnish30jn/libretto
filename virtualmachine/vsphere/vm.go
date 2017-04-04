@@ -995,9 +995,20 @@ func GetDcNetworkList(vm *VM, filter map[string][]string) ([]map[string]string, 
 		dest := Destination{}
 		dest.DestinationName = cluster
 		dest.DestinationType = "cluster"
+		vm.Destination = dest
+		hostsInCluster, err := GetHostList(vm)
+		if err != nil {
+			return nil, err
+		}
+		hostList := make([]string, 0)
+		for _, host := range hostsInCluster {
+			hostList = append(hostList, host["name"])
+		}
 		for _, host := range hosts {
-			dest.HostSystem = host
-			destHostList = append(destHostList, dest)
+			if StringInSlice(host, hostList) {
+				dest.HostSystem = host
+				destHostList = append(destHostList, dest)
+			}
 		}
 	}
 
