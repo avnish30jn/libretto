@@ -889,12 +889,14 @@ func GetDatastoreInHost(vm *VM) ([]map[string]string, error) {
 // GetNetworkInHost : Returns the networks in a host in a cluster
 func GetNetworkInHost(vm *VM) ([]map[string]string, error) {
 	var (
-		networkList []map[string]string
-		networkMap  map[string]string
-		network     mo.Network
-		portGroup   mo.DistributedVirtualPortgroup
-		opNetwork   mo.OpaqueNetwork
-		hsMo        mo.HostSystem
+		networkList    []map[string]string
+		networkMap     map[string]string
+		network        mo.Network
+		portGroup      mo.DistributedVirtualPortgroup
+		opNetwork      mo.OpaqueNetwork
+		hsMo           mo.HostSystem
+		dvSwitch       mo.DistributedVirtualSwitch
+		vmwareDvSwitch mo.VmwareDistributedVirtualSwitch
 	)
 	// set up session to vcenter server
 	if err := SetupSession(vm); err != nil {
@@ -944,6 +946,20 @@ func GetNetworkInHost(vm *VM) ([]map[string]string, error) {
 				return nil, err
 			}
 			networkMap = map[string]string{"name": opNetwork.Name}
+		case "DistributedVirtualSwitch":
+			err = vm.collector.RetrieveOne(vm.ctx, networkMor, []string{"name"}, &dvSwitch)
+			if err != nil {
+				return nil, err
+			}
+			networkMap = map[string]string{"name": dvSwitch.Name}
+		case "VmwareDistributedVirtualSwitch":
+			err = vm.collector.RetrieveOne(vm.ctx, networkMor, []string{"name"}, &vmwareDvSwitch)
+			if err != nil {
+				return nil, err
+			}
+			networkMap = map[string]string{"name": vmwareDvSwitch.Name}
+		default:
+			return nil, fmt.Errorf("Unknown network type : %s", networkMor.Type)
 		}
 		networkList = append(networkList, networkMap)
 	}
@@ -953,42 +969,58 @@ func GetNetworkInHost(vm *VM) ([]map[string]string, error) {
 // GetDcNetworkList : returns a list of network in given datacenter
 // available-filters (map-keys): "hosts", "clusters".
 func GetDcNetworkList(vm *VM, filter map[string][]string) ([]map[string]string, error) {
-	networkMap := map[string]bool{}
-	networks := []map[string]string{}
+	var (
+		networks []map[string]string
+		clusters []string
+		hosts    []string
+	)
+
 	// set up session to vcenter server
 	if err := SetupSession(vm); err != nil {
 		return nil, err
 	}
-	if _, ok := filter["clusters"]; !ok {
+	clusters, ok := filter["clusters"]
+	if !ok {
 		return nil, errors.New("Key 'clusters' is missing")
 	}
 
-	if _, ok := filter["hosts"]; !ok {
+	hosts, ok = filter["hosts"]
+	if !ok {
 		return nil, errors.New("Key 'hosts' is missing")
 	}
 
-	vm.Destination.DestinationType = "cluster"
-	for _, cluster := range filter["clusters"] {
-		vm.Destination.DestinationName = cluster
-		for _, host := range filter["hosts"] {
-			vm.Destination.HostSystem = host
-			networksInHost, err := GetNetworkInHost(vm)
-			switch err.(type) {
-			case ErrorObjectNotFound:
-				continue
-			}
-			if err != nil {
-				return nil, err
-			}
-			for _, network := range networksInHost {
-				networkMap[network["name"]] = true
+	// creating the destination host list
+	destHostList := make([]Destination, 0)
+	for _, cluster := range clusters {
+		dest := Destination{}
+		dest.DestinationName = cluster
+		dest.DestinationType = "cluster"
+		for _, host := range hosts {
+			dest.HostSystem = host
+			destHostList = append(destHostList, dest)
+		}
+	}
+
+	// traverse the host list and find the networks in the host
+	networkMap := make(map[string]map[string]string)
+	for _, dest := range destHostList {
+		vm.Destination = dest
+		networksInHost, err := GetNetworkInHost(vm)
+		switch err.(type) {
+		case ErrorObjectNotFound:
+			continue
+		}
+		if err != nil {
+			return nil, err
+		}
+		for _, network := range networksInHost {
+			if _, ok := networkMap[network["name"]]; !ok {
+				networkMap[network["name"]] = network
 			}
 		}
 	}
-	for k := range networkMap {
-		networks = append(networks, map[string]string{
-			"name": k,
-		})
+	for _, network := range networkMap {
+		networks = append(networks, network)
 	}
 	return networks, nil
 }
