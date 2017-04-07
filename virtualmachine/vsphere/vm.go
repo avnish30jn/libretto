@@ -434,9 +434,11 @@ func (vm *VM) Provision() (err error) {
 
 	usableDatastores := []string{}
 	for _, d := range datastores {
-		template := vm.Template
+		var template string
 		if vm.UseLocalTemplates {
 			template = createTemplateName(vm.Template, d)
+		} else {
+			template = vm.Template
 		}
 		// Does the VM template already exist?
 		e, err := Exists(vm, dcMo, template)

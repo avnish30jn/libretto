@@ -495,9 +495,11 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		return err
 	}
 	dsMor := dsMo.Reference()
-	template := vm.Template
+	var template string
 	if vm.UseLocalTemplates {
 		template = createTemplateName(vm.Template, vm.datastore)
+	} else {
+		template = vm.Template
 	}
 	vmMo, err := findVM(vm, dcMo, template)
 	if err != nil {
@@ -824,9 +826,11 @@ var createTemplateName = func(t string, ds string) string {
 }
 
 var uploadTemplate = func(vm *VM, dcMo *mo.Datacenter, selectedDatastore string) error {
-	template := vm.Template
+	var template string
 	if vm.UseLocalTemplates {
 		template = createTemplateName(vm.Template, selectedDatastore)
+	} else {
+		template = vm.Template
 	}
 	vm.datastore = selectedDatastore
 	downloadOvaPath, err := ioutil.TempDir("", "")
