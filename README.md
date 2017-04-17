@@ -165,7 +165,7 @@ Exoscale
      KeypairName: "mydev",
      Name:        "libretto-exoscale",
      Userdata: `
-#cloud-config
+# cloud-config
 manage_etc_hosts: true
 fqdn: new.host
 `,
