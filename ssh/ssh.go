@@ -139,7 +139,7 @@ func (client *SSHClient) Connect() error {
 
 	client.cryptoClient = c
 
-	client.close = make(chan bool)
+	client.close = make(chan bool, 1)
 
 	if client.Options.KeepAlive > 0 {
 		go client.keepAlive()
