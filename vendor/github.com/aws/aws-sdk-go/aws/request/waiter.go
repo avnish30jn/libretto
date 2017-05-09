@@ -67,12 +67,17 @@ func WithWaiterRequestOptions(opts ...Option) WaiterOption {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // A Waiter provides the functionality to perform a blocking call which will
 // wait for a resource state to be satisfied by a service.
 =======
 // A Waiter provides the functionality to performing blocking call which will
 // wait for an resource state to be satisfied a service.
 >>>>>>> Revendor using dep tool
+=======
+// A Waiter provides the functionality to perform a blocking call which will
+// wait for a resource state to be satisfied by a service.
+>>>>>>> Update all deps
 //
 // This type should not be used directly. The API operations provided in the
 // service packages prefixed with "WaitUntil" should be used instead.
@@ -190,6 +195,7 @@ func (w Waiter) WaitWithContext(ctx aws.Context) error {
 		// See if any of the acceptors match the request's response, or error
 		for _, a := range w.Acceptors {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if matched, matchErr := a.match(w.Name, w.Logger, req, err); matched {
 				return matchErr
 =======
@@ -202,6 +208,10 @@ func (w Waiter) WaitWithContext(ctx aws.Context) error {
 				// Match was found can stop here and return
 				return nil
 >>>>>>> Revendor using dep tool
+=======
+			if matched, matchErr := a.match(w.Name, w.Logger, req, err); matched {
+				return matchErr
+>>>>>>> Update all deps
 			}
 		}
 
@@ -303,10 +313,14 @@ func (a *WaiterAcceptor) match(name string, l aws.Logger, req *Request, err erro
 	case FailureWaiterState:
 		// Waiter failure state triggered
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return true, awserr.New(WaiterResourceNotReadyErrorCode,
 =======
 		return false, awserr.New("ResourceNotReady",
 >>>>>>> Revendor using dep tool
+=======
+		return true, awserr.New(WaiterResourceNotReadyErrorCode,
+>>>>>>> Update all deps
 			"failed waiting for successful resource state", err)
 	case RetryWaiterState:
 		// clear the error and retry the operation

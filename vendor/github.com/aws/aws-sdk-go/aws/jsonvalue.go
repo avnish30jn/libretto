@@ -5,11 +5,16 @@ package aws
 //
 //	Example:
 <<<<<<< HEAD
+<<<<<<< HEAD
 //
 //	values := aws.JSONValue{
 =======
 //	values := JSONValue{
 >>>>>>> Revendor using dep tool
+=======
+//
+//	values := aws.JSONValue{
+>>>>>>> Update all deps
 //		"Foo": "Bar",
 //	}
 //	values["Baz"] = "Qux"

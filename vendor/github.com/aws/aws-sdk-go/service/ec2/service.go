@@ -12,12 +12,16 @@ import (
 )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update all deps
 // EC2 provides the API operation methods for making requests to
 // Amazon Elastic Compute Cloud. See this package's package overview docs
 // for details on the service.
 //
 // EC2 methods are safe to use concurrently. It is not safe to
 // modify mutate any of the struct's properties though.
+<<<<<<< HEAD
 =======
 // Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computing capacity
 // in the Amazon Web Services (AWS) cloud. Using Amazon EC2 eliminates your
@@ -27,6 +31,8 @@ import (
 // It is not safe to mutate any of the client's properties though.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update all deps
 type EC2 struct {
 	*client.Client
 }

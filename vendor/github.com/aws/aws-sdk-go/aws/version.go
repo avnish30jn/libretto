@@ -6,7 +6,11 @@ const SDKName = "aws-sdk-go"
 
 // SDKVersion is the version of this SDK
 <<<<<<< HEAD
+<<<<<<< HEAD
 const SDKVersion = "1.12.19"
 =======
 const SDKVersion = "1.8.7"
 >>>>>>> Revendor using dep tool
+=======
+const SDKVersion = "1.8.21"
+>>>>>>> Update all deps

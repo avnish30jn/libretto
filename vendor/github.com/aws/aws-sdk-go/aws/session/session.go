@@ -226,10 +226,14 @@ type Options struct {
 //     // Force enable Shared Config support
 //     sess := session.Must(session.NewSessionWithOptions(session.Options{
 <<<<<<< HEAD
+<<<<<<< HEAD
 //         SharedConfigState: session.SharedConfigEnable,
 =======
 //         SharedConfigState: SharedConfigEnable,
 >>>>>>> Revendor using dep tool
+=======
+//         SharedConfigState: session.SharedConfigEnable,
+>>>>>>> Update all deps
 //     }))
 func NewSessionWithOptions(opts Options) (*Session, error) {
 	var envCfg envConfig

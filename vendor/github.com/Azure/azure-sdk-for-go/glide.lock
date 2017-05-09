@@ -1,22 +1,23 @@
-hash: 5a5e74f8be7a721d3ea9c2e36d994d2754f15087f89ba8342c4ec9ed4cbedf7b
-updated: 2017-03-01T16:08:43.5505724-08:00
+hash: fc11c273a4bfae9a077f2238a4693fa3af3d815dfc1b1e9ec75d9eb8e6428993
+updated: 2017-05-04T15:24:51.52099-07:00
 imports:
 - name: github.com/Azure/go-autorest
-  version: ec5f4903f77ed9927ac95b19ab8e44ada64c1356
+  version: 58f6f26e200fa5dfb40c9cd1c83f3e2c860d779d
   subpackages:
   - autorest
   - autorest/azure
   - autorest/date
   - autorest/to
   - autorest/validation
+  - autorest/adal
 - name: github.com/dgrijalva/jwt-go
   version: 2268707a8f0843315e2004ee4f1d021dc08baedf
 - name: github.com/howeyc/gopass
   version: bf9dde6d0d2c004a008c27aaee91170c786f6db8
 - name: github.com/mattn/go-colorable
-  version: d898aa9fb31c91f35dd28ca75db377eff023c076
+  version: ded68f7a9561c023e790de24279db7ebf473ea80
 - name: github.com/mattn/go-isatty
-  version: dda3de49cbfcec471bd7a70e6cc01fcc3ff90109
+  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
 - name: github.com/mgutz/ansi
   version: 9520e82c474b0a04dd04f8a40959027271bab992
 - name: github.com/mgutz/minimist
@@ -30,17 +31,17 @@ imports:
 - name: github.com/nozzle/throttler
   version: d9b45f19996c645d38c9266d1f5cf1990e930119
 - name: github.com/satori/uuid
-  version: b061729afc07e77a8aa4fad0a2fd840958f1942a
+  version: 5bf94b69c6b68ee1b541973bb8e1144db23a194b
 - name: github.com/shopspring/decimal
   version: 3526cd0bdb7f64e1178943b7dee81a0cc3d86a69
 - name: golang.org/x/crypto
-  version: 453249f01cfeb54c3d549ddb75ff152ca243f9d8
+  version: 5a033cc77e57eca05bdb50522851d29e03569cbe
   subpackages:
   - pkcs12
   - pkcs12/internal/rc2
   - ssh/terminal
 - name: golang.org/x/sys
-  version: 76cc09b634294339fa19ec41b5f2a0b3932cea8b
+  version: 9ccfe848b9db8435a24c424abbc07a921adf1df5
   subpackages:
   - unix
 - name: gopkg.in/check.v1
@@ -52,4 +53,11 @@ imports:
   - util
   - watcher
   - watcher/fswatch
-testImports: []
+testImports:
+- name: github.com/dnaeon/go-vcr
+  version: 87d4990451a858cc210399285be976e63bc3c364
+  subpackages:
+  - cassette
+  - recorder
+- name: gopkg.in/yaml.v2
+  version: cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b

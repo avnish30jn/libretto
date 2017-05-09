@@ -3119,6 +3119,88 @@ func (c *EC2) CreateFpgaImageWithContext(ctx aws.Context, input *CreateFpgaImage
 >>>>>>> Revendor using dep tool
 }
 
+const opCreateFpgaImage = "CreateFpgaImage"
+
+// CreateFpgaImageRequest generates a "aws/request.Request" representing the
+// client's request for the CreateFpgaImage operation. The "output" return
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See CreateFpgaImage for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the CreateFpgaImage method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+//
+//    // Example sending a request using the CreateFpgaImageRequest method.
+//    req, resp := client.CreateFpgaImageRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateFpgaImage
+func (c *EC2) CreateFpgaImageRequest(input *CreateFpgaImageInput) (req *request.Request, output *CreateFpgaImageOutput) {
+	op := &request.Operation{
+		Name:       opCreateFpgaImage,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateFpgaImageInput{}
+	}
+
+	output = &CreateFpgaImageOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateFpgaImage API operation for Amazon Elastic Compute Cloud.
+//
+// Creates an Amazon FPGA Image (AFI) from the specified design checkpoint (DCP).
+//
+// The create operation is asynchronous. To verify that the AFI is ready for
+// use, check the output logs.
+//
+// An AFI contains the FPGA bitstream that is ready to download to an FPGA.
+// You can securely deploy an AFI on one or more FPGA-accelerated instances.
+// For more information, see the AWS FPGA Hardware Development Kit (https://github.com/aws/aws-fpga/).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation CreateFpgaImage for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateFpgaImage
+func (c *EC2) CreateFpgaImage(input *CreateFpgaImageInput) (*CreateFpgaImageOutput, error) {
+	req, out := c.CreateFpgaImageRequest(input)
+	return out, req.Send()
+}
+
+// CreateFpgaImageWithContext is the same as CreateFpgaImage with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateFpgaImage for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) CreateFpgaImageWithContext(ctx aws.Context, input *CreateFpgaImageInput, opts ...request.Option) (*CreateFpgaImageOutput, error) {
+	req, out := c.CreateFpgaImageRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateImage = "CreateImage"
 
 // CreateImageRequest generates a "aws/request.Request" representing the

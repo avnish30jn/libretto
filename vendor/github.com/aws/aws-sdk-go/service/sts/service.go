@@ -16,6 +16,7 @@ import (
 // for details on the service.
 //
 <<<<<<< HEAD
+<<<<<<< HEAD
 // STS methods are safe to use concurrently. It is not safe to
 // modify mutate any of the struct's properties though.
 =======
@@ -62,6 +63,10 @@ import (
 // It is not safe to mutate any of the client's properties though.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/sts-2011-06-15
 >>>>>>> Revendor using dep tool
+=======
+// STS methods are safe to use concurrently. It is not safe to
+// modify mutate any of the struct's properties though.
+>>>>>>> Update all deps
 type STS struct {
 	*client.Client
 }

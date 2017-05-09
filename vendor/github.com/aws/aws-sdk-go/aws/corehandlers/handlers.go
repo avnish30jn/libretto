@@ -106,6 +106,7 @@ var SendHandler = request.NamedHandler{
 			sender = sendWithoutFollowRedirects
 		}
 
+<<<<<<< HEAD
 		if request.NoBody == r.HTTPRequest.Body {
 			// Strip off the request body if the NoBody reader was used as a
 			// place holder for a request body. This prevents the SDK from
@@ -127,6 +128,13 @@ var SendHandler = request.NamedHandler{
 		if err != nil {
 			handleSendError(r, err)
 		}
+=======
+		var err error
+		r.HTTPResponse, err = sender(r)
+		if err != nil {
+			handleSendError(r, err)
+		}
+>>>>>>> Update all deps
 	},
 }
 
@@ -164,6 +172,7 @@ func handleSendError(r *request.Request, err error) {
 			return
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		// Catch all other request errors.
 		r.Error = awserr.New("RequestError", "send request failed", err)
@@ -177,9 +186,20 @@ func handleSendError(r *request.Request, err error) {
 				"request context canceled", ctx.Err())
 			r.Retryable = aws.Bool(false)
 		default:
+=======
+	}
+	if r.HTTPResponse == nil {
+		// Add a dummy request response object to ensure the HTTPResponse
+		// value is consistent.
+		r.HTTPResponse = &http.Response{
+			StatusCode: int(0),
+			Status:     http.StatusText(int(0)),
+			Body:       ioutil.NopCloser(bytes.NewReader([]byte{})),
+>>>>>>> Update all deps
 		}
 >>>>>>> Revendor using dep tool
 	}
+<<<<<<< HEAD
 	if r.HTTPResponse == nil {
 		// Add a dummy request response object to ensure the HTTPResponse
 		// value is consistent.
@@ -189,6 +209,8 @@ func handleSendError(r *request.Request, err error) {
 			Body:       ioutil.NopCloser(bytes.NewReader([]byte{})),
 		}
 	}
+=======
+>>>>>>> Update all deps
 	// Catch all other request errors.
 	r.Error = awserr.New("RequestError", "send request failed", err)
 	r.Retryable = aws.Bool(true) // network errors are retryable

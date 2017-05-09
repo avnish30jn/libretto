@@ -226,8 +226,8 @@ func (vm *VM) Destroy() error {
 	virtualMachinesClient := compute.NewVirtualMachinesClient(vm.Creds.SubscriptionID)
 	virtualMachinesClient.Authorizer = authorizer
 
-	_, err = virtualMachinesClient.Delete(vm.ResourceGroup, vm.Name, nil)
-	if err != nil {
+	_, errc := virtualMachinesClient.Delete(vm.ResourceGroup, vm.Name, nil)
+	if err := <-errc; err != nil {
 		return err
 	}
 
@@ -304,8 +304,8 @@ func (vm *VM) Halt() error {
 	virtualMachinesClient := compute.NewVirtualMachinesClient(vm.Creds.SubscriptionID)
 	virtualMachinesClient.Authorizer = authorizer
 
-	_, err = virtualMachinesClient.PowerOff(vm.ResourceGroup, vm.Name, nil)
-	if err != nil {
+	_, errc := virtualMachinesClient.PowerOff(vm.ResourceGroup, vm.Name, nil)
+	if err := <-errc; err != nil {
 		return err
 	}
 
@@ -336,8 +336,8 @@ func (vm *VM) Start() error {
 	virtualMachinesClient := compute.NewVirtualMachinesClient(vm.Creds.SubscriptionID)
 	virtualMachinesClient.Authorizer = authorizer
 
-	_, err = virtualMachinesClient.Start(vm.ResourceGroup, vm.Name, nil)
-	if err != nil {
+	_, errc := virtualMachinesClient.Start(vm.ResourceGroup, vm.Name, nil)
+	if err := <-errc; err != nil {
 		return err
 	}
 

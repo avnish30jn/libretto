@@ -17,6 +17,9 @@ import (
 )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update all deps
 const (
 	// ErrCodeSerialization is the serialization error code that is received
 	// during protocol unmarshaling.
@@ -25,7 +28,11 @@ const (
 	// ErrCodeRead is an error that is returned during HTTP reads.
 	ErrCodeRead = "ReadError"
 
+<<<<<<< HEAD
 	// ErrCodeResponseTimeout is the connection timeout error that is received
+=======
+	// ErrCodeResponseTimeout is the connection timeout error that is recieved
+>>>>>>> Update all deps
 	// during body reads.
 	ErrCodeResponseTimeout = "ResponseTimeout"
 
@@ -34,12 +41,15 @@ const (
 	// return this error when canceled.
 	CanceledErrorCode = "RequestCanceled"
 )
+<<<<<<< HEAD
 =======
 // CanceledErrorCode is the error code that will be returned by an
 // API request that was canceled. Requests given a aws.Context may
 // return this error when canceled.
 const CanceledErrorCode = "RequestCanceled"
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update all deps
 
 // A Request is the service request to be made.
 type Request struct {
@@ -66,8 +76,11 @@ type Request struct {
 	SignedHeaderVals       http.Header
 	LastSignedAt           time.Time
 	DisableFollowRedirects bool
+<<<<<<< HEAD
 
 	context aws.Context
+=======
+>>>>>>> Update all deps
 
 	context aws.Context
 
@@ -376,6 +389,7 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	l, err := computeBodyLength(r.Body)
 	if err != nil {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return nil, awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
 	}
 
@@ -386,6 +400,9 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 		body = r.safeBody
 =======
 		r.Error = awserr.New("SerializationError", "failed to compute request body size", err)
+=======
+		r.Error = awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
+>>>>>>> Update all deps
 		return
 	}
 

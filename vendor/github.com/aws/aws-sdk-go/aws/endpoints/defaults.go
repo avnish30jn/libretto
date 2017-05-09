@@ -389,9 +389,13 @@ var awsPartition = partition{
 				"ap-southeast-2": endpoint{},
 				"eu-west-1":      endpoint{},
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"eu-west-2":      endpoint{},
 =======
 >>>>>>> Revendor using dep tool
+=======
+				"eu-west-2":      endpoint{},
+>>>>>>> Update all deps
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-2":      endpoint{},
@@ -595,16 +599,29 @@ var awsPartition = partition{
 				"us-west-2":      endpoint{},
 			},
 		},
+		"codestar": service{
+
+			Endpoints: endpoints{
+				"eu-west-1": endpoint{},
+				"us-east-1": endpoint{},
+				"us-east-2": endpoint{},
+				"us-west-2": endpoint{},
+			},
+		},
 		"cognito-identity": service{
 
 			Endpoints: endpoints{
 				"ap-northeast-1": endpoint{},
 				"ap-northeast-2": endpoint{},
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"ap-south-1":     endpoint{},
 				"ap-southeast-1": endpoint{},
 =======
 >>>>>>> Revendor using dep tool
+=======
+				"ap-south-1":     endpoint{},
+>>>>>>> Update all deps
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
@@ -620,10 +637,14 @@ var awsPartition = partition{
 				"ap-northeast-1": endpoint{},
 				"ap-northeast-2": endpoint{},
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"ap-south-1":     endpoint{},
 				"ap-southeast-1": endpoint{},
 =======
 >>>>>>> Revendor using dep tool
+=======
+				"ap-south-1":     endpoint{},
+>>>>>>> Update all deps
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
@@ -639,10 +660,14 @@ var awsPartition = partition{
 				"ap-northeast-1": endpoint{},
 				"ap-northeast-2": endpoint{},
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"ap-south-1":     endpoint{},
 				"ap-southeast-1": endpoint{},
 =======
 >>>>>>> Revendor using dep tool
+=======
+				"ap-south-1":     endpoint{},
+>>>>>>> Update all deps
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},

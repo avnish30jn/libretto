@@ -163,8 +163,8 @@ func (vm *VM) deploy() error {
 	deploymentsClient := resources.NewDeploymentsClient(vm.Creds.SubscriptionID)
 	deploymentsClient.Authorizer = authorizer
 
-	_, err = deploymentsClient.CreateOrUpdate(vm.ResourceGroup, vm.DeploymentName, *deployment, nil)
-	if err != nil {
+	_, errc := deploymentsClient.CreateOrUpdate(vm.ResourceGroup, vm.DeploymentName, *deployment, nil)
+	if err := <-errc; err != nil {
 		return err
 	}
 
@@ -264,8 +264,8 @@ func (vm *VM) deleteNic(authorizer *azure.ServicePrincipalToken) error {
 	interfaceClient := network.NewInterfacesClient(vm.Creds.SubscriptionID)
 	interfaceClient.Authorizer = authorizer
 
-	_, err := interfaceClient.Delete(vm.ResourceGroup, vm.Nic, nil)
-	return err
+	_, errc := interfaceClient.Delete(vm.ResourceGroup, vm.Nic, nil)
+	return <-errc
 }
 
 // deletePublicIP deletes the reserved Public IP of the given VM from the VM's resource group, returns an error
@@ -275,8 +275,8 @@ func (vm *VM) deletePublicIP(authorizer *azure.ServicePrincipalToken) error {
 	publicIPAddressesClient := network.NewPublicIPAddressesClient(vm.Creds.SubscriptionID)
 	publicIPAddressesClient.Authorizer = authorizer
 
-	_, err := publicIPAddressesClient.Delete(vm.ResourceGroup, vm.PublicIP, nil)
-	return err
+	_, errc := publicIPAddressesClient.Delete(vm.ResourceGroup, vm.PublicIP, nil)
+	return <-errc
 }
 
 // deleteDeployment deletes the deployed azure arm template for this vm.
@@ -286,8 +286,8 @@ func (vm *VM) deleteDeployment(authorizer *azure.ServicePrincipalToken) error {
 	deploymentsClient.Authorizer = authorizer
 
 	// Delete the deployment
-	_, err := deploymentsClient.Delete(vm.ResourceGroup, vm.DeploymentName, nil)
-	return err
+	_, errc := deploymentsClient.Delete(vm.ResourceGroup, vm.DeploymentName, nil)
+	return <-errc
 }
 
 func createDeployment(template string, params armParameters) (*resources.Deployment, error) {

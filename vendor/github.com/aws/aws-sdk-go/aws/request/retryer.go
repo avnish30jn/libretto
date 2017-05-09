@@ -29,9 +29,13 @@ var retryableCodes = map[string]struct{}{
 	"RequestError":            {},
 	"RequestTimeout":          {},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ErrCodeResponseTimeout:    {},
 =======
 >>>>>>> Revendor using dep tool
+=======
+	ErrCodeResponseTimeout:    {},
+>>>>>>> Update all deps
 	"RequestTimeoutException": {}, // Glacier's flavor of RequestTimeout
 }
 
@@ -73,12 +77,17 @@ func isCodeExpiredCreds(code string) bool {
 }
 
 var validParentCodes = map[string]struct{}{
+<<<<<<< HEAD
 	ErrCodeSerialization: {},
 	ErrCodeRead:          {},
 }
 
 type temporaryError interface {
 	Temporary() bool
+=======
+	ErrCodeSerialization: struct{}{},
+	ErrCodeRead:          struct{}{},
+>>>>>>> Update all deps
 }
 
 func isNestedErrorRetryable(parentErr awserr.Error) bool {
@@ -99,10 +108,13 @@ func isNestedErrorRetryable(parentErr awserr.Error) bool {
 		return isCodeRetryable(aerr.Code())
 	}
 
+<<<<<<< HEAD
 	if t, ok := err.(temporaryError); ok {
 		return t.Temporary()
 	}
 
+=======
+>>>>>>> Update all deps
 	return isErrConnectionReset(err)
 }
 
