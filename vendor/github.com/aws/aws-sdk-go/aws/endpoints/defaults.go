@@ -773,10 +773,15 @@ var awsPartition = partition{
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
 				"eu-west-2":      endpoint{},
+<<<<<<< HEAD
 				"sa-east-1":      endpoint{},
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-1":      endpoint{},
+=======
+				"us-east-1":      endpoint{},
+				"us-east-2":      endpoint{},
+>>>>>>> Update all deps
 				"us-west-2":      endpoint{},
 			},
 		},
@@ -1250,6 +1255,7 @@ var awsPartition = partition{
 		"lightsail": service{
 
 			Endpoints: endpoints{
+<<<<<<< HEAD
 				"ap-northeast-1": endpoint{},
 				"ap-south-1":     endpoint{},
 				"ap-southeast-1": endpoint{},
@@ -1260,6 +1266,14 @@ var awsPartition = partition{
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-2":      endpoint{},
+=======
+				"eu-central-1": endpoint{},
+				"eu-west-1":    endpoint{},
+				"eu-west-2":    endpoint{},
+				"us-east-1":    endpoint{},
+				"us-east-2":    endpoint{},
+				"us-west-2":    endpoint{},
+>>>>>>> Update all deps
 			},
 		},
 		"logs": service{

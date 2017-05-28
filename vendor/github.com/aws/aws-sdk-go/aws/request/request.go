@@ -390,6 +390,7 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	if err != nil {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return nil, awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
 	}
 
@@ -404,13 +405,21 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 		r.Error = awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
 >>>>>>> Update all deps
 		return
+=======
+		return nil, awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
+>>>>>>> Update all deps
 	}
 
+	var body io.ReadCloser
 	if l == 0 {
-		r.HTTPRequest.Body = noBodyReader
+		body = NoBody
 	} else if l > 0 {
+<<<<<<< HEAD
 		r.HTTPRequest.Body = r.safeBody
 >>>>>>> Revendor using dep tool
+=======
+		body = r.safeBody
+>>>>>>> Update all deps
 	} else {
 		// Hack to prevent sending bodies for methods where the body
 		// should be ignored by the server. Sending bodies on these
@@ -423,6 +432,7 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 		switch r.Operation.HTTPMethod {
 		case "GET", "HEAD", "DELETE":
 <<<<<<< HEAD
+<<<<<<< HEAD
 			body = NoBody
 		default:
 			body = r.safeBody
@@ -432,11 +442,19 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	return body, nil
 =======
 			r.HTTPRequest.Body = noBodyReader
+=======
+			body = NoBody
+>>>>>>> Update all deps
 		default:
-			r.HTTPRequest.Body = r.safeBody
+			body = r.safeBody
 		}
 	}
+<<<<<<< HEAD
 >>>>>>> Revendor using dep tool
+=======
+
+	return body, nil
+>>>>>>> Update all deps
 }
 
 // Attempts to compute the length of the body of the reader using the

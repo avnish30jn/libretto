@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/client/metadata"
 	"github.com/aws/aws-sdk-go/aws/request"
 )
@@ -91,6 +90,7 @@ func (c *Client) AddDebugHandlers() {
 <<<<<<< HEAD
 =======
 }
+<<<<<<< HEAD
 
 const logReqMsg = `DEBUG: Request %s/%s Details:
 ---[ REQUEST POST-SIGN ]-----------------------------
@@ -149,3 +149,5 @@ func logResponse(r *request.Request) {
 	r.Config.Logger.Log(fmt.Sprintf(logRespMsg, r.ClientInfo.ServiceName, r.Operation.Name, msg))
 >>>>>>> Update all deps
 }
+=======
+>>>>>>> Update all deps

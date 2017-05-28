@@ -156,12 +156,18 @@ type Options struct {
 	SharedConfigState SharedConfigState
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update all deps
 	// Ordered list of files the session will load configuration from.
 	// It will override environment variable AWS_SHARED_CREDENTIALS_FILE, AWS_CONFIG_FILE.
 	SharedConfigFiles []string
 
+<<<<<<< HEAD
 =======
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update all deps
 	// When the SDK's shared config is configured to assume a role with MFA
 	// this option is required in order to provide the mechanism that will
 	// retrieve the MFA token. There is no default value for this field. If

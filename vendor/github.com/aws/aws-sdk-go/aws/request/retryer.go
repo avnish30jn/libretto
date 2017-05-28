@@ -90,6 +90,10 @@ type temporaryError interface {
 >>>>>>> Update all deps
 }
 
+type temporaryError interface {
+	Temporary() bool
+}
+
 func isNestedErrorRetryable(parentErr awserr.Error) bool {
 	if parentErr == nil {
 		return false
@@ -109,10 +113,16 @@ func isNestedErrorRetryable(parentErr awserr.Error) bool {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update all deps
 	if t, ok := err.(temporaryError); ok {
 		return t.Temporary()
 	}
 
+<<<<<<< HEAD
+=======
+>>>>>>> Update all deps
 =======
 >>>>>>> Update all deps
 	return isErrConnectionReset(err)

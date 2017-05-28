@@ -107,6 +107,9 @@ var SendHandler = request.NamedHandler{
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update all deps
 		if request.NoBody == r.HTTPRequest.Body {
 			// Strip off the request body if the NoBody reader was used as a
 			// place holder for a request body. This prevents the SDK from
@@ -123,12 +126,15 @@ var SendHandler = request.NamedHandler{
 			}()
 		}
 
+<<<<<<< HEAD
 		var err error
 		r.HTTPResponse, err = sender(r)
 		if err != nil {
 			handleSendError(r, err)
 		}
 =======
+=======
+>>>>>>> Update all deps
 		var err error
 		r.HTTPResponse, err = sender(r)
 		if err != nil {

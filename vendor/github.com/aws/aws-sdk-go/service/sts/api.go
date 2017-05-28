@@ -1100,10 +1100,14 @@ type AssumeRoleInput struct {
 	// The regex used to validated this parameter is a string of characters consisting
 	// of upper- and lower-case alphanumeric characters with no spaces. You can
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// also include underscores or any of the following characters: =,.@:/-
 =======
 	// also include underscores or any of the following characters: =,.@:\/-
 >>>>>>> Revendor using dep tool
+=======
+	// also include underscores or any of the following characters: =,.@:/-
+>>>>>>> Update all deps
 	ExternalId *string `min:"2" type:"string"`
 
 	// An IAM policy in JSON format.
@@ -2288,6 +2292,7 @@ type GetSessionTokenInput struct {
 	// and viewing the user's security credentials.
 	//
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// The regex used to validated this parameter is a string of characters consisting
 	// of upper- and lower-case alphanumeric characters with no spaces. You can
 	// also include underscores or any of the following characters: =,.@:/-
@@ -2296,6 +2301,11 @@ type GetSessionTokenInput struct {
 	// of upper- and lower-case alphanumeric characters with no spaces. You can
 	// also include underscores or any of the following characters: =,.@-
 >>>>>>> Revendor using dep tool
+=======
+	// The regex used to validated this parameter is a string of characters consisting
+	// of upper- and lower-case alphanumeric characters with no spaces. You can
+	// also include underscores or any of the following characters: =,.@:/-
+>>>>>>> Update all deps
 	SerialNumber *string `min:"9" type:"string"`
 
 	// The value provided by the MFA device, if MFA is required. If any policy requires
