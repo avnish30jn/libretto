@@ -567,7 +567,10 @@ func (vm *VM) Provision() (err error) {
 	}
 
 	// Cancel the sdk context
-	defer vm.cancel()
+	defer func() {
+		vm.client.Logout(vm.ctx)
+		vm.cancel()
+	}()
 
 	// Get a reference to the datacenter with host and vm folders populated
 	dcMo, err := GetDatacenter(vm)
@@ -778,7 +781,10 @@ func (vm *VM) GetIPsAndId() ([]net.IP, string, error) {
 	if err := SetupSession(vm); err != nil {
 		return nil, "", err
 	}
-	defer vm.cancel()
+	defer func() {
+		vm.client.Logout(vm.ctx)
+		vm.cancel()
+	}()
 
 	// Get a reference to the datacenter with host and vm folders populated
 	dcMo, err := GetDatacenter(vm)
@@ -805,7 +811,10 @@ func (vm *VM) Destroy() (err error) {
 	if err := SetupSession(vm); err != nil {
 		return err
 	}
-	defer vm.cancel()
+	defer func() {
+		vm.client.Logout(vm.ctx)
+		vm.cancel()
+	}()
 
 	// Get a reference to the datacenter with host and vm folders populated
 	dcMo, err := GetDatacenter(vm)
@@ -985,8 +994,10 @@ func (vm *VM) GetState() (state string, err error) {
 	if err := SetupSession(vm); err != nil {
 		return "", lvm.ErrVMInfoFailed
 	}
-	defer vm.cancel()
-
+	defer func() {
+		vm.client.Logout(vm.ctx)
+		vm.cancel()
+	}()
 	state, err = getState(vm)
 	if err != nil {
 		return "", err
@@ -1008,7 +1019,11 @@ func (vm *VM) Suspend() (err error) {
 	if err := SetupSession(vm); err != nil {
 		return err
 	}
-	defer vm.cancel()
+
+	defer func() {
+		vm.client.Logout(vm.ctx)
+		vm.cancel()
+	}()
 
 	// Get a reference to the datacenter with host and vm folders populated
 	dcMo, err := GetDatacenter(vm)
@@ -1039,7 +1054,11 @@ func (vm *VM) Halt() (err error) {
 	if err := SetupSession(vm); err != nil {
 		return err
 	}
-	defer vm.cancel()
+	defer func() {
+		vm.client.Logout(vm.ctx)
+		vm.cancel()
+	}()
+
 	return halt(vm)
 }
 
@@ -1066,7 +1085,11 @@ func (vm *VM) Start() (err error) {
 	if err := SetupSession(vm); err != nil {
 		return err
 	}
-	defer vm.cancel()
+	defer func() {
+		vm.client.Logout(vm.ctx)
+		vm.cancel()
+	}()
+
 	return start(vm)
 }
 
