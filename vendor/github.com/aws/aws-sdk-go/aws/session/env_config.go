@@ -179,8 +179,11 @@ func envConfigLoad(enableSharedConfig bool) envConfig {
 
 	setFromEnvVal(&cfg.SharedCredentialsFile, sharedCredsFileEnvKey)
 	setFromEnvVal(&cfg.SharedConfigFile, sharedConfigFileEnvKey)
+<<<<<<< HEAD
 
 	cfg.CustomCABundle = os.Getenv("AWS_CA_BUNDLE")
+=======
+>>>>>>> Dep updates for June 26, 2017
 
 	cfg.CustomCABundle = os.Getenv("AWS_CA_BUNDLE")
 

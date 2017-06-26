@@ -46,10 +46,14 @@
 // through 1.7.4 you should use the URL.RawPath as the pre-escaped form of the
 // request URL. https://github.com/golang/go/issues/16847 points to a bug in
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Go pre 1.8 that fails to make HTTP2 requests using absolute URL in the HTTP
 =======
 // Go pre 1.8 that failes to make HTTP2 requests using absolute URL in the HTTP
 >>>>>>> Revendor using dep tool
+=======
+// Go pre 1.8 that fails to make HTTP2 requests using absolute URL in the HTTP
+>>>>>>> Dep updates for June 26, 2017
 // message. URL.Opaque generally will force Go to make requests with absolute URL.
 // URL.RawPath does not do this, but RawPath must be a valid escaping of Path
 // or url.EscapedPath will ignore the RawPath escaping.

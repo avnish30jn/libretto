@@ -23,14 +23,12 @@ matrix:
 install: true
 
 before_script:
-  - go get -v honnef.co/go/tools/cmd/{gosimple,staticcheck,unused}
+  - go get honnef.co/go/tools/cmd/megacheck
   - PKGS=$(go list ./... | grep -v /vendor/)
   - GO_FILES=$(find . -iname '*.go' | grep -v /vendor/)
 
 script:
   - test -z $(gofmt -s -l $GO_FILES)
   - go vet $PKGS
-  - staticcheck $PKGS
+  - megacheck $PKGS
   - go test -v -race $PKGS
-  - gosimple $PKGS
-  - unused $PKGS

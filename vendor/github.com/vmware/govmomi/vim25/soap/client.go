@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2014-2015 VMware, Inc. All Rights Reserved.
+Copyright (c) 2014-2017 VMware, Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -58,6 +58,10 @@ const (
 	DefaultMinVimVersion = "5.5"
 )
 
+type header struct {
+	Cookie string `xml:"vcSessionCookie,omitempty"`
+}
+
 type Client struct {
 	http.Client
 
@@ -73,6 +77,8 @@ type Client struct {
 	Namespace string // Vim namespace
 	Version   string // Vim version
 	UserAgent string
+
+	header *header
 }
 
 var schemeMatch = regexp.MustCompile(`^\w+://`)
@@ -145,6 +151,32 @@ func NewClient(u *url.URL, insecure bool) *Client {
 	c.Version = DefaultVimVersion
 
 	return &c
+}
+
+// NewServiceClient creates a NewClient with the given URL.Path and namespace.
+func (c *Client) NewServiceClient(path string, namespace string) *Client {
+	u := c.URL()
+	u.Path = path
+
+	client := NewClient(u, c.k)
+
+	client.Namespace = namespace
+
+	// Copy the cookies
+	client.Client.Jar.SetCookies(u, c.Client.Jar.Cookies(u))
+
+	// Set SOAP Header cookie
+	for _, cookie := range client.Jar.Cookies(u) {
+		if cookie.Name == "vmware_soap_session" {
+			client.header = &header{
+				Cookie: cookie.Value,
+			}
+
+			break
+		}
+	}
+
+	return client
 }
 
 // SetRootCAs defines the set of root certificate authorities
@@ -401,6 +433,8 @@ func (c *Client) RoundTrip(ctx context.Context, reqBody, resBody HasFault) error
 	reqEnv := Envelope{Body: reqBody}
 	resEnv := Envelope{Body: resBody}
 
+	reqEnv.Header = c.header
+
 	// Create debugging context for this round trip
 	d := c.d.newRoundTrip()
 	if d.enabled() {
@@ -604,6 +638,36 @@ func (c *Client) DownloadRequest(u *url.URL, param *Download) (*http.Response, e
 	return c.Client.Do(req)
 }
 
+// directoryReader wraps an io.ReadCloser to support streaming download
+// of a guest directory, stops reading once it sees the stream trailer.
+// This is only useful when guest tools is the Go toolbox.
+// The trailer is required since TransferFromGuest requires a Content-Length,
+// which toolbox doesn't know ahead of time as the gzip'd tarball never touches the disk.
+// We opted to wrap this here for now rather than guest.FileManager so
+// DownloadFile can be also be used as-is to handle this use case.
+type directoryReader struct {
+	io.ReadCloser
+}
+
+var (
+	gzipHeader    = []byte{0x1f, 0x8b, 0x08} // rfc1952 {ID1, ID2, CM}
+	gzipHeaderLen = len(gzipHeader)
+)
+
+func (r *directoryReader) Read(buf []byte) (int, error) {
+	nr, err := r.ReadCloser.Read(buf)
+
+	// Stop reading if the last N bytes are the gzipTrailer
+	if nr >= gzipHeaderLen {
+		if bytes.Equal(buf[nr-gzipHeaderLen:nr], gzipHeader) {
+			nr -= gzipHeaderLen
+			err = io.EOF
+		}
+	}
+
+	return nr, err
+}
+
 // Download GETs the remote file from the given URL
 func (c *Client) Download(u *url.URL, param *Download) (io.ReadCloser, int64, error) {
 	res, err := c.DownloadRequest(u, param)
@@ -621,7 +685,13 @@ func (c *Client) Download(u *url.URL, param *Download) (io.ReadCloser, int64, er
 		return nil, 0, err
 	}
 
-	return res.Body, res.ContentLength, nil
+	r := res.Body
+
+	if strings.HasSuffix(u.Path, "/") {
+		r = &directoryReader{ReadCloser: r}
+	}
+
+	return r, res.ContentLength, nil
 }
 
 // DownloadFile GETs the given URL to a local file

@@ -8641,6 +8641,83 @@ func (c *EC2) DescribeFpgaImagesWithContext(ctx aws.Context, input *DescribeFpga
 >>>>>>> Revendor using dep tool
 }
 
+const opDescribeFpgaImages = "DescribeFpgaImages"
+
+// DescribeFpgaImagesRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeFpgaImages operation. The "output" return
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See DescribeFpgaImages for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the DescribeFpgaImages method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+//
+//    // Example sending a request using the DescribeFpgaImagesRequest method.
+//    req, resp := client.DescribeFpgaImagesRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFpgaImages
+func (c *EC2) DescribeFpgaImagesRequest(input *DescribeFpgaImagesInput) (req *request.Request, output *DescribeFpgaImagesOutput) {
+	op := &request.Operation{
+		Name:       opDescribeFpgaImages,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeFpgaImagesInput{}
+	}
+
+	output = &DescribeFpgaImagesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeFpgaImages API operation for Amazon Elastic Compute Cloud.
+//
+// Describes one or more available Amazon FPGA Images (AFIs). These include
+// public AFIs, private AFIs that you own, and AFIs owned by other AWS accounts
+// for which you have load permissions.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation DescribeFpgaImages for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFpgaImages
+func (c *EC2) DescribeFpgaImages(input *DescribeFpgaImagesInput) (*DescribeFpgaImagesOutput, error) {
+	req, out := c.DescribeFpgaImagesRequest(input)
+	return out, req.Send()
+}
+
+// DescribeFpgaImagesWithContext is the same as DescribeFpgaImages with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeFpgaImages for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeFpgaImagesWithContext(ctx aws.Context, input *DescribeFpgaImagesInput, opts ...request.Option) (*DescribeFpgaImagesOutput, error) {
+	req, out := c.DescribeFpgaImagesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDescribeHostReservationOfferings = "DescribeHostReservationOfferings"
 
 // DescribeHostReservationOfferingsRequest generates a "aws/request.Request" representing the
@@ -31056,6 +31133,7 @@ func (s *DescribeFlowLogsOutput) SetNextToken(v string) *DescribeFlowLogsOutput 
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFpgaImageAttributeRequest
 type DescribeFpgaImageAttributeInput struct {
 	_ struct{} `type:"structure"`
@@ -31145,6 +31223,8 @@ func (s *DescribeFpgaImageAttributeOutput) SetFpgaImageAttribute(v *FpgaImageAtt
 	return s
 }
 
+=======
+>>>>>>> Dep updates for June 26, 2017
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeFpgaImagesRequest
 type DescribeFpgaImagesInput struct {
 	_ struct{} `type:"structure"`
@@ -31303,8 +31383,11 @@ func (s *DescribeFpgaImagesOutput) SetNextToken(v string) *DescribeFpgaImagesOut
 	return s
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Dep updates for June 26, 2017
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeHostReservationOfferingsRequest
 type DescribeHostReservationOfferingsInput struct {
 	_ struct{} `type:"structure"`
@@ -40765,9 +40848,12 @@ type FpgaImage struct {
 	// The product codes for the AFI.
 	ProductCodes []*ProductCode `locationName:"productCodes" locationNameList:"item" type:"list"`
 
+<<<<<<< HEAD
 	// Indicates whether the AFI is public.
 	Public *bool `locationName:"public" type:"boolean"`
 
+=======
+>>>>>>> Dep updates for June 26, 2017
 	// The version of the AWS Shell that was used to create the bitstream.
 	ShellVersion *string `locationName:"shellVersion" type:"string"`
 
@@ -40845,12 +40931,15 @@ func (s *FpgaImage) SetProductCodes(v []*ProductCode) *FpgaImage {
 	return s
 }
 
+<<<<<<< HEAD
 // SetPublic sets the Public field's value.
 func (s *FpgaImage) SetPublic(v bool) *FpgaImage {
 	s.Public = &v
 	return s
 }
 
+=======
+>>>>>>> Dep updates for June 26, 2017
 // SetShellVersion sets the ShellVersion field's value.
 func (s *FpgaImage) SetShellVersion(v string) *FpgaImage {
 	s.ShellVersion = &v
@@ -40875,6 +40964,7 @@ func (s *FpgaImage) SetUpdateTime(v time.Time) *FpgaImage {
 	return s
 }
 
+<<<<<<< HEAD
 // Describes an Amazon FPGA image (AFI) attribute.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/FpgaImageAttribute
 type FpgaImageAttribute struct {
@@ -40936,6 +41026,8 @@ func (s *FpgaImageAttribute) SetProductCodes(v []*ProductCode) *FpgaImageAttribu
 	return s
 }
 
+=======
+>>>>>>> Dep updates for June 26, 2017
 // Describes the state of the bitstream generation process for an Amazon FPGA
 // image (AFI).
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/FpgaImageState
@@ -60725,6 +60817,7 @@ const (
 )
 
 const (
+<<<<<<< HEAD
 	// FpgaImageAttributeNameDescription is a FpgaImageAttributeName enum value
 	FpgaImageAttributeNameDescription = "description"
 
@@ -60739,6 +60832,8 @@ const (
 )
 
 const (
+=======
+>>>>>>> Dep updates for June 26, 2017
 	// FpgaImageStateCodePending is a FpgaImageStateCode enum value
 	FpgaImageStateCodePending = "pending"
 

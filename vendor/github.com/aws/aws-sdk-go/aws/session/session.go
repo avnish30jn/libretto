@@ -261,6 +261,9 @@ func NewSessionWithOptions(opts Options) (*Session, error) {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Dep updates for June 26, 2017
 	if len(envCfg.SharedCredentialsFile) == 0 {
 		envCfg.SharedCredentialsFile = defaults.SharedCredentialsFilename()
 	}
@@ -268,8 +271,11 @@ func NewSessionWithOptions(opts Options) (*Session, error) {
 		envCfg.SharedConfigFile = defaults.SharedConfigFilename()
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Dep updates for June 26, 2017
 	// Only use AWS_CA_BUNDLE if session option is not provided.
 	if len(envCfg.CustomCABundle) != 0 && opts.CustomCABundle == nil {
 		f, err := os.Open(envCfg.CustomCABundle)
