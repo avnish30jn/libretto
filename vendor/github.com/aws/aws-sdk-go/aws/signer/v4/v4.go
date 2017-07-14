@@ -736,6 +736,7 @@ func stripExcessSpaces(vals []string) {
 		for j = len(str) - 1; j >= 0 && str[j] == ' '; j-- {
 		}
 
+<<<<<<< HEAD
 		// Trim leading spaces
 		for k = 0; k < j && str[k] == ' '; k++ {
 		}
@@ -755,6 +756,30 @@ func stripExcessSpaces(vals []string) {
 					// First space.
 					buf[m] = buf[k]
 					m++
+=======
+		idx := strings.Index(trimmed, doubleSpaces)
+		if idx < 0 {
+			vals[i] = trimmed
+			continue
+		}
+
+		buf := []byte(trimmed)
+		for idx > -1 {
+			stripToIdx := -1
+			for j := idx + 1; j < len(buf); j++ {
+				if buf[j] != ' ' {
+					buf = append(buf[:idx+1], buf[j:]...)
+					stripToIdx = j - idx - 1
+					break
+				}
+			}
+
+			if stripToIdx >= 0 {
+				// Find next double space
+				idx = bytes.Index(buf[stripToIdx:], doubleSpaceBytes)
+				if idx >= 0 {
+					idx += stripToIdx
+>>>>>>> Update deps for July 14th.
 				}
 				spaces++
 			} else {
@@ -765,6 +790,10 @@ func stripExcessSpaces(vals []string) {
 			}
 		}
 
+<<<<<<< HEAD
 		vals[i] = string(buf[:m])
+=======
+		vals[i] = string(buf)
+>>>>>>> Update deps for July 14th.
 	}
 }

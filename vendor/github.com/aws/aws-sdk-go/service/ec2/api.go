@@ -3934,6 +3934,85 @@ func (c *EC2) CreateNetworkInterfacePermissionWithContext(ctx aws.Context, input
 >>>>>>> Revendor using dep tool
 }
 
+const opCreateNetworkInterfacePermission = "CreateNetworkInterfacePermission"
+
+// CreateNetworkInterfacePermissionRequest generates a "aws/request.Request" representing the
+// client's request for the CreateNetworkInterfacePermission operation. The "output" return
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See CreateNetworkInterfacePermission for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the CreateNetworkInterfacePermission method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+//
+//    // Example sending a request using the CreateNetworkInterfacePermissionRequest method.
+//    req, resp := client.CreateNetworkInterfacePermissionRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkInterfacePermission
+func (c *EC2) CreateNetworkInterfacePermissionRequest(input *CreateNetworkInterfacePermissionInput) (req *request.Request, output *CreateNetworkInterfacePermissionOutput) {
+	op := &request.Operation{
+		Name:       opCreateNetworkInterfacePermission,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateNetworkInterfacePermissionInput{}
+	}
+
+	output = &CreateNetworkInterfacePermissionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateNetworkInterfacePermission API operation for Amazon Elastic Compute Cloud.
+//
+// Grants an AWS authorized partner account permission to attach the specified
+// network interface to an instance in their account.
+//
+// You can grant permission to a single AWS account only, and only one account
+// at a time.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation CreateNetworkInterfacePermission for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkInterfacePermission
+func (c *EC2) CreateNetworkInterfacePermission(input *CreateNetworkInterfacePermissionInput) (*CreateNetworkInterfacePermissionOutput, error) {
+	req, out := c.CreateNetworkInterfacePermissionRequest(input)
+	return out, req.Send()
+}
+
+// CreateNetworkInterfacePermissionWithContext is the same as CreateNetworkInterfacePermission with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateNetworkInterfacePermission for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) CreateNetworkInterfacePermissionWithContext(ctx aws.Context, input *CreateNetworkInterfacePermissionInput, opts ...request.Option) (*CreateNetworkInterfacePermissionOutput, error) {
+	req, out := c.CreateNetworkInterfacePermissionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreatePlacementGroup = "CreatePlacementGroup"
 
 // CreatePlacementGroupRequest generates a "aws/request.Request" representing the
@@ -6267,6 +6346,84 @@ func (c *EC2) DeleteNetworkInterfacePermissionWithContext(ctx aws.Context, input
 	return out, req.Send()
 =======
 >>>>>>> Revendor using dep tool
+}
+
+const opDeleteNetworkInterfacePermission = "DeleteNetworkInterfacePermission"
+
+// DeleteNetworkInterfacePermissionRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteNetworkInterfacePermission operation. The "output" return
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See DeleteNetworkInterfacePermission for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the DeleteNetworkInterfacePermission method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+//
+//    // Example sending a request using the DeleteNetworkInterfacePermissionRequest method.
+//    req, resp := client.DeleteNetworkInterfacePermissionRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkInterfacePermission
+func (c *EC2) DeleteNetworkInterfacePermissionRequest(input *DeleteNetworkInterfacePermissionInput) (req *request.Request, output *DeleteNetworkInterfacePermissionOutput) {
+	op := &request.Operation{
+		Name:       opDeleteNetworkInterfacePermission,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteNetworkInterfacePermissionInput{}
+	}
+
+	output = &DeleteNetworkInterfacePermissionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteNetworkInterfacePermission API operation for Amazon Elastic Compute Cloud.
+//
+// Deletes a permission for a network interface. By default, you cannot delete
+// the permission if the account for which you're removing the permission has
+// attached the network interface to an instance. However, you can force delete
+// the permission, regardless of any attachment.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation DeleteNetworkInterfacePermission for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkInterfacePermission
+func (c *EC2) DeleteNetworkInterfacePermission(input *DeleteNetworkInterfacePermissionInput) (*DeleteNetworkInterfacePermissionOutput, error) {
+	req, out := c.DeleteNetworkInterfacePermissionRequest(input)
+	return out, req.Send()
+}
+
+// DeleteNetworkInterfacePermissionWithContext is the same as DeleteNetworkInterfacePermission with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteNetworkInterfacePermission for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DeleteNetworkInterfacePermissionWithContext(ctx aws.Context, input *DeleteNetworkInterfacePermissionInput, opts ...request.Option) (*DeleteNetworkInterfacePermissionOutput, error) {
+	req, out := c.DeleteNetworkInterfacePermissionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
 }
 
 const opDeletePlacementGroup = "DeletePlacementGroup"
@@ -10477,6 +10634,81 @@ func (c *EC2) DescribeNetworkInterfacePermissionsWithContext(ctx aws.Context, in
 	return out, req.Send()
 =======
 >>>>>>> Revendor using dep tool
+}
+
+const opDescribeNetworkInterfacePermissions = "DescribeNetworkInterfacePermissions"
+
+// DescribeNetworkInterfacePermissionsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeNetworkInterfacePermissions operation. The "output" return
+// value can be used to capture response data after the request's "Send" method
+// is called.
+//
+// See DescribeNetworkInterfacePermissions for usage and error information.
+//
+// Creating a request object using this method should be used when you want to inject
+// custom logic into the request's lifecycle using a custom handler, or if you want to
+// access properties on the request object before or after sending the request. If
+// you just want the service response, call the DescribeNetworkInterfacePermissions method directly
+// instead.
+//
+// Note: You must call the "Send" method on the returned request object in order
+// to execute the request.
+//
+//    // Example sending a request using the DescribeNetworkInterfacePermissionsRequest method.
+//    req, resp := client.DescribeNetworkInterfacePermissionsRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkInterfacePermissions
+func (c *EC2) DescribeNetworkInterfacePermissionsRequest(input *DescribeNetworkInterfacePermissionsInput) (req *request.Request, output *DescribeNetworkInterfacePermissionsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeNetworkInterfacePermissions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeNetworkInterfacePermissionsInput{}
+	}
+
+	output = &DescribeNetworkInterfacePermissionsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeNetworkInterfacePermissions API operation for Amazon Elastic Compute Cloud.
+//
+// Describes the permissions for your network interfaces.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation DescribeNetworkInterfacePermissions for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkInterfacePermissions
+func (c *EC2) DescribeNetworkInterfacePermissions(input *DescribeNetworkInterfacePermissionsInput) (*DescribeNetworkInterfacePermissionsOutput, error) {
+	req, out := c.DescribeNetworkInterfacePermissionsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeNetworkInterfacePermissionsWithContext is the same as DescribeNetworkInterfacePermissions with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeNetworkInterfacePermissions for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeNetworkInterfacePermissionsWithContext(ctx aws.Context, input *DescribeNetworkInterfacePermissionsInput, opts ...request.Option) (*DescribeNetworkInterfacePermissionsOutput, error) {
+	req, out := c.DescribeNetworkInterfacePermissionsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
 }
 
 const opDescribeNetworkInterfaces = "DescribeNetworkInterfaces"
@@ -26200,7 +26432,10 @@ func (s *CreateNetworkInterfaceOutput) SetNetworkInterface(v *NetworkInterface) 
 	return s
 }
 
+<<<<<<< HEAD
 // Contains the parameters for CreateNetworkInterfacePermission.
+=======
+>>>>>>> Update deps for July 14th.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkInterfacePermissionRequest
 type CreateNetworkInterfacePermissionInput struct {
 	_ struct{} `type:"structure"`
@@ -26284,7 +26519,10 @@ func (s *CreateNetworkInterfacePermissionInput) SetPermission(v string) *CreateN
 	return s
 }
 
+<<<<<<< HEAD
 // Contains the output of CreateNetworkInterfacePermission.
+=======
+>>>>>>> Update deps for July 14th.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkInterfacePermissionResult
 type CreateNetworkInterfacePermissionOutput struct {
 	_ struct{} `type:"structure"`
@@ -28857,7 +29095,10 @@ func (s DeleteNetworkInterfaceOutput) GoString() string {
 	return s.String()
 }
 
+<<<<<<< HEAD
 // Contains the parameters for DeleteNetworkInterfacePermission.
+=======
+>>>>>>> Update deps for July 14th.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkInterfacePermissionRequest
 type DeleteNetworkInterfacePermissionInput struct {
 	_ struct{} `type:"structure"`
@@ -28919,7 +29160,10 @@ func (s *DeleteNetworkInterfacePermissionInput) SetNetworkInterfacePermissionId(
 	return s
 }
 
+<<<<<<< HEAD
 // Contains the output for DeleteNetworkInterfacePermission.
+=======
+>>>>>>> Update deps for July 14th.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkInterfacePermissionResult
 type DeleteNetworkInterfacePermissionOutput struct {
 	_ struct{} `type:"structure"`
@@ -33840,7 +34084,10 @@ func (s *DescribeNetworkInterfaceAttributeOutput) SetSourceDestCheck(v *Attribut
 	return s
 }
 
+<<<<<<< HEAD
 // Contains the parameters for DescribeNetworkInterfacePermissions.
+=======
+>>>>>>> Update deps for July 14th.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkInterfacePermissionsRequest
 type DescribeNetworkInterfacePermissionsInput struct {
 	_ struct{} `type:"structure"`
@@ -33907,7 +34154,10 @@ func (s *DescribeNetworkInterfacePermissionsInput) SetNextToken(v string) *Descr
 	return s
 }
 
+<<<<<<< HEAD
 // Contains the output for DescribeNetworkInterfacePermissions.
+=======
+>>>>>>> Update deps for July 14th.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkInterfacePermissionsResult
 type DescribeNetworkInterfacePermissionsOutput struct {
 	_ struct{} `type:"structure"`

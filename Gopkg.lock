@@ -4,8 +4,8 @@
 [[projects]]
   name = "cloud.google.com/go"
   packages = ["compute/metadata"]
-  revision = "d4f8670e9dba7e0c9dd3f6da843d678afd21c587"
-  version = "v0.9.0"
+  revision = "a5913b3f7deecba45e98ff33cefbac4fd204ddd7"
+  version = "v0.10.0"
 
 [[projects]]
   name = "github.com/Azure/azure-sdk-for-go"
@@ -29,13 +29,13 @@
   branch = "master"
   name = "github.com/apcera/util"
   packages = ["uuid"]
-  revision = "851b52b8a71e1ab411ec56401c1efbce5e9652ea"
+  revision = "346d8c10c6f817df60ff768b05ced4170d747180"
 
 [[projects]]
   name = "github.com/aws/aws-sdk-go"
   packages = ["aws","aws/awserr","aws/awsutil","aws/client","aws/client/metadata","aws/corehandlers","aws/credentials","aws/credentials/ec2rolecreds","aws/credentials/endpointcreds","aws/credentials/stscreds","aws/defaults","aws/ec2metadata","aws/endpoints","aws/request","aws/session","aws/signer/v4","internal/shareddefaults","private/protocol","private/protocol/ec2query","private/protocol/query","private/protocol/query/queryutil","private/protocol/rest","private/protocol/xml/xmlutil","service/ec2","service/sts"]
-  revision = "72e42b13da62269f68308fb6068b7ea691a416a4"
-  version = "v1.10.3"
+  revision = "b73b028e599fa9176687c70b8f9cafbe57c27d20"
+  version = "v1.10.11"
 
 [[projects]]
   name = "github.com/dgrijalva/jwt-go"
@@ -53,13 +53,13 @@
   branch = "master"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "6a1fa9404c0aebf36c879bc50152edcc953910d2"
+  revision = "0a4f71a498b7c4812f64969510bcb4eca251e33a"
 
 [[projects]]
   branch = "master"
   name = "github.com/gophercloud/gophercloud"
   packages = [".","openstack","openstack/blockstorage/v1/volumes","openstack/compute/v2/extensions/floatingips","openstack/compute/v2/extensions/startstop","openstack/compute/v2/extensions/volumeattach","openstack/compute/v2/flavors","openstack/compute/v2/images","openstack/compute/v2/servers","openstack/identity/v2/tenants","openstack/identity/v2/tokens","openstack/identity/v3/tokens","openstack/networking/v2/networks","openstack/utils","pagination"]
-  revision = "5102b608e3e070dadf65b060362fe4052f0c5967"
+  revision = "062f2739aef0b03a8e68cd94865c34d416d753e0"
 
 [[projects]]
   name = "github.com/jmespath/go-jmespath"
@@ -83,25 +83,25 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["curve25519","ed25519","ed25519/internal/edwards25519","pkcs12","pkcs12/internal/rc2","ssh"]
-  revision = "adbae1b6b6fb4b02448a0fc0dbbc9ba2b95b294d"
+  revision = "dd85ac7e6a88fc6ca420478e934de5f1a42dd3c6"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context","context/ctxhttp"]
-  revision = "5f8847ae0d0e90b6a9dc8148e7ad616874625171"
+  revision = "f01ecb60fe3835d80d9a0b7b2bf24b228c89260e"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/oauth2"
   packages = [".","google","internal","jws","jwt"]
-  revision = "f047394b6d14284165300fd82dad67edb3a4d7f6"
+  revision = "cce311a261e6fcf29de72ca96827bdb0b7d9c9e6"
 
 [[projects]]
   branch = "master"
   name = "google.golang.org/api"
   packages = ["compute/v1","gensupport","googleapi","googleapi/internal/uritemplates"]
-  revision = "1ba364a3bb616587dfd46d5009edefdfd7896ed9"
+  revision = "e665075b5ff79143ba49c58fab02df9dc122afd5"
 
 [[projects]]
   name = "google.golang.org/appengine"

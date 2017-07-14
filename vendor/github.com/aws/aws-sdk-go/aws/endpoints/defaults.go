@@ -328,19 +328,27 @@ var awsPartition = partition{
 
 			Endpoints: endpoints{
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"ap-northeast-1": endpoint{},
 				"ap-southeast-1": endpoint{},
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
+=======
+				"ap-northeast-1": endpoint{},
+				"ap-southeast-1": endpoint{},
+>>>>>>> Update deps for July 14th.
 				"eu-west-1":      endpoint{},
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-2":      endpoint{},
+<<<<<<< HEAD
 =======
 				"us-east-1": endpoint{},
 				"us-east-2": endpoint{},
 				"us-west-2": endpoint{},
 >>>>>>> Dep updates for June 26, 2017
+=======
+>>>>>>> Update deps for July 14th.
 			},
 		},
 		"autoscaling": service{
@@ -370,7 +378,10 @@ var awsPartition = partition{
 <<<<<<< HEAD
 <<<<<<< HEAD
 				"ap-northeast-1": endpoint{},
+<<<<<<< HEAD
 				"ap-southeast-1": endpoint{},
+=======
+>>>>>>> Update deps for July 14th.
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
@@ -526,6 +537,7 @@ var awsPartition = partition{
 				"ap-southeast-1": endpoint{},
 				"ap-southeast-2": endpoint{},
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"ca-central-1":   endpoint{},
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
@@ -534,11 +546,19 @@ var awsPartition = partition{
 				"us-east-2":      endpoint{},
 				"us-west-1":      endpoint{},
 =======
+=======
+				"ca-central-1":   endpoint{},
+>>>>>>> Update deps for July 14th.
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
+				"eu-west-2":      endpoint{},
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
+<<<<<<< HEAD
 >>>>>>> Revendor using dep tool
+=======
+				"us-west-1":      endpoint{},
+>>>>>>> Update deps for July 14th.
 				"us-west-2":      endpoint{},
 			},
 		},
@@ -548,6 +568,7 @@ var awsPartition = partition{
 				"ap-northeast-1": endpoint{},
 				"ap-northeast-2": endpoint{},
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"ap-south-1":     endpoint{},
 				"ap-southeast-1": endpoint{},
 				"ap-southeast-2": endpoint{},
@@ -556,6 +577,12 @@ var awsPartition = partition{
 				"ap-southeast-1": endpoint{},
 				"ap-southeast-2": endpoint{},
 >>>>>>> Dep updates for June 26, 2017
+=======
+				"ap-south-1":     endpoint{},
+				"ap-southeast-1": endpoint{},
+				"ap-southeast-2": endpoint{},
+				"ca-central-1":   endpoint{},
+>>>>>>> Update deps for July 14th.
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
 				"eu-west-2":      endpoint{},
@@ -600,13 +627,18 @@ var awsPartition = partition{
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"eu-west-2":      endpoint{},
 =======
 >>>>>>> Revendor using dep tool
+=======
+				"eu-west-2":      endpoint{},
+>>>>>>> Update deps for July 14th.
 				"sa-east-1":      endpoint{},
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-1":      endpoint{},
+<<<<<<< HEAD
 				"us-west-2":      endpoint{},
 			},
 		},
@@ -621,6 +653,8 @@ var awsPartition = partition{
 				"us-east-1":      endpoint{},
 				"us-east-2":      endpoint{},
 				"us-west-1":      endpoint{},
+=======
+>>>>>>> Update deps for July 14th.
 				"us-west-2":      endpoint{},
 			},
 		},
@@ -1140,15 +1174,21 @@ var awsPartition = partition{
 			},
 			Endpoints: endpoints{
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"ap-northeast-1": endpoint{},
+=======
+>>>>>>> Update deps for July 14th.
 				"ap-southeast-2": endpoint{},
 				"eu-central-1":   endpoint{},
 				"us-east-1":      endpoint{},
 				"us-west-2":      endpoint{},
+<<<<<<< HEAD
 =======
 				"us-east-1": endpoint{},
 				"us-west-2": endpoint{},
 >>>>>>> Dep updates for June 26, 2017
+=======
+>>>>>>> Update deps for July 14th.
 			},
 		},
 		"health": service{
@@ -1689,6 +1729,10 @@ var awsPartition = partition{
 				"ap-northeast-2": endpoint{},
 				"ap-south-1":     endpoint{},
 				"ap-southeast-2": endpoint{},
+<<<<<<< HEAD
+=======
+				"ca-central-1":   endpoint{},
+>>>>>>> Update deps for July 14th.
 				"eu-central-1":   endpoint{},
 				"eu-west-1":      endpoint{},
 				"us-east-1":      endpoint{},
