@@ -4,9 +4,11 @@ package ssh
 
 import (
 	"bufio"
+	"bytes"
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net"
 	"os"
 	"path"
@@ -290,16 +292,16 @@ func (client *SSHClient) Run(command string, stdout io.Writer, stderr io.Writer)
 
 // Upload uploads a new file via SSH (SCP)
 func (client *SSHClient) Upload(src io.Reader, dst string, mode uint32) error {
-	// The scp protocol header requires the size of the file to be transferred.
-	fileSize, err := getFileSize(src)
+	fileContent, err := ioutil.ReadAll(src)
 	if err != nil {
-		return fmt.Errorf("can't get the file size: %v", err)
+		return err
 	}
 
 	session, err := client.cryptoClient.NewSession()
 	if err != nil {
 		return err
 	}
+
 	defer session.Close()
 
 	w, err := session.StdinPipe()
@@ -319,8 +321,8 @@ func (client *SSHClient) Upload(src io.Reader, dst string, mode uint32) error {
 		defer wg.Done()
 
 		// Signals to the SSH receiver that content is being passed.
-		fmt.Fprintf(w, "C%#o %d %s\n", mode, fileSize, remoteFileName)
-		_, err = io.Copy(w, src)
+		fmt.Fprintf(w, "C%#o %d %s\n", mode, len(fileContent), remoteFileName)
+		_, err = io.Copy(w, bytes.NewReader(fileContent))
 		if err != nil {
 			errorChan <- err
 			return
@@ -348,23 +350,6 @@ func (client *SSHClient) Upload(src io.Reader, dst string, mode uint32) error {
 	}
 
 	return nil
-}
-
-// getFileSize returns the size of the given reader. If the reader is not type
-// *os.File, it can potentially use a lot of memory because it has to read
-// everything from the reader to get its size.
-func getFileSize(src io.Reader) (int, error) {
-	f, ok := src.(*os.File)
-	if !ok {
-		return 0, errors.New("not a file")
-	}
-
-	fi, err := f.Stat()
-	if err != nil {
-		return 0, err
-	}
-
-	return int(fi.Size()), nil
 }
 
 // Validate verifies that SSH connection credentials were properly configured.
