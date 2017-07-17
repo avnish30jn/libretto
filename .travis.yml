@@ -9,11 +9,6 @@ os:
   - linux
   - osx
 
-env:
-  matrix:
-    - BUILD_GOARCH=amd64
-    - BUILD_GOARCH=386
-
 matrix:
   allow_failures:
     - go: tip
