@@ -22,6 +22,7 @@ import (
 	lvm "github.com/apcera/libretto/virtualmachine"
 	"github.com/vmware/govmomi"
 	"github.com/vmware/govmomi/find"
+	"github.com/vmware/govmomi/nfc"
 	"github.com/vmware/govmomi/object"
 	"github.com/vmware/govmomi/vim25/mo"
 	"github.com/vmware/govmomi/vim25/soap"
@@ -63,7 +64,7 @@ func (v vmwareFinder) NetworkList(c context.Context, p string) ([]object.Network
 }
 
 // NewLease creates a VMwareLease.
-var NewLease = func(ctx context.Context, lease *object.HttpNfcLease) Lease {
+var NewLease = func(ctx context.Context, lease *nfc.Lease) Lease {
 	return VMwareLease{
 		Ctx:   ctx,
 		Lease: lease,
@@ -73,23 +74,23 @@ var NewLease = func(ctx context.Context, lease *object.HttpNfcLease) Lease {
 // VMwareLease implements the Lease interface.
 type VMwareLease struct {
 	Ctx   context.Context
-	Lease *object.HttpNfcLease
+	Lease *nfc.Lease
 }
 
-// HTTPNfcLeaseProgress takes a percentage as an int and sets that percentage as
-// the completed percent.
-func (v VMwareLease) HTTPNfcLeaseProgress(p int) {
-	v.Lease.HttpNfcLeaseProgress(v.Ctx, int32(p))
+// Progress takes a percentage as an int and sets that percentage as the
+// completed percent.
+func (v VMwareLease) Progress(p int) {
+	v.Lease.Progress(v.Ctx, int32(p))
 }
 
 // Wait waits for the underlying lease to finish.
-func (v VMwareLease) Wait() (*types.HttpNfcLeaseInfo, error) {
-	return v.Lease.Wait(v.Ctx)
+func (v VMwareLease) Wait() (*nfc.LeaseInfo, error) {
+	return v.Lease.Wait(v.Ctx, nil)
 }
 
 // Complete marks the underlying lease as complete.
 func (v VMwareLease) Complete() error {
-	return v.Lease.HttpNfcLeaseComplete(v.Ctx)
+	return v.Lease.Complete(v.Ctx)
 }
 
 type Datastore struct {
@@ -268,7 +269,7 @@ func (r ReadProgress) StartProgress() {
 				percent = int32((float32(bytesReceived) / float32(r.TotalBytes)) * 100)
 			case <-tick.C:
 				// TODO: Preet This can return an error as well, should return it
-				r.Lease.HTTPNfcLeaseProgress(percent)
+				r.Lease.Progress(percent)
 				if percent == 100 {
 					return
 				}
@@ -460,10 +461,10 @@ type Destination struct {
 	HostSystem string
 }
 
-// Lease represents a type that wraps around a HTTPNfcLease
+// Lease represents a type that wraps around a nfc.Lease
 type Lease interface {
-	HTTPNfcLeaseProgress(int32)
-	Wait() (*types.HttpNfcLeaseInfo, error)
+	Progress(int)
+	Wait() (*nfc.LeaseInfo, error)
 	Complete() error
 }
 

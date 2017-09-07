@@ -94,6 +94,7 @@ const opAcceptVpcPeeringConnection = "AcceptVpcPeeringConnection"
 // client's request for the AcceptVpcPeeringConnection operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -101,6 +102,15 @@ const opAcceptVpcPeeringConnection = "AcceptVpcPeeringConnection"
 // See AcceptVpcPeeringConnection for more information on using the AcceptVpcPeeringConnection
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AcceptVpcPeeringConnection for more information on using the AcceptVpcPeeringConnection
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -171,6 +181,7 @@ const opAllocateAddress = "AllocateAddress"
 // client's request for the AllocateAddress operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -178,6 +189,15 @@ const opAllocateAddress = "AllocateAddress"
 // See AllocateAddress for more information on using the AllocateAddress
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AllocateAddress for more information on using the AllocateAddress
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -257,6 +277,7 @@ const opAllocateHosts = "AllocateHosts"
 // client's request for the AllocateHosts operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -264,6 +285,15 @@ const opAllocateHosts = "AllocateHosts"
 // See AllocateHosts for more information on using the AllocateHosts
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AllocateHosts for more information on using the AllocateHosts
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -414,6 +444,7 @@ const opAssignPrivateIpAddresses = "AssignPrivateIpAddresses"
 // client's request for the AssignPrivateIpAddresses operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -421,6 +452,15 @@ const opAssignPrivateIpAddresses = "AssignPrivateIpAddresses"
 // See AssignPrivateIpAddresses for more information on using the AssignPrivateIpAddresses
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AssignPrivateIpAddresses for more information on using the AssignPrivateIpAddresses
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -597,6 +637,7 @@ const opAssociateDhcpOptions = "AssociateDhcpOptions"
 // client's request for the AssociateDhcpOptions operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -604,6 +645,15 @@ const opAssociateDhcpOptions = "AssociateDhcpOptions"
 // See AssociateDhcpOptions for more information on using the AssociateDhcpOptions
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AssociateDhcpOptions for more information on using the AssociateDhcpOptions
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -683,6 +733,7 @@ const opAssociateIamInstanceProfile = "AssociateIamInstanceProfile"
 // AssociateIamInstanceProfileRequest generates a "aws/request.Request" representing the
 // client's request for the AssociateIamInstanceProfile operation. The "output" return
 <<<<<<< HEAD
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -698,18 +749,26 @@ const opAssociateIamInstanceProfile = "AssociateIamInstanceProfile"
 =======
 // value can be used to capture response data after the request's "Send" method
 // is called.
+=======
+// value will be populated with the request's response once the request complets
+// successfuly.
+>>>>>>> Update deps for Sep 12 2017
 //
-// See AssociateIamInstanceProfile for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the AssociateIamInstanceProfile method directly
-// instead.
+// See AssociateIamInstanceProfile for more information on using the AssociateIamInstanceProfile
+// API call, and error handling.
 //
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+<<<<<<< HEAD
 // Note: You must call the "Send" method on the returned request object in order
 // to execute the request.
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
 //    // Example sending a request using the AssociateIamInstanceProfileRequest method.
 //    req, resp := client.AssociateIamInstanceProfileRequest(params)
@@ -775,6 +834,7 @@ const opAssociateRouteTable = "AssociateRouteTable"
 // client's request for the AssociateRouteTable operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -782,6 +842,15 @@ const opAssociateRouteTable = "AssociateRouteTable"
 // See AssociateRouteTable for more information on using the AssociateRouteTable
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AssociateRouteTable for more information on using the AssociateRouteTable
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -932,6 +1001,7 @@ const opAssociateVpcCidrBlock = "AssociateVpcCidrBlock"
 // client's request for the AssociateVpcCidrBlock operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -939,6 +1009,15 @@ const opAssociateVpcCidrBlock = "AssociateVpcCidrBlock"
 // See AssociateVpcCidrBlock for more information on using the AssociateVpcCidrBlock
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AssociateVpcCidrBlock for more information on using the AssociateVpcCidrBlock
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -1097,6 +1176,7 @@ const opAttachInternetGateway = "AttachInternetGateway"
 // client's request for the AttachInternetGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1104,6 +1184,15 @@ const opAttachInternetGateway = "AttachInternetGateway"
 // See AttachInternetGateway for more information on using the AttachInternetGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AttachInternetGateway for more information on using the AttachInternetGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -1249,6 +1338,7 @@ const opAttachVolume = "AttachVolume"
 // client's request for the AttachVolume operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1256,6 +1346,15 @@ const opAttachVolume = "AttachVolume"
 // See AttachVolume for more information on using the AttachVolume
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AttachVolume for more information on using the AttachVolume
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -1435,6 +1534,7 @@ const opAuthorizeSecurityGroupEgress = "AuthorizeSecurityGroupEgress"
 // client's request for the AuthorizeSecurityGroupEgress operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1442,6 +1542,15 @@ const opAuthorizeSecurityGroupEgress = "AuthorizeSecurityGroupEgress"
 // See AuthorizeSecurityGroupEgress for more information on using the AuthorizeSecurityGroupEgress
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AuthorizeSecurityGroupEgress for more information on using the AuthorizeSecurityGroupEgress
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -1704,6 +1813,7 @@ const opCancelBundleTask = "CancelBundleTask"
 // client's request for the CancelBundleTask operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1711,6 +1821,15 @@ const opCancelBundleTask = "CancelBundleTask"
 // See CancelBundleTask for more information on using the CancelBundleTask
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CancelBundleTask for more information on using the CancelBundleTask
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -1861,6 +1980,7 @@ const opCancelExportTask = "CancelExportTask"
 // client's request for the CancelExportTask operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1868,6 +1988,15 @@ const opCancelExportTask = "CancelExportTask"
 // See CancelExportTask for more information on using the CancelExportTask
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CancelExportTask for more information on using the CancelExportTask
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -2014,6 +2143,7 @@ const opCancelReservedInstancesListing = "CancelReservedInstancesListing"
 // client's request for the CancelReservedInstancesListing operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2021,6 +2151,15 @@ const opCancelReservedInstancesListing = "CancelReservedInstancesListing"
 // See CancelReservedInstancesListing for more information on using the CancelReservedInstancesListing
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CancelReservedInstancesListing for more information on using the CancelReservedInstancesListing
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -2173,6 +2312,7 @@ const opCancelSpotInstanceRequests = "CancelSpotInstanceRequests"
 // client's request for the CancelSpotInstanceRequests operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2180,6 +2320,15 @@ const opCancelSpotInstanceRequests = "CancelSpotInstanceRequests"
 // See CancelSpotInstanceRequests for more information on using the CancelSpotInstanceRequests
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CancelSpotInstanceRequests for more information on using the CancelSpotInstanceRequests
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -2408,6 +2557,7 @@ const opCopyImage = "CopyImage"
 // client's request for the CopyImage operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2415,6 +2565,15 @@ const opCopyImage = "CopyImage"
 // See CopyImage for more information on using the CopyImage
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CopyImage for more information on using the CopyImage
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -2581,6 +2740,7 @@ const opCreateCustomerGateway = "CreateCustomerGateway"
 // client's request for the CreateCustomerGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2588,6 +2748,15 @@ const opCreateCustomerGateway = "CreateCustomerGateway"
 // See CreateCustomerGateway for more information on using the CreateCustomerGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateCustomerGateway for more information on using the CreateCustomerGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -2762,6 +2931,92 @@ func (c *EC2) CreateDefaultVpcWithContext(ctx aws.Context, input *CreateDefaultV
 >>>>>>> Revendor using dep tool
 }
 
+const opCreateDefaultVpc = "CreateDefaultVpc"
+
+// CreateDefaultVpcRequest generates a "aws/request.Request" representing the
+// client's request for the CreateDefaultVpc operation. The "output" return
+// value will be populated with the request's response once the request complets
+// successfuly.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateDefaultVpc for more information on using the CreateDefaultVpc
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//
+//    // Example sending a request using the CreateDefaultVpcRequest method.
+//    req, resp := client.CreateDefaultVpcRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateDefaultVpc
+func (c *EC2) CreateDefaultVpcRequest(input *CreateDefaultVpcInput) (req *request.Request, output *CreateDefaultVpcOutput) {
+	op := &request.Operation{
+		Name:       opCreateDefaultVpc,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateDefaultVpcInput{}
+	}
+
+	output = &CreateDefaultVpcOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateDefaultVpc API operation for Amazon Elastic Compute Cloud.
+//
+// Creates a default VPC with a size /16 IPv4 CIDR block and a default subnet
+// in each Availability Zone. For more information about the components of a
+// default VPC, see Default VPC and Default Subnets (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html)
+// in the Amazon Virtual Private Cloud User Guide. You cannot specify the components
+// of the default VPC yourself.
+//
+// You can create a default VPC if you deleted your previous default VPC. You
+// cannot have more than one default VPC per region.
+//
+// If your account supports EC2-Classic, you cannot use this action to create
+// a default VPC in a region that supports EC2-Classic. If you want a default
+// VPC in a region that supports EC2-Classic, see "I really want a default VPC
+// for my existing EC2 account. Is that possible?" in the Default VPCs FAQ (http://aws.amazon.com/vpc/faqs/#Default_VPCs).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation CreateDefaultVpc for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateDefaultVpc
+func (c *EC2) CreateDefaultVpc(input *CreateDefaultVpcInput) (*CreateDefaultVpcOutput, error) {
+	req, out := c.CreateDefaultVpcRequest(input)
+	return out, req.Send()
+}
+
+// CreateDefaultVpcWithContext is the same as CreateDefaultVpc with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateDefaultVpc for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) CreateDefaultVpcWithContext(ctx aws.Context, input *CreateDefaultVpcInput, opts ...request.Option) (*CreateDefaultVpcOutput, error) {
+	req, out := c.CreateDefaultVpcRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateDhcpOptions = "CreateDhcpOptions"
 
 // CreateDhcpOptionsRequest generates a "aws/request.Request" representing the
@@ -2881,6 +3136,7 @@ const opCreateEgressOnlyInternetGateway = "CreateEgressOnlyInternetGateway"
 // client's request for the CreateEgressOnlyInternetGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2888,6 +3144,15 @@ const opCreateEgressOnlyInternetGateway = "CreateEgressOnlyInternetGateway"
 // See CreateEgressOnlyInternetGateway for more information on using the CreateEgressOnlyInternetGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateEgressOnlyInternetGateway for more information on using the CreateEgressOnlyInternetGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -3123,19 +3388,18 @@ const opCreateFpgaImage = "CreateFpgaImage"
 
 // CreateFpgaImageRequest generates a "aws/request.Request" representing the
 // client's request for the CreateFpgaImage operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CreateFpgaImage for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CreateFpgaImage method directly
-// instead.
+// See CreateFpgaImage for more information on using the CreateFpgaImage
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CreateFpgaImageRequest method.
 //    req, resp := client.CreateFpgaImageRequest(params)
@@ -3290,6 +3554,7 @@ const opCreateInstanceExportTask = "CreateInstanceExportTask"
 // client's request for the CreateInstanceExportTask operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3297,6 +3562,15 @@ const opCreateInstanceExportTask = "CreateInstanceExportTask"
 // See CreateInstanceExportTask for more information on using the CreateInstanceExportTask
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateInstanceExportTask for more information on using the CreateInstanceExportTask
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -3447,6 +3721,7 @@ const opCreateKeyPair = "CreateKeyPair"
 // client's request for the CreateKeyPair operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3454,6 +3729,15 @@ const opCreateKeyPair = "CreateKeyPair"
 // See CreateKeyPair for more information on using the CreateKeyPair
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateKeyPair for more information on using the CreateKeyPair
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -3611,6 +3895,7 @@ const opCreateNetworkAcl = "CreateNetworkAcl"
 // client's request for the CreateNetworkAcl operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3618,6 +3903,15 @@ const opCreateNetworkAcl = "CreateNetworkAcl"
 // See CreateNetworkAcl for more information on using the CreateNetworkAcl
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateNetworkAcl for more information on using the CreateNetworkAcl
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -3781,6 +4075,7 @@ const opCreateNetworkInterface = "CreateNetworkInterface"
 // client's request for the CreateNetworkInterface operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3788,6 +4083,15 @@ const opCreateNetworkInterface = "CreateNetworkInterface"
 // See CreateNetworkInterface for more information on using the CreateNetworkInterface
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateNetworkInterface for more information on using the CreateNetworkInterface
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -3938,19 +4242,18 @@ const opCreateNetworkInterfacePermission = "CreateNetworkInterfacePermission"
 
 // CreateNetworkInterfacePermissionRequest generates a "aws/request.Request" representing the
 // client's request for the CreateNetworkInterfacePermission operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CreateNetworkInterfacePermission for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CreateNetworkInterfacePermission method directly
-// instead.
+// See CreateNetworkInterfacePermission for more information on using the CreateNetworkInterfacePermission
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CreateNetworkInterfacePermissionRequest method.
 //    req, resp := client.CreateNetworkInterfacePermissionRequest(params)
@@ -4019,6 +4322,7 @@ const opCreatePlacementGroup = "CreatePlacementGroup"
 // client's request for the CreatePlacementGroup operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -4026,6 +4330,15 @@ const opCreatePlacementGroup = "CreatePlacementGroup"
 // See CreatePlacementGroup for more information on using the CreatePlacementGroup
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreatePlacementGroup for more information on using the CreatePlacementGroup
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -4197,6 +4510,7 @@ const opCreateRoute = "CreateRoute"
 // client's request for the CreateRoute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -4204,6 +4518,15 @@ const opCreateRoute = "CreateRoute"
 // See CreateRoute for more information on using the CreateRoute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateRoute for more information on using the CreateRoute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -4368,6 +4691,7 @@ const opCreateSecurityGroup = "CreateSecurityGroup"
 // client's request for the CreateSecurityGroup operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -4375,6 +4699,15 @@ const opCreateSecurityGroup = "CreateSecurityGroup"
 // See CreateSecurityGroup for more information on using the CreateSecurityGroup
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateSecurityGroup for more information on using the CreateSecurityGroup
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -4569,6 +4902,7 @@ const opCreateSpotDatafeedSubscription = "CreateSpotDatafeedSubscription"
 // client's request for the CreateSpotDatafeedSubscription operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -4576,6 +4910,15 @@ const opCreateSpotDatafeedSubscription = "CreateSpotDatafeedSubscription"
 // See CreateSpotDatafeedSubscription for more information on using the CreateSpotDatafeedSubscription
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateSpotDatafeedSubscription for more information on using the CreateSpotDatafeedSubscription
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -4746,6 +5089,7 @@ const opCreateTags = "CreateTags"
 // client's request for the CreateTags operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -4753,6 +5097,15 @@ const opCreateTags = "CreateTags"
 // See CreateTags for more information on using the CreateTags
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateTags for more information on using the CreateTags
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -4922,6 +5275,7 @@ const opCreateVpc = "CreateVpc"
 // client's request for the CreateVpc operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -4929,6 +5283,15 @@ const opCreateVpc = "CreateVpc"
 // See CreateVpc for more information on using the CreateVpc
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateVpc for more information on using the CreateVpc
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -5094,6 +5457,7 @@ const opCreateVpcPeeringConnection = "CreateVpcPeeringConnection"
 // client's request for the CreateVpcPeeringConnection operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -5101,6 +5465,15 @@ const opCreateVpcPeeringConnection = "CreateVpcPeeringConnection"
 // See CreateVpcPeeringConnection for more information on using the CreateVpcPeeringConnection
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateVpcPeeringConnection for more information on using the CreateVpcPeeringConnection
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -5270,6 +5643,7 @@ const opCreateVpnConnectionRoute = "CreateVpnConnectionRoute"
 // client's request for the CreateVpnConnectionRoute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -5277,6 +5651,15 @@ const opCreateVpnConnectionRoute = "CreateVpnConnectionRoute"
 // See CreateVpnConnectionRoute for more information on using the CreateVpnConnectionRoute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateVpnConnectionRoute for more information on using the CreateVpnConnectionRoute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -5433,6 +5816,7 @@ const opDeleteCustomerGateway = "DeleteCustomerGateway"
 // client's request for the DeleteCustomerGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -5440,6 +5824,15 @@ const opDeleteCustomerGateway = "DeleteCustomerGateway"
 // See DeleteCustomerGateway for more information on using the DeleteCustomerGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteCustomerGateway for more information on using the DeleteCustomerGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -5589,6 +5982,7 @@ const opDeleteEgressOnlyInternetGateway = "DeleteEgressOnlyInternetGateway"
 // client's request for the DeleteEgressOnlyInternetGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -5596,6 +5990,15 @@ const opDeleteEgressOnlyInternetGateway = "DeleteEgressOnlyInternetGateway"
 // See DeleteEgressOnlyInternetGateway for more information on using the DeleteEgressOnlyInternetGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteEgressOnlyInternetGateway for more information on using the DeleteEgressOnlyInternetGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -5814,6 +6217,7 @@ const opDeleteInternetGateway = "DeleteInternetGateway"
 // client's request for the DeleteInternetGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -5821,6 +6225,15 @@ const opDeleteInternetGateway = "DeleteInternetGateway"
 // See DeleteInternetGateway for more information on using the DeleteInternetGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteInternetGateway for more information on using the DeleteInternetGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -5967,6 +6380,7 @@ const opDeleteNatGateway = "DeleteNatGateway"
 // client's request for the DeleteNatGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -5974,6 +6388,15 @@ const opDeleteNatGateway = "DeleteNatGateway"
 // See DeleteNatGateway for more information on using the DeleteNatGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteNatGateway for more information on using the DeleteNatGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -6120,6 +6543,7 @@ const opDeleteNetworkAclEntry = "DeleteNetworkAclEntry"
 // client's request for the DeleteNetworkAclEntry operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -6127,6 +6551,15 @@ const opDeleteNetworkAclEntry = "DeleteNetworkAclEntry"
 // See DeleteNetworkAclEntry for more information on using the DeleteNetworkAclEntry
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteNetworkAclEntry for more information on using the DeleteNetworkAclEntry
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -6352,19 +6785,18 @@ const opDeleteNetworkInterfacePermission = "DeleteNetworkInterfacePermission"
 
 // DeleteNetworkInterfacePermissionRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteNetworkInterfacePermission operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteNetworkInterfacePermission for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteNetworkInterfacePermission method directly
-// instead.
+// See DeleteNetworkInterfacePermission for more information on using the DeleteNetworkInterfacePermission
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteNetworkInterfacePermissionRequest method.
 //    req, resp := client.DeleteNetworkInterfacePermissionRequest(params)
@@ -6511,6 +6943,7 @@ const opDeleteRoute = "DeleteRoute"
 // client's request for the DeleteRoute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -6518,6 +6951,15 @@ const opDeleteRoute = "DeleteRoute"
 // See DeleteRoute for more information on using the DeleteRoute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteRoute for more information on using the DeleteRoute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -6665,6 +7107,7 @@ const opDeleteSecurityGroup = "DeleteSecurityGroup"
 // client's request for the DeleteSecurityGroup operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -6672,6 +7115,15 @@ const opDeleteSecurityGroup = "DeleteSecurityGroup"
 // See DeleteSecurityGroup for more information on using the DeleteSecurityGroup
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteSecurityGroup for more information on using the DeleteSecurityGroup
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -6835,6 +7287,7 @@ const opDeleteSpotDatafeedSubscription = "DeleteSpotDatafeedSubscription"
 // client's request for the DeleteSpotDatafeedSubscription operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -6842,6 +7295,15 @@ const opDeleteSpotDatafeedSubscription = "DeleteSpotDatafeedSubscription"
 // See DeleteSpotDatafeedSubscription for more information on using the DeleteSpotDatafeedSubscription
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteSpotDatafeedSubscription for more information on using the DeleteSpotDatafeedSubscription
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -6988,6 +7450,7 @@ const opDeleteTags = "DeleteTags"
 // client's request for the DeleteTags operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -6995,6 +7458,15 @@ const opDeleteTags = "DeleteTags"
 // See DeleteTags for more information on using the DeleteTags
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteTags for more information on using the DeleteTags
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -7068,6 +7540,7 @@ const opDeleteVolume = "DeleteVolume"
 // client's request for the DeleteVolume operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -7075,6 +7548,15 @@ const opDeleteVolume = "DeleteVolume"
 // See DeleteVolume for more information on using the DeleteVolume
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteVolume for more information on using the DeleteVolume
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -7230,6 +7712,7 @@ const opDeleteVpcEndpoints = "DeleteVpcEndpoints"
 // client's request for the DeleteVpcEndpoints operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -7237,6 +7720,15 @@ const opDeleteVpcEndpoints = "DeleteVpcEndpoints"
 // See DeleteVpcEndpoints for more information on using the DeleteVpcEndpoints
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteVpcEndpoints for more information on using the DeleteVpcEndpoints
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -7382,6 +7874,7 @@ const opDeleteVpnConnection = "DeleteVpnConnection"
 // client's request for the DeleteVpnConnection operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -7389,6 +7882,15 @@ const opDeleteVpnConnection = "DeleteVpnConnection"
 // See DeleteVpnConnection for more information on using the DeleteVpnConnection
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteVpnConnection for more information on using the DeleteVpnConnection
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -7546,6 +8048,7 @@ const opDeleteVpnGateway = "DeleteVpnGateway"
 // client's request for the DeleteVpnGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -7553,6 +8056,15 @@ const opDeleteVpnGateway = "DeleteVpnGateway"
 // See DeleteVpnGateway for more information on using the DeleteVpnGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteVpnGateway for more information on using the DeleteVpnGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -7710,6 +8222,7 @@ const opDescribeAccountAttributes = "DescribeAccountAttributes"
 // client's request for the DescribeAccountAttributes operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -7717,6 +8230,15 @@ const opDescribeAccountAttributes = "DescribeAccountAttributes"
 // See DescribeAccountAttributes for more information on using the DescribeAccountAttributes
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeAccountAttributes for more information on using the DescribeAccountAttributes
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -7880,6 +8402,7 @@ const opDescribeAvailabilityZones = "DescribeAvailabilityZones"
 // client's request for the DescribeAvailabilityZones operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -7887,6 +8410,15 @@ const opDescribeAvailabilityZones = "DescribeAvailabilityZones"
 // See DescribeAvailabilityZones for more information on using the DescribeAvailabilityZones
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeAvailabilityZones for more information on using the DescribeAvailabilityZones
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -8039,6 +8571,7 @@ const opDescribeClassicLinkInstances = "DescribeClassicLinkInstances"
 // client's request for the DescribeClassicLinkInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -8046,6 +8579,15 @@ const opDescribeClassicLinkInstances = "DescribeClassicLinkInstances"
 // See DescribeClassicLinkInstances for more information on using the DescribeClassicLinkInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeClassicLinkInstances for more information on using the DescribeClassicLinkInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -8194,6 +8736,7 @@ const opDescribeCustomerGateways = "DescribeCustomerGateways"
 // client's request for the DescribeCustomerGateways operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -8201,6 +8744,15 @@ const opDescribeCustomerGateways = "DescribeCustomerGateways"
 // See DescribeCustomerGateways for more information on using the DescribeCustomerGateways
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeCustomerGateways for more information on using the DescribeCustomerGateways
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -8349,6 +8901,7 @@ const opDescribeEgressOnlyInternetGateways = "DescribeEgressOnlyInternetGateways
 // client's request for the DescribeEgressOnlyInternetGateways operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -8356,6 +8909,15 @@ const opDescribeEgressOnlyInternetGateways = "DescribeEgressOnlyInternetGateways
 // See DescribeEgressOnlyInternetGateways for more information on using the DescribeEgressOnlyInternetGateways
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeEgressOnlyInternetGateways for more information on using the DescribeEgressOnlyInternetGateways
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -8495,6 +9057,81 @@ func (c *EC2) DescribeElasticGpusWithContext(ctx aws.Context, input *DescribeEla
 >>>>>>> Revendor using dep tool
 }
 
+const opDescribeElasticGpus = "DescribeElasticGpus"
+
+// DescribeElasticGpusRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeElasticGpus operation. The "output" return
+// value will be populated with the request's response once the request complets
+// successfuly.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeElasticGpus for more information on using the DescribeElasticGpus
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//
+//    // Example sending a request using the DescribeElasticGpusRequest method.
+//    req, resp := client.DescribeElasticGpusRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeElasticGpus
+func (c *EC2) DescribeElasticGpusRequest(input *DescribeElasticGpusInput) (req *request.Request, output *DescribeElasticGpusOutput) {
+	op := &request.Operation{
+		Name:       opDescribeElasticGpus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeElasticGpusInput{}
+	}
+
+	output = &DescribeElasticGpusOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeElasticGpus API operation for Amazon Elastic Compute Cloud.
+//
+// Describes the Elastic GPUs associated with your instances. For more information
+// about Elastic GPUs, see Amazon EC2 Elastic GPUs (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-gpus.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation DescribeElasticGpus for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeElasticGpus
+func (c *EC2) DescribeElasticGpus(input *DescribeElasticGpusInput) (*DescribeElasticGpusOutput, error) {
+	req, out := c.DescribeElasticGpusRequest(input)
+	return out, req.Send()
+}
+
+// DescribeElasticGpusWithContext is the same as DescribeElasticGpus with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeElasticGpus for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) DescribeElasticGpusWithContext(ctx aws.Context, input *DescribeElasticGpusInput, opts ...request.Option) (*DescribeElasticGpusOutput, error) {
+	req, out := c.DescribeElasticGpusRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDescribeExportTasks = "DescribeExportTasks"
 
 // DescribeExportTasksRequest generates a "aws/request.Request" representing the
@@ -8575,6 +9212,7 @@ const opDescribeFlowLogs = "DescribeFlowLogs"
 // client's request for the DescribeFlowLogs operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -8582,6 +9220,15 @@ const opDescribeFlowLogs = "DescribeFlowLogs"
 // See DescribeFlowLogs for more information on using the DescribeFlowLogs
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeFlowLogs for more information on using the DescribeFlowLogs
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -8802,19 +9449,18 @@ const opDescribeFpgaImages = "DescribeFpgaImages"
 
 // DescribeFpgaImagesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeFpgaImages operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeFpgaImages for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeFpgaImages method directly
-// instead.
+// See DescribeFpgaImages for more information on using the DescribeFpgaImages
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeFpgaImagesRequest method.
 //    req, resp := client.DescribeFpgaImagesRequest(params)
@@ -8881,6 +9527,7 @@ const opDescribeHostReservationOfferings = "DescribeHostReservationOfferings"
 // client's request for the DescribeHostReservationOfferings operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -8888,6 +9535,15 @@ const opDescribeHostReservationOfferings = "DescribeHostReservationOfferings"
 // See DescribeHostReservationOfferings for more information on using the DescribeHostReservationOfferings
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeHostReservationOfferings for more information on using the DescribeHostReservationOfferings
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -9038,6 +9694,7 @@ const opDescribeHosts = "DescribeHosts"
 // client's request for the DescribeHosts operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -9045,6 +9702,15 @@ const opDescribeHosts = "DescribeHosts"
 // See DescribeHosts for more information on using the DescribeHosts
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeHosts for more information on using the DescribeHosts
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -9115,6 +9781,7 @@ const opDescribeIamInstanceProfileAssociations = "DescribeIamInstanceProfileAsso
 // DescribeIamInstanceProfileAssociationsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeIamInstanceProfileAssociations operation. The "output" return
 <<<<<<< HEAD
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -9130,18 +9797,26 @@ const opDescribeIamInstanceProfileAssociations = "DescribeIamInstanceProfileAsso
 =======
 // value can be used to capture response data after the request's "Send" method
 // is called.
+=======
+// value will be populated with the request's response once the request complets
+// successfuly.
+>>>>>>> Update deps for Sep 12 2017
 //
-// See DescribeIamInstanceProfileAssociations for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeIamInstanceProfileAssociations method directly
-// instead.
+// See DescribeIamInstanceProfileAssociations for more information on using the DescribeIamInstanceProfileAssociations
+// API call, and error handling.
 //
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+<<<<<<< HEAD
 // Note: You must call the "Send" method on the returned request object in order
 // to execute the request.
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
 //    // Example sending a request using the DescribeIamInstanceProfileAssociationsRequest method.
 //    req, resp := client.DescribeIamInstanceProfileAssociationsRequest(params)
@@ -9206,6 +9881,7 @@ const opDescribeIdFormat = "DescribeIdFormat"
 // client's request for the DescribeIdFormat operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -9213,6 +9889,15 @@ const opDescribeIdFormat = "DescribeIdFormat"
 // See DescribeIdFormat for more information on using the DescribeIdFormat
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeIdFormat for more information on using the DescribeIdFormat
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -9378,6 +10063,7 @@ const opDescribeImageAttribute = "DescribeImageAttribute"
 // client's request for the DescribeImageAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -9385,6 +10071,15 @@ const opDescribeImageAttribute = "DescribeImageAttribute"
 // See DescribeImageAttribute for more information on using the DescribeImageAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeImageAttribute for more information on using the DescribeImageAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -9533,6 +10228,7 @@ const opDescribeImportImageTasks = "DescribeImportImageTasks"
 // client's request for the DescribeImportImageTasks operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -9540,6 +10236,15 @@ const opDescribeImportImageTasks = "DescribeImportImageTasks"
 // See DescribeImportImageTasks for more information on using the DescribeImportImageTasks
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeImportImageTasks for more information on using the DescribeImportImageTasks
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -9682,6 +10387,7 @@ const opDescribeInstanceAttribute = "DescribeInstanceAttribute"
 // client's request for the DescribeInstanceAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -9689,6 +10395,15 @@ const opDescribeInstanceAttribute = "DescribeInstanceAttribute"
 // See DescribeInstanceAttribute for more information on using the DescribeInstanceAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeInstanceAttribute for more information on using the DescribeInstanceAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -9911,6 +10626,7 @@ const opDescribeInstances = "DescribeInstances"
 // client's request for the DescribeInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -9918,6 +10634,15 @@ const opDescribeInstances = "DescribeInstances"
 // See DescribeInstances for more information on using the DescribeInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeInstances for more information on using the DescribeInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -10130,6 +10855,7 @@ const opDescribeKeyPairs = "DescribeKeyPairs"
 // client's request for the DescribeKeyPairs operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -10137,6 +10863,15 @@ const opDescribeKeyPairs = "DescribeKeyPairs"
 // See DescribeKeyPairs for more information on using the DescribeKeyPairs
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeKeyPairs for more information on using the DescribeKeyPairs
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -10283,6 +11018,7 @@ const opDescribeNatGateways = "DescribeNatGateways"
 // client's request for the DescribeNatGateways operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -10290,6 +11026,15 @@ const opDescribeNatGateways = "DescribeNatGateways"
 // See DescribeNatGateways for more information on using the DescribeNatGateways
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeNatGateways for more information on using the DescribeNatGateways
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -10490,6 +11235,7 @@ const opDescribeNetworkInterfaceAttribute = "DescribeNetworkInterfaceAttribute"
 // client's request for the DescribeNetworkInterfaceAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -10497,6 +11243,15 @@ const opDescribeNetworkInterfaceAttribute = "DescribeNetworkInterfaceAttribute"
 // See DescribeNetworkInterfaceAttribute for more information on using the DescribeNetworkInterfaceAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeNetworkInterfaceAttribute for more information on using the DescribeNetworkInterfaceAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -10640,19 +11395,18 @@ const opDescribeNetworkInterfacePermissions = "DescribeNetworkInterfacePermissio
 
 // DescribeNetworkInterfacePermissionsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeNetworkInterfacePermissions operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeNetworkInterfacePermissions for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeNetworkInterfacePermissions method directly
-// instead.
+// See DescribeNetworkInterfacePermissions for more information on using the DescribeNetworkInterfacePermissions
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeNetworkInterfacePermissionsRequest method.
 //    req, resp := client.DescribeNetworkInterfacePermissionsRequest(params)
@@ -10717,6 +11471,7 @@ const opDescribeNetworkInterfaces = "DescribeNetworkInterfaces"
 // client's request for the DescribeNetworkInterfaces operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -10724,6 +11479,15 @@ const opDescribeNetworkInterfaces = "DescribeNetworkInterfaces"
 // See DescribeNetworkInterfaces for more information on using the DescribeNetworkInterfaces
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeNetworkInterfaces for more information on using the DescribeNetworkInterfaces
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -10867,6 +11631,7 @@ const opDescribePrefixLists = "DescribePrefixLists"
 // client's request for the DescribePrefixLists operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -10874,6 +11639,15 @@ const opDescribePrefixLists = "DescribePrefixLists"
 // See DescribePrefixLists for more information on using the DescribePrefixLists
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribePrefixLists for more information on using the DescribePrefixLists
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -11022,6 +11796,7 @@ const opDescribeReservedInstances = "DescribeReservedInstances"
 // client's request for the DescribeReservedInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -11029,6 +11804,15 @@ const opDescribeReservedInstances = "DescribeReservedInstances"
 // See DescribeReservedInstances for more information on using the DescribeReservedInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeReservedInstances for more information on using the DescribeReservedInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -11194,6 +11978,7 @@ const opDescribeReservedInstancesModifications = "DescribeReservedInstancesModif
 // client's request for the DescribeReservedInstancesModifications operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -11201,6 +11986,15 @@ const opDescribeReservedInstancesModifications = "DescribeReservedInstancesModif
 // See DescribeReservedInstancesModifications for more information on using the DescribeReservedInstancesModifications
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeReservedInstancesModifications for more information on using the DescribeReservedInstancesModifications
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -11471,6 +12265,7 @@ const opDescribeRouteTables = "DescribeRouteTables"
 // client's request for the DescribeRouteTables operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -11478,6 +12273,15 @@ const opDescribeRouteTables = "DescribeRouteTables"
 // See DescribeRouteTables for more information on using the DescribeRouteTables
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeRouteTables for more information on using the DescribeRouteTables
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -11635,6 +12439,7 @@ const opDescribeScheduledInstances = "DescribeScheduledInstances"
 // client's request for the DescribeScheduledInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -11642,6 +12447,15 @@ const opDescribeScheduledInstances = "DescribeScheduledInstances"
 // See DescribeScheduledInstances for more information on using the DescribeScheduledInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeScheduledInstances for more information on using the DescribeScheduledInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -11784,6 +12598,7 @@ const opDescribeSecurityGroups = "DescribeSecurityGroups"
 // client's request for the DescribeSecurityGroups operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -11791,6 +12606,15 @@ const opDescribeSecurityGroups = "DescribeSecurityGroups"
 // See DescribeSecurityGroups for more information on using the DescribeSecurityGroups
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeSecurityGroups for more information on using the DescribeSecurityGroups
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -11943,6 +12767,7 @@ const opDescribeSnapshots = "DescribeSnapshots"
 // client's request for the DescribeSnapshots operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -11950,6 +12775,15 @@ const opDescribeSnapshots = "DescribeSnapshots"
 // See DescribeSnapshots for more information on using the DescribeSnapshots
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeSnapshots for more information on using the DescribeSnapshots
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -12194,6 +13028,7 @@ const opDescribeSpotFleetInstances = "DescribeSpotFleetInstances"
 // client's request for the DescribeSpotFleetInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -12201,6 +13036,15 @@ const opDescribeSpotFleetInstances = "DescribeSpotFleetInstances"
 // See DescribeSpotFleetInstances for more information on using the DescribeSpotFleetInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeSpotFleetInstances for more information on using the DescribeSpotFleetInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -12347,6 +13191,7 @@ const opDescribeSpotFleetRequests = "DescribeSpotFleetRequests"
 // client's request for the DescribeSpotFleetRequests operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -12354,6 +13199,15 @@ const opDescribeSpotFleetRequests = "DescribeSpotFleetRequests"
 // See DescribeSpotFleetRequests for more information on using the DescribeSpotFleetRequests
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeSpotFleetRequests for more information on using the DescribeSpotFleetRequests
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -12568,6 +13422,7 @@ const opDescribeSpotPriceHistory = "DescribeSpotPriceHistory"
 // client's request for the DescribeSpotPriceHistory operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -12575,6 +13430,15 @@ const opDescribeSpotPriceHistory = "DescribeSpotPriceHistory"
 // See DescribeSpotPriceHistory for more information on using the DescribeSpotPriceHistory
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeSpotPriceHistory for more information on using the DescribeSpotPriceHistory
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -12782,6 +13646,7 @@ const opDescribeSubnets = "DescribeSubnets"
 // client's request for the DescribeSubnets operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -12789,6 +13654,15 @@ const opDescribeSubnets = "DescribeSubnets"
 // See DescribeSubnets for more information on using the DescribeSubnets
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeSubnets for more information on using the DescribeSubnets
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -12992,6 +13866,7 @@ const opDescribeVolumeAttribute = "DescribeVolumeAttribute"
 // client's request for the DescribeVolumeAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -12999,6 +13874,15 @@ const opDescribeVolumeAttribute = "DescribeVolumeAttribute"
 // See DescribeVolumeAttribute for more information on using the DescribeVolumeAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeVolumeAttribute for more information on using the DescribeVolumeAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -13234,6 +14118,7 @@ const opDescribeVolumes = "DescribeVolumes"
 // client's request for the DescribeVolumes operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -13241,6 +14126,15 @@ const opDescribeVolumes = "DescribeVolumes"
 // See DescribeVolumes for more information on using the DescribeVolumes
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeVolumes for more information on using the DescribeVolumes
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -13373,6 +14267,7 @@ const opDescribeVolumesModifications = "DescribeVolumesModifications"
 // DescribeVolumesModificationsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeVolumesModifications operation. The "output" return
 <<<<<<< HEAD
+<<<<<<< HEAD
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
@@ -13388,18 +14283,26 @@ const opDescribeVolumesModifications = "DescribeVolumesModifications"
 =======
 // value can be used to capture response data after the request's "Send" method
 // is called.
+=======
+// value will be populated with the request's response once the request complets
+// successfuly.
+>>>>>>> Update deps for Sep 12 2017
 //
-// See DescribeVolumesModifications for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeVolumesModifications method directly
-// instead.
+// See DescribeVolumesModifications for more information on using the DescribeVolumesModifications
+// API call, and error handling.
 //
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+<<<<<<< HEAD
 // Note: You must call the "Send" method on the returned request object in order
 // to execute the request.
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
 //    // Example sending a request using the DescribeVolumesModificationsRequest method.
 //    req, resp := client.DescribeVolumesModificationsRequest(params)
@@ -13476,6 +14379,7 @@ const opDescribeVpcAttribute = "DescribeVpcAttribute"
 // client's request for the DescribeVpcAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -13483,6 +14387,15 @@ const opDescribeVpcAttribute = "DescribeVpcAttribute"
 // See DescribeVpcAttribute for more information on using the DescribeVpcAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeVpcAttribute for more information on using the DescribeVpcAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -13625,6 +14538,7 @@ const opDescribeVpcClassicLinkDnsSupport = "DescribeVpcClassicLinkDnsSupport"
 // client's request for the DescribeVpcClassicLinkDnsSupport operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -13632,6 +14546,15 @@ const opDescribeVpcClassicLinkDnsSupport = "DescribeVpcClassicLinkDnsSupport"
 // See DescribeVpcClassicLinkDnsSupport for more information on using the DescribeVpcClassicLinkDnsSupport
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeVpcClassicLinkDnsSupport for more information on using the DescribeVpcClassicLinkDnsSupport
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -13780,6 +14703,7 @@ const opDescribeVpcEndpoints = "DescribeVpcEndpoints"
 // client's request for the DescribeVpcEndpoints operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -13787,6 +14711,15 @@ const opDescribeVpcEndpoints = "DescribeVpcEndpoints"
 // See DescribeVpcEndpoints for more information on using the DescribeVpcEndpoints
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeVpcEndpoints for more information on using the DescribeVpcEndpoints
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -13928,6 +14861,7 @@ const opDescribeVpcs = "DescribeVpcs"
 // client's request for the DescribeVpcs operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -13935,6 +14869,15 @@ const opDescribeVpcs = "DescribeVpcs"
 // See DescribeVpcs for more information on using the DescribeVpcs
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeVpcs for more information on using the DescribeVpcs
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -14080,6 +15023,7 @@ const opDescribeVpnGateways = "DescribeVpnGateways"
 // client's request for the DescribeVpnGateways operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -14087,6 +15031,15 @@ const opDescribeVpnGateways = "DescribeVpnGateways"
 // See DescribeVpnGateways for more information on using the DescribeVpnGateways
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeVpnGateways for more information on using the DescribeVpnGateways
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -14234,6 +15187,7 @@ const opDetachInternetGateway = "DetachInternetGateway"
 // client's request for the DetachInternetGateway operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -14241,6 +15195,15 @@ const opDetachInternetGateway = "DetachInternetGateway"
 // See DetachInternetGateway for more information on using the DetachInternetGateway
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DetachInternetGateway for more information on using the DetachInternetGateway
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -14388,6 +15351,7 @@ const opDetachVolume = "DetachVolume"
 // client's request for the DetachVolume operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -14395,6 +15359,15 @@ const opDetachVolume = "DetachVolume"
 // See DetachVolume for more information on using the DetachVolume
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DetachVolume for more information on using the DetachVolume
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -14558,6 +15531,7 @@ const opDisableVgwRoutePropagation = "DisableVgwRoutePropagation"
 // client's request for the DisableVgwRoutePropagation operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -14565,6 +15539,15 @@ const opDisableVgwRoutePropagation = "DisableVgwRoutePropagation"
 // See DisableVgwRoutePropagation for more information on using the DisableVgwRoutePropagation
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DisableVgwRoutePropagation for more information on using the DisableVgwRoutePropagation
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -14710,6 +15693,7 @@ const opDisableVpcClassicLinkDnsSupport = "DisableVpcClassicLinkDnsSupport"
 // client's request for the DisableVpcClassicLinkDnsSupport operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -14717,6 +15701,15 @@ const opDisableVpcClassicLinkDnsSupport = "DisableVpcClassicLinkDnsSupport"
 // See DisableVpcClassicLinkDnsSupport for more information on using the DisableVpcClassicLinkDnsSupport
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DisableVpcClassicLinkDnsSupport for more information on using the DisableVpcClassicLinkDnsSupport
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -14871,11 +15864,15 @@ const opDisassociateIamInstanceProfile = "DisassociateIamInstanceProfile"
 // DisassociateIamInstanceProfileRequest generates a "aws/request.Request" representing the
 // client's request for the DisassociateIamInstanceProfile operation. The "output" return
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update deps for Sep 12 2017
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
+<<<<<<< HEAD
 //
 // See DisassociateIamInstanceProfile for more information on using the DisassociateIamInstanceProfile
 // API call, and error handling.
@@ -14886,18 +15883,21 @@ const opDisassociateIamInstanceProfile = "DisassociateIamInstanceProfile"
 =======
 // value can be used to capture response data after the request's "Send" method
 // is called.
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
-// See DisassociateIamInstanceProfile for usage and error information.
+// See DisassociateIamInstanceProfile for more information on using the DisassociateIamInstanceProfile
+// API call, and error handling.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DisassociateIamInstanceProfile method directly
-// instead.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+<<<<<<< HEAD
 // Note: You must call the "Send" method on the returned request object in order
 // to execute the request.
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
 //    // Example sending a request using the DisassociateIamInstanceProfileRequest method.
 //    req, resp := client.DisassociateIamInstanceProfileRequest(params)
@@ -15045,6 +16045,7 @@ const opDisassociateSubnetCidrBlock = "DisassociateSubnetCidrBlock"
 // client's request for the DisassociateSubnetCidrBlock operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -15052,6 +16053,15 @@ const opDisassociateSubnetCidrBlock = "DisassociateSubnetCidrBlock"
 // See DisassociateSubnetCidrBlock for more information on using the DisassociateSubnetCidrBlock
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DisassociateSubnetCidrBlock for more information on using the DisassociateSubnetCidrBlock
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -15201,6 +16211,7 @@ const opEnableVgwRoutePropagation = "EnableVgwRoutePropagation"
 // client's request for the EnableVgwRoutePropagation operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -15208,6 +16219,15 @@ const opEnableVgwRoutePropagation = "EnableVgwRoutePropagation"
 // See EnableVgwRoutePropagation for more information on using the EnableVgwRoutePropagation
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See EnableVgwRoutePropagation for more information on using the EnableVgwRoutePropagation
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -15355,6 +16375,7 @@ const opEnableVpcClassicLink = "EnableVpcClassicLink"
 // client's request for the EnableVpcClassicLink operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -15362,6 +16383,15 @@ const opEnableVpcClassicLink = "EnableVpcClassicLink"
 // See EnableVpcClassicLink for more information on using the EnableVpcClassicLink
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See EnableVpcClassicLink for more information on using the EnableVpcClassicLink
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -15515,6 +16545,7 @@ const opGetConsoleOutput = "GetConsoleOutput"
 // client's request for the GetConsoleOutput operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -15522,6 +16553,15 @@ const opGetConsoleOutput = "GetConsoleOutput"
 // See GetConsoleOutput for more information on using the GetConsoleOutput
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetConsoleOutput for more information on using the GetConsoleOutput
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -15682,6 +16722,7 @@ const opGetHostReservationPurchasePreview = "GetHostReservationPurchasePreview"
 // client's request for the GetHostReservationPurchasePreview operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -15689,6 +16730,15 @@ const opGetHostReservationPurchasePreview = "GetHostReservationPurchasePreview"
 // See GetHostReservationPurchasePreview for more information on using the GetHostReservationPurchasePreview
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetHostReservationPurchasePreview for more information on using the GetHostReservationPurchasePreview
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -15852,6 +16902,7 @@ const opGetReservedInstancesExchangeQuote = "GetReservedInstancesExchangeQuote"
 // client's request for the GetReservedInstancesExchangeQuote operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -15859,6 +16910,15 @@ const opGetReservedInstancesExchangeQuote = "GetReservedInstancesExchangeQuote"
 // See GetReservedInstancesExchangeQuote for more information on using the GetReservedInstancesExchangeQuote
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetReservedInstancesExchangeQuote for more information on using the GetReservedInstancesExchangeQuote
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -16006,6 +17066,7 @@ const opImportInstance = "ImportInstance"
 // client's request for the ImportInstance operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -16013,6 +17074,15 @@ const opImportInstance = "ImportInstance"
 // See ImportInstance for more information on using the ImportInstance
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ImportInstance for more information on using the ImportInstance
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -16167,6 +17237,7 @@ const opImportSnapshot = "ImportSnapshot"
 // client's request for the ImportSnapshot operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -16174,6 +17245,15 @@ const opImportSnapshot = "ImportSnapshot"
 // See ImportSnapshot for more information on using the ImportSnapshot
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ImportSnapshot for more information on using the ImportSnapshot
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -16396,6 +17476,7 @@ const opModifyHosts = "ModifyHosts"
 // client's request for the ModifyHosts operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -16403,6 +17484,15 @@ const opModifyHosts = "ModifyHosts"
 // See ModifyHosts for more information on using the ModifyHosts
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyHosts for more information on using the ModifyHosts
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -16476,6 +17566,7 @@ const opModifyIdFormat = "ModifyIdFormat"
 // client's request for the ModifyIdFormat operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -16483,6 +17574,15 @@ const opModifyIdFormat = "ModifyIdFormat"
 // See ModifyIdFormat for more information on using the ModifyIdFormat
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyIdFormat for more information on using the ModifyIdFormat
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -16656,6 +17756,7 @@ const opModifyImageAttribute = "ModifyImageAttribute"
 // client's request for the ModifyImageAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -16663,6 +17764,15 @@ const opModifyImageAttribute = "ModifyImageAttribute"
 // See ModifyImageAttribute for more information on using the ModifyImageAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyImageAttribute for more information on using the ModifyImageAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -16822,6 +17932,7 @@ const opModifyInstancePlacement = "ModifyInstancePlacement"
 // client's request for the ModifyInstancePlacement operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -16829,6 +17940,15 @@ const opModifyInstancePlacement = "ModifyInstancePlacement"
 // See ModifyInstancePlacement for more information on using the ModifyInstancePlacement
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyInstancePlacement for more information on using the ModifyInstancePlacement
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -16991,6 +18111,7 @@ const opModifyReservedInstances = "ModifyReservedInstances"
 // client's request for the ModifyReservedInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -16998,6 +18119,15 @@ const opModifyReservedInstances = "ModifyReservedInstances"
 // See ModifyReservedInstances for more information on using the ModifyReservedInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyReservedInstances for more information on using the ModifyReservedInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -17159,6 +18289,7 @@ const opModifySpotFleetRequest = "ModifySpotFleetRequest"
 // client's request for the ModifySpotFleetRequest operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -17166,6 +18297,15 @@ const opModifySpotFleetRequest = "ModifySpotFleetRequest"
 // See ModifySpotFleetRequest for more information on using the ModifySpotFleetRequest
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifySpotFleetRequest for more information on using the ModifySpotFleetRequest
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -17327,11 +18467,15 @@ const opModifyVolume = "ModifyVolume"
 // ModifyVolumeRequest generates a "aws/request.Request" representing the
 // client's request for the ModifyVolume operation. The "output" return
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update deps for Sep 12 2017
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
+<<<<<<< HEAD
 //
 // See ModifyVolume for more information on using the ModifyVolume
 // API call, and error handling.
@@ -17342,18 +18486,21 @@ const opModifyVolume = "ModifyVolume"
 =======
 // value can be used to capture response data after the request's "Send" method
 // is called.
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
-// See ModifyVolume for usage and error information.
+// See ModifyVolume for more information on using the ModifyVolume
+// API call, and error handling.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ModifyVolume method directly
-// instead.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+<<<<<<< HEAD
 // Note: You must call the "Send" method on the returned request object in order
 // to execute the request.
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
 //    // Example sending a request using the ModifyVolumeRequest method.
 //    req, resp := client.ModifyVolumeRequest(params)
@@ -17535,6 +18682,7 @@ const opModifyVpcAttribute = "ModifyVpcAttribute"
 // client's request for the ModifyVpcAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -17542,6 +18690,15 @@ const opModifyVpcAttribute = "ModifyVpcAttribute"
 // See ModifyVpcAttribute for more information on using the ModifyVpcAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyVpcAttribute for more information on using the ModifyVpcAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -17687,6 +18844,7 @@ const opModifyVpcPeeringConnectionOptions = "ModifyVpcPeeringConnectionOptions"
 // client's request for the ModifyVpcPeeringConnectionOptions operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -17694,6 +18852,15 @@ const opModifyVpcPeeringConnectionOptions = "ModifyVpcPeeringConnectionOptions"
 // See ModifyVpcPeeringConnectionOptions for more information on using the ModifyVpcPeeringConnectionOptions
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyVpcPeeringConnectionOptions for more information on using the ModifyVpcPeeringConnectionOptions
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -17945,6 +19112,7 @@ const opMoveAddressToVpc = "MoveAddressToVpc"
 // client's request for the MoveAddressToVpc operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -17952,6 +19120,15 @@ const opMoveAddressToVpc = "MoveAddressToVpc"
 // See MoveAddressToVpc for more information on using the MoveAddressToVpc
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See MoveAddressToVpc for more information on using the MoveAddressToVpc
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -18102,6 +19279,7 @@ const opPurchaseReservedInstancesOffering = "PurchaseReservedInstancesOffering"
 // client's request for the PurchaseReservedInstancesOffering operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -18109,6 +19287,15 @@ const opPurchaseReservedInstancesOffering = "PurchaseReservedInstancesOffering"
 // See PurchaseReservedInstancesOffering for more information on using the PurchaseReservedInstancesOffering
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See PurchaseReservedInstancesOffering for more information on using the PurchaseReservedInstancesOffering
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -18268,6 +19455,7 @@ const opRebootInstances = "RebootInstances"
 // client's request for the RebootInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -18275,6 +19463,15 @@ const opRebootInstances = "RebootInstances"
 // See RebootInstances for more information on using the RebootInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See RebootInstances for more information on using the RebootInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -18456,6 +19653,7 @@ const opRejectVpcPeeringConnection = "RejectVpcPeeringConnection"
 // client's request for the RejectVpcPeeringConnection operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -18463,6 +19661,15 @@ const opRejectVpcPeeringConnection = "RejectVpcPeeringConnection"
 // See RejectVpcPeeringConnection for more information on using the RejectVpcPeeringConnection
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See RejectVpcPeeringConnection for more information on using the RejectVpcPeeringConnection
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -18711,11 +19918,15 @@ const opReplaceIamInstanceProfileAssociation = "ReplaceIamInstanceProfileAssocia
 // ReplaceIamInstanceProfileAssociationRequest generates a "aws/request.Request" representing the
 // client's request for the ReplaceIamInstanceProfileAssociation operation. The "output" return
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update deps for Sep 12 2017
 // value will be populated with the request's response once the request complets
 // successfuly.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
+<<<<<<< HEAD
 //
 // See ReplaceIamInstanceProfileAssociation for more information on using the ReplaceIamInstanceProfileAssociation
 // API call, and error handling.
@@ -18726,18 +19937,21 @@ const opReplaceIamInstanceProfileAssociation = "ReplaceIamInstanceProfileAssocia
 =======
 // value can be used to capture response data after the request's "Send" method
 // is called.
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
-// See ReplaceIamInstanceProfileAssociation for usage and error information.
+// See ReplaceIamInstanceProfileAssociation for more information on using the ReplaceIamInstanceProfileAssociation
+// API call, and error handling.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ReplaceIamInstanceProfileAssociation method directly
-// instead.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+<<<<<<< HEAD
 // Note: You must call the "Send" method on the returned request object in order
 // to execute the request.
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update deps for Sep 12 2017
 //
 //    // Example sending a request using the ReplaceIamInstanceProfileAssociationRequest method.
 //    req, resp := client.ReplaceIamInstanceProfileAssociationRequest(params)
@@ -18884,6 +20098,7 @@ const opReplaceNetworkAclEntry = "ReplaceNetworkAclEntry"
 // client's request for the ReplaceNetworkAclEntry operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -18891,6 +20106,15 @@ const opReplaceNetworkAclEntry = "ReplaceNetworkAclEntry"
 // See ReplaceNetworkAclEntry for more information on using the ReplaceNetworkAclEntry
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ReplaceNetworkAclEntry for more information on using the ReplaceNetworkAclEntry
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -18962,6 +20186,7 @@ const opReplaceRoute = "ReplaceRoute"
 // client's request for the ReplaceRoute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -18969,6 +20194,15 @@ const opReplaceRoute = "ReplaceRoute"
 // See ReplaceRoute for more information on using the ReplaceRoute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ReplaceRoute for more information on using the ReplaceRoute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -19126,6 +20360,7 @@ const opReportInstanceStatus = "ReportInstanceStatus"
 // client's request for the ReportInstanceStatus operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -19133,6 +20368,15 @@ const opReportInstanceStatus = "ReportInstanceStatus"
 // See ReportInstanceStatus for more information on using the ReportInstanceStatus
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ReportInstanceStatus for more information on using the ReportInstanceStatus
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -19298,6 +20542,7 @@ const opRequestSpotInstances = "RequestSpotInstances"
 // client's request for the RequestSpotInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -19305,6 +20550,15 @@ const opRequestSpotInstances = "RequestSpotInstances"
 // See RequestSpotInstances for more information on using the RequestSpotInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See RequestSpotInstances for more information on using the RequestSpotInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -19533,6 +20787,7 @@ const opResetInstanceAttribute = "ResetInstanceAttribute"
 // client's request for the ResetInstanceAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -19540,6 +20795,15 @@ const opResetInstanceAttribute = "ResetInstanceAttribute"
 // See ResetInstanceAttribute for more information on using the ResetInstanceAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ResetInstanceAttribute for more information on using the ResetInstanceAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -19694,6 +20958,7 @@ const opResetSnapshotAttribute = "ResetSnapshotAttribute"
 // client's request for the ResetSnapshotAttribute operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -19701,6 +20966,15 @@ const opResetSnapshotAttribute = "ResetSnapshotAttribute"
 // See ResetSnapshotAttribute for more information on using the ResetSnapshotAttribute
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ResetSnapshotAttribute for more information on using the ResetSnapshotAttribute
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -19851,6 +21125,7 @@ const opRevokeSecurityGroupEgress = "RevokeSecurityGroupEgress"
 // client's request for the RevokeSecurityGroupEgress operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -19858,6 +21133,15 @@ const opRevokeSecurityGroupEgress = "RevokeSecurityGroupEgress"
 // See RevokeSecurityGroupEgress for more information on using the RevokeSecurityGroupEgress
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See RevokeSecurityGroupEgress for more information on using the RevokeSecurityGroupEgress
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -20152,6 +21436,7 @@ const opRunScheduledInstances = "RunScheduledInstances"
 // client's request for the RunScheduledInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -20159,6 +21444,15 @@ const opRunScheduledInstances = "RunScheduledInstances"
 // See RunScheduledInstances for more information on using the RunScheduledInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See RunScheduledInstances for more information on using the RunScheduledInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -20332,6 +21626,7 @@ const opStopInstances = "StopInstances"
 // client's request for the StopInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -20339,6 +21634,15 @@ const opStopInstances = "StopInstances"
 // See StopInstances for more information on using the StopInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StopInstances for more information on using the StopInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -20536,6 +21840,7 @@ const opUnassignIpv6Addresses = "UnassignIpv6Addresses"
 // client's request for the UnassignIpv6Addresses operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -20543,6 +21848,15 @@ const opUnassignIpv6Addresses = "UnassignIpv6Addresses"
 // See UnassignIpv6Addresses for more information on using the UnassignIpv6Addresses
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UnassignIpv6Addresses for more information on using the UnassignIpv6Addresses
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -20686,6 +22000,7 @@ const opUnmonitorInstances = "UnmonitorInstances"
 // client's request for the UnmonitorInstances operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -20693,6 +22008,15 @@ const opUnmonitorInstances = "UnmonitorInstances"
 // See UnmonitorInstances for more information on using the UnmonitorInstances
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UnmonitorInstances for more information on using the UnmonitorInstances
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
@@ -20917,6 +22241,166 @@ func (c *EC2) UpdateSecurityGroupRuleDescriptionsIngressWithContext(ctx aws.Cont
 	return out, req.Send()
 =======
 >>>>>>> Revendor using dep tool
+}
+
+const opUpdateSecurityGroupRuleDescriptionsEgress = "UpdateSecurityGroupRuleDescriptionsEgress"
+
+// UpdateSecurityGroupRuleDescriptionsEgressRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateSecurityGroupRuleDescriptionsEgress operation. The "output" return
+// value will be populated with the request's response once the request complets
+// successfuly.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateSecurityGroupRuleDescriptionsEgress for more information on using the UpdateSecurityGroupRuleDescriptionsEgress
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//
+//    // Example sending a request using the UpdateSecurityGroupRuleDescriptionsEgressRequest method.
+//    req, resp := client.UpdateSecurityGroupRuleDescriptionsEgressRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/UpdateSecurityGroupRuleDescriptionsEgress
+func (c *EC2) UpdateSecurityGroupRuleDescriptionsEgressRequest(input *UpdateSecurityGroupRuleDescriptionsEgressInput) (req *request.Request, output *UpdateSecurityGroupRuleDescriptionsEgressOutput) {
+	op := &request.Operation{
+		Name:       opUpdateSecurityGroupRuleDescriptionsEgress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &UpdateSecurityGroupRuleDescriptionsEgressInput{}
+	}
+
+	output = &UpdateSecurityGroupRuleDescriptionsEgressOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateSecurityGroupRuleDescriptionsEgress API operation for Amazon Elastic Compute Cloud.
+//
+// [EC2-VPC only] Updates the description of an egress (outbound) security group
+// rule. You can replace an existing description, or add a description to a
+// rule that did not have one previously.
+//
+// You specify the description as part of the IP permissions structure. You
+// can remove a description for a security group rule by omitting the description
+// parameter in the request.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation UpdateSecurityGroupRuleDescriptionsEgress for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/UpdateSecurityGroupRuleDescriptionsEgress
+func (c *EC2) UpdateSecurityGroupRuleDescriptionsEgress(input *UpdateSecurityGroupRuleDescriptionsEgressInput) (*UpdateSecurityGroupRuleDescriptionsEgressOutput, error) {
+	req, out := c.UpdateSecurityGroupRuleDescriptionsEgressRequest(input)
+	return out, req.Send()
+}
+
+// UpdateSecurityGroupRuleDescriptionsEgressWithContext is the same as UpdateSecurityGroupRuleDescriptionsEgress with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateSecurityGroupRuleDescriptionsEgress for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) UpdateSecurityGroupRuleDescriptionsEgressWithContext(ctx aws.Context, input *UpdateSecurityGroupRuleDescriptionsEgressInput, opts ...request.Option) (*UpdateSecurityGroupRuleDescriptionsEgressOutput, error) {
+	req, out := c.UpdateSecurityGroupRuleDescriptionsEgressRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUpdateSecurityGroupRuleDescriptionsIngress = "UpdateSecurityGroupRuleDescriptionsIngress"
+
+// UpdateSecurityGroupRuleDescriptionsIngressRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateSecurityGroupRuleDescriptionsIngress operation. The "output" return
+// value will be populated with the request's response once the request complets
+// successfuly.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateSecurityGroupRuleDescriptionsIngress for more information on using the UpdateSecurityGroupRuleDescriptionsIngress
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//
+//    // Example sending a request using the UpdateSecurityGroupRuleDescriptionsIngressRequest method.
+//    req, resp := client.UpdateSecurityGroupRuleDescriptionsIngressRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/UpdateSecurityGroupRuleDescriptionsIngress
+func (c *EC2) UpdateSecurityGroupRuleDescriptionsIngressRequest(input *UpdateSecurityGroupRuleDescriptionsIngressInput) (req *request.Request, output *UpdateSecurityGroupRuleDescriptionsIngressOutput) {
+	op := &request.Operation{
+		Name:       opUpdateSecurityGroupRuleDescriptionsIngress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &UpdateSecurityGroupRuleDescriptionsIngressInput{}
+	}
+
+	output = &UpdateSecurityGroupRuleDescriptionsIngressOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateSecurityGroupRuleDescriptionsIngress API operation for Amazon Elastic Compute Cloud.
+//
+// Updates the description of an ingress (inbound) security group rule. You
+// can replace an existing description, or add a description to a rule that
+// did not have one previously.
+//
+// You specify the description as part of the IP permissions structure. You
+// can remove a description for a security group rule by omitting the description
+// parameter in the request.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Elastic Compute Cloud's
+// API operation UpdateSecurityGroupRuleDescriptionsIngress for usage and error information.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/UpdateSecurityGroupRuleDescriptionsIngress
+func (c *EC2) UpdateSecurityGroupRuleDescriptionsIngress(input *UpdateSecurityGroupRuleDescriptionsIngressInput) (*UpdateSecurityGroupRuleDescriptionsIngressOutput, error) {
+	req, out := c.UpdateSecurityGroupRuleDescriptionsIngressRequest(input)
+	return out, req.Send()
+}
+
+// UpdateSecurityGroupRuleDescriptionsIngressWithContext is the same as UpdateSecurityGroupRuleDescriptionsIngress with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateSecurityGroupRuleDescriptionsIngress for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EC2) UpdateSecurityGroupRuleDescriptionsIngressWithContext(ctx aws.Context, input *UpdateSecurityGroupRuleDescriptionsIngressInput, opts ...request.Option) (*UpdateSecurityGroupRuleDescriptionsIngressOutput, error) {
+	req, out := c.UpdateSecurityGroupRuleDescriptionsIngressRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
 }
 
 // Contains the parameters for accepting the quote.
@@ -26433,9 +27917,13 @@ func (s *CreateNetworkInterfaceOutput) SetNetworkInterface(v *NetworkInterface) 
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Contains the parameters for CreateNetworkInterfacePermission.
 =======
 >>>>>>> Update deps for July 14th.
+=======
+// Contains the parameters for CreateNetworkInterfacePermission.
+>>>>>>> Update deps for Sep 12 2017
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkInterfacePermissionRequest
 type CreateNetworkInterfacePermissionInput struct {
 	_ struct{} `type:"structure"`
@@ -26520,9 +28008,13 @@ func (s *CreateNetworkInterfacePermissionInput) SetPermission(v string) *CreateN
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Contains the output of CreateNetworkInterfacePermission.
 =======
 >>>>>>> Update deps for July 14th.
+=======
+// Contains the output of CreateNetworkInterfacePermission.
+>>>>>>> Update deps for Sep 12 2017
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateNetworkInterfacePermissionResult
 type CreateNetworkInterfacePermissionOutput struct {
 	_ struct{} `type:"structure"`
@@ -29096,9 +30588,13 @@ func (s DeleteNetworkInterfaceOutput) GoString() string {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Contains the parameters for DeleteNetworkInterfacePermission.
 =======
 >>>>>>> Update deps for July 14th.
+=======
+// Contains the parameters for DeleteNetworkInterfacePermission.
+>>>>>>> Update deps for Sep 12 2017
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkInterfacePermissionRequest
 type DeleteNetworkInterfacePermissionInput struct {
 	_ struct{} `type:"structure"`
@@ -29161,9 +30657,13 @@ func (s *DeleteNetworkInterfacePermissionInput) SetNetworkInterfacePermissionId(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Contains the output for DeleteNetworkInterfacePermission.
 =======
 >>>>>>> Update deps for July 14th.
+=======
+// Contains the output for DeleteNetworkInterfacePermission.
+>>>>>>> Update deps for Sep 12 2017
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteNetworkInterfacePermissionResult
 type DeleteNetworkInterfacePermissionOutput struct {
 	_ struct{} `type:"structure"`
@@ -31185,7 +32685,11 @@ type DescribeElasticGpusOutput struct {
 	_ struct{} `type:"structure"`
 
 	// Information about the Elastic GPUs.
+<<<<<<< HEAD
 	ElasticGpuSet []*ElasticGpus `locationName:"elasticGpuSet" locationNameList:"item" type:"list"`
+=======
+	ElasticGpuSet []*ElasticGpus `locationName:"elasticGpuSet" type:"list"`
+>>>>>>> Update deps for Sep 12 2017
 
 	// The total number of items to return. If the total number of items available
 	// is more than the value specified in max-items then a Next-Token will be provided
@@ -34085,9 +35589,13 @@ func (s *DescribeNetworkInterfaceAttributeOutput) SetSourceDestCheck(v *Attribut
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Contains the parameters for DescribeNetworkInterfacePermissions.
 =======
 >>>>>>> Update deps for July 14th.
+=======
+// Contains the parameters for DescribeNetworkInterfacePermissions.
+>>>>>>> Update deps for Sep 12 2017
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkInterfacePermissionsRequest
 type DescribeNetworkInterfacePermissionsInput struct {
 	_ struct{} `type:"structure"`
@@ -34155,9 +35663,13 @@ func (s *DescribeNetworkInterfacePermissionsInput) SetNextToken(v string) *Descr
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Contains the output for DescribeNetworkInterfacePermissions.
 =======
 >>>>>>> Update deps for July 14th.
+=======
+// Contains the output for DescribeNetworkInterfacePermissions.
+>>>>>>> Update deps for Sep 12 2017
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeNetworkInterfacePermissionsResult
 type DescribeNetworkInterfacePermissionsOutput struct {
 	_ struct{} `type:"structure"`

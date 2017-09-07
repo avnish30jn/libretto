@@ -10,6 +10,7 @@ const SDKName = "aws-sdk-go"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const SDKVersion = "1.12.19"
 =======
 const SDKVersion = "1.8.7"
@@ -26,3 +27,6 @@ const SDKVersion = "1.10.3"
 =======
 const SDKVersion = "1.10.11"
 >>>>>>> Update deps for July 14th.
+=======
+const SDKVersion = "1.10.43"
+>>>>>>> Update deps for Sep 12 2017

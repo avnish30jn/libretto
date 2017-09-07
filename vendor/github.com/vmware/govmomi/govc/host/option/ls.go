@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
 Copyright (c) 2016 VMware, Inc. All Rights Reserved.
+=======
+Copyright (c) 2016-2017 VMware, Inc. All Rights Reserved.
+>>>>>>> Update deps for Sep 12 2017
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,6 +23,7 @@ package option
 import (
 	"context"
 	"flag"
+<<<<<<< HEAD
 	"fmt"
 	"io"
 	"os"
@@ -32,6 +37,16 @@ import (
 type ls struct {
 	*flags.ClientFlag
 	*flags.OutputFlag
+=======
+
+	"github.com/vmware/govmomi/govc/cli"
+	"github.com/vmware/govmomi/govc/flags"
+	"github.com/vmware/govmomi/govc/option"
+)
+
+type ls struct {
+	*option.List
+>>>>>>> Update deps for Sep 12 2017
 	*flags.HostSystemFlag
 }
 
@@ -40,21 +55,34 @@ func init() {
 }
 
 func (cmd *ls) Register(ctx context.Context, f *flag.FlagSet) {
+<<<<<<< HEAD
 	cmd.ClientFlag, ctx = flags.NewClientFlag(ctx)
 	cmd.ClientFlag.Register(ctx, f)
 
 	cmd.OutputFlag, ctx = flags.NewOutputFlag(ctx)
 	cmd.OutputFlag.Register(ctx, f)
+=======
+	cmd.List = &option.List{}
+	cmd.List.ClientFlag, ctx = flags.NewClientFlag(ctx)
+	cmd.List.ClientFlag.Register(ctx, f)
+
+	cmd.List.OutputFlag, ctx = flags.NewOutputFlag(ctx)
+	cmd.List.OutputFlag.Register(ctx, f)
+>>>>>>> Update deps for Sep 12 2017
 
 	cmd.HostSystemFlag, ctx = flags.NewHostSystemFlag(ctx)
 	cmd.HostSystemFlag.Register(ctx, f)
 }
 
 func (cmd *ls) Process(ctx context.Context) error {
+<<<<<<< HEAD
 	if err := cmd.ClientFlag.Process(ctx); err != nil {
 		return err
 	}
 	if err := cmd.OutputFlag.Process(ctx); err != nil {
+=======
+	if err := cmd.List.Process(ctx); err != nil {
+>>>>>>> Update deps for Sep 12 2017
 		return err
 	}
 	if err := cmd.HostSystemFlag.Process(ctx); err != nil {
@@ -63,6 +91,7 @@ func (cmd *ls) Process(ctx context.Context) error {
 	return nil
 }
 
+<<<<<<< HEAD
 func (cmd *ls) Usage() string {
 	return "NAME"
 }
@@ -78,6 +107,18 @@ func (cmd *ls) Run(ctx context.Context, f *flag.FlagSet) error {
 		return flag.ErrHelp
 	}
 
+=======
+func (cmd *ls) Description() string {
+	return option.ListDescription + `
+
+Examples:
+  govc host.option.ls
+  govc host.option.ls Config.HostAgent.
+  govc host.option.ls Config.HostAgent.plugins.solo.enableMob`
+}
+
+func (cmd *ls) Run(ctx context.Context, f *flag.FlagSet) error {
+>>>>>>> Update deps for Sep 12 2017
 	host, err := cmd.HostSystem()
 	if err != nil {
 		return err
@@ -88,6 +129,7 @@ func (cmd *ls) Run(ctx context.Context, f *flag.FlagSet) error {
 		return err
 	}
 
+<<<<<<< HEAD
 	opts, err := m.Query(ctx, f.Arg(0))
 	if err != nil {
 		return err
@@ -105,4 +147,7 @@ func (r optionResult) Write(w io.Writer) error {
 		fmt.Fprintf(tw, "%s:\t%v\n", o.Key, o.Value)
 	}
 	return tw.Flush()
+=======
+	return cmd.Query(ctx, f, m)
+>>>>>>> Update deps for Sep 12 2017
 }

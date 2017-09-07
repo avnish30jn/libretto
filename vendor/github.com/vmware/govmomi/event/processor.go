@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
 Copyright (c) 2016 VMware, Inc. All Rights Reserved.
+=======
+Copyright (c) 2016-2017 VMware, Inc. All Rights Reserved.
+>>>>>>> Update deps for Sep 12 2017
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,8 +29,11 @@ import (
 	"github.com/vmware/govmomi/vim25/types"
 )
 
+<<<<<<< HEAD
 const latestPageProp = "latestPage"
 
+=======
+>>>>>>> Update deps for Sep 12 2017
 type tailInfo struct {
 	t         *eventTailer
 	obj       types.ManagedObjectReference
@@ -81,12 +88,16 @@ func (p *eventProcessor) run(ctx context.Context, tail bool) error {
 		return nil
 	}
 
+<<<<<<< HEAD
 	var err error
+=======
+>>>>>>> Update deps for Sep 12 2017
 	var collectors []types.ManagedObjectReference
 	for _, t := range p.tailers {
 		collectors = append(collectors, t.collector)
 	}
 
+<<<<<<< HEAD
 	if len(p.tailers) > 1 {
 		// create and populate a ListView
 		viewMgr := view.NewManager(p.mgr.Client())
@@ -128,6 +139,44 @@ func (p *eventProcessor) run(ctx context.Context, tail bool) error {
 	})
 
 	return err
+=======
+	c := property.DefaultCollector(p.mgr.Client())
+	props := []string{"latestPage"}
+
+	if len(collectors) == 1 {
+		// only one object to follow, don't bother creating a view
+		return property.Wait(ctx, c, collectors[0], props, func(pc []types.PropertyChange) bool {
+			if err := p.process(collectors[0], pc); err != nil {
+				return false
+			}
+
+			return !tail
+		})
+	}
+
+	// create and populate a ListView
+	m := view.NewManager(p.mgr.Client())
+
+	list, err := m.CreateListView(ctx, collectors)
+	if err != nil {
+		return err
+	}
+
+	defer list.Destroy(context.Background())
+
+	ref := list.Reference()
+	filter := new(property.WaitFilter).Add(ref, collectors[0].Type, props, list.TraversalSpec())
+
+	return property.WaitForUpdates(ctx, c, filter, func(updates []types.ObjectUpdate) bool {
+		for _, update := range updates {
+			if err := p.process(update.Obj, update.ChangeSet); err != nil {
+				return false
+			}
+		}
+
+		return !tail
+	})
+>>>>>>> Update deps for Sep 12 2017
 }
 
 func (p *eventProcessor) process(c types.ManagedObjectReference, pc []types.PropertyChange) error {
@@ -137,10 +186,13 @@ func (p *eventProcessor) process(c types.ManagedObjectReference, pc []types.Prop
 	}
 
 	for _, u := range pc {
+<<<<<<< HEAD
 		if u.Name != latestPageProp {
 			continue
 		}
 
+=======
+>>>>>>> Update deps for Sep 12 2017
 		evs := t.t.newEvents(u.Val.(types.ArrayOfEvent).Event)
 		if len(evs) == 0 {
 			continue

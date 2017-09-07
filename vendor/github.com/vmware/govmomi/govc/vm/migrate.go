@@ -80,6 +80,10 @@ func (cmd *migrate) Description() string {
 
 Examples:
   govc vm.migrate -host another-host vm-1 vm-2 vm-3
+<<<<<<< HEAD
+=======
+  govc vm.migrate -pool another-pool vm-1 vm-2 vm-3
+>>>>>>> Update deps for Sep 12 2017
   govc vm.migrate -ds another-ds vm-1 vm-2 vm-3`
 }
 
@@ -121,6 +125,16 @@ func (cmd *migrate) Run(ctx context.Context, f *flag.FlagSet) error {
 		return err
 	}
 
+<<<<<<< HEAD
+=======
+	if pool == nil && host != nil {
+		pool, err = host.ResourcePool(ctx)
+		if err != nil {
+			return err
+		}
+	}
+
+>>>>>>> Update deps for Sep 12 2017
 	if pool != nil {
 		ref := pool.Reference()
 		cmd.spec.Pool = &ref

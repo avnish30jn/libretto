@@ -90,6 +90,7 @@ type Waiter struct {
 	Delay       WaiterDelay
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	RequestOptions   []Option
 	NewRequest       func([]Option) (*Request, error)
 	SleepWithContext func(aws.Context, time.Duration) error
@@ -97,6 +98,11 @@ type Waiter struct {
 	RequestOptions []Option
 	NewRequest     func([]Option) (*Request, error)
 >>>>>>> Revendor using dep tool
+=======
+	RequestOptions   []Option
+	NewRequest       func([]Option) (*Request, error)
+	SleepWithContext func(aws.Context, time.Duration) error
+>>>>>>> Update deps for Sep 12 2017
 }
 
 // ApplyOptions updates the waiter with the list of waiter options provided.
@@ -228,6 +234,9 @@ func (w Waiter) WaitWithContext(ctx aws.Context) error {
 			// Support SleepDelay for backwards compatibility and testing
 			sleepFn(delay)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update deps for Sep 12 2017
 		} else {
 			sleepCtxFn := w.SleepWithContext
 			if sleepCtxFn == nil {
@@ -237,10 +246,13 @@ func (w Waiter) WaitWithContext(ctx aws.Context) error {
 			if err := sleepCtxFn(ctx, delay); err != nil {
 				return awserr.New(CanceledErrorCode, "waiter context canceled", err)
 			}
+<<<<<<< HEAD
 =======
 		} else if err := aws.SleepWithContext(ctx, delay); err != nil {
 			return awserr.New(CanceledErrorCode, "waiter context canceled", err)
 >>>>>>> Revendor using dep tool
+=======
+>>>>>>> Update deps for Sep 12 2017
 		}
 	}
 

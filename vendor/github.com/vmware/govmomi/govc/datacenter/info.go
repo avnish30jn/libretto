@@ -148,6 +148,10 @@ func (r *infoResult) Write(w io.Writer) error {
 	for _, o := range r.objects {
 		dc := objects[o.Reference()]
 		fmt.Fprintf(tw, "Name:\t%s\n", dc.Name)
+<<<<<<< HEAD
+=======
+		fmt.Fprintf(tw, "  Path:\t%s\n", o.InventoryPath)
+>>>>>>> Update deps for Sep 12 2017
 
 		folders, err := o.Folders(r.ctx)
 		if err != nil {

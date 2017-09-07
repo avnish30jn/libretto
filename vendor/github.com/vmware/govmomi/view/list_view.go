@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
 Copyright (c) 2015 VMware, Inc. All Rights Reserved.
+=======
+Copyright (c) 2015-2017 VMware, Inc. All Rights Reserved.
+>>>>>>> Update deps for Sep 12 2017
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,17 +21,60 @@ limitations under the License.
 package view
 
 import (
+<<<<<<< HEAD
 	"github.com/vmware/govmomi/object"
 	"github.com/vmware/govmomi/vim25"
+=======
+	"context"
+
+	"github.com/vmware/govmomi/vim25"
+	"github.com/vmware/govmomi/vim25/methods"
+>>>>>>> Update deps for Sep 12 2017
 	"github.com/vmware/govmomi/vim25/types"
 )
 
 type ListView struct {
+<<<<<<< HEAD
 	*object.ListView
+=======
+	ManagedObjectView
+>>>>>>> Update deps for Sep 12 2017
 }
 
 func NewListView(c *vim25.Client, ref types.ManagedObjectReference) *ListView {
 	return &ListView{
+<<<<<<< HEAD
 		ListView: object.NewListView(c, ref),
 	}
+=======
+		ManagedObjectView: *NewManagedObjectView(c, ref),
+	}
+}
+
+func (v ListView) Add(ctx context.Context, refs []types.ManagedObjectReference) error {
+	req := types.ModifyListView{
+		This: v.Reference(),
+		Add:  refs,
+	}
+	_, err := methods.ModifyListView(ctx, v.Client(), &req)
+	return err
+}
+
+func (v ListView) Remove(ctx context.Context, refs []types.ManagedObjectReference) error {
+	req := types.ModifyListView{
+		This:   v.Reference(),
+		Remove: refs,
+	}
+	_, err := methods.ModifyListView(ctx, v.Client(), &req)
+	return err
+}
+
+func (v ListView) Reset(ctx context.Context, refs []types.ManagedObjectReference) error {
+	req := types.ResetListView{
+		This: v.Reference(),
+		Obj:  refs,
+	}
+	_, err := methods.ResetListView(ctx, v.Client(), &req)
+	return err
+>>>>>>> Update deps for Sep 12 2017
 }

@@ -182,8 +182,63 @@ type VM struct {
 func (vm *VM) MarshalJSON() ([]byte, error) {
 	// Make an alias of the VM type to avoid infinite recursion. This works
 	// because the alias does not have a MarshalJSON() method.
-	type vmAlias VM
-	alias := vmAlias(*vm)
+	type (
+		// credsAlias prevents a mutex in ssh.Credentials from being copied.
+		credsAlias struct {
+			SSHUser       string
+			SSHPassword   string
+			SSHPrivateKey string
+		}
+		vmAlias struct {
+			IdentityEndpoint string
+			Username         string
+			Password         string
+			Region           string
+			TenantName       string
+			FlavorName       string
+			ImageID          string
+			ImageMetadata    ImageMetadata
+			ImagePath        string
+			Volume           Volume
+			InstanceID       string
+			Name             string
+			Networks         []string
+			FloatingIPPool   string
+			FloatingIP       *floatingips.FloatingIP
+			SecurityGroup    string
+			UserData         []byte
+			AdminPassword    string
+			Credentials      credsAlias
+		}
+	)
+
+	// Creating the alias in this way avoids copying the mutex in
+	// ssh.Credentials, which go vet doesn't like.
+	alias := vmAlias{
+		IdentityEndpoint: vm.IdentityEndpoint,
+		Username:         vm.Username,
+		Password:         vm.Password,
+		Region:           vm.Region,
+		TenantName:       vm.TenantName,
+		FlavorName:       vm.FlavorName,
+		ImageID:          vm.ImageID,
+		ImageMetadata:    vm.ImageMetadata,
+		ImagePath:        vm.ImagePath,
+		Volume:           vm.Volume,
+		InstanceID:       vm.InstanceID,
+		Name:             vm.Name,
+		Networks:         vm.Networks,
+		FloatingIPPool:   vm.FloatingIPPool,
+		FloatingIP:       vm.FloatingIP,
+		SecurityGroup:    vm.SecurityGroup,
+		UserData:         vm.UserData,
+		AdminPassword:    vm.AdminPassword,
+		Credentials: credsAlias{
+			SSHUser:       vm.Credentials.SSHUser,
+			SSHPassword:   vm.Credentials.SSHPassword,
+			SSHPrivateKey: vm.Credentials.SSHPrivateKey,
+		},
+	}
 
 	b, err := json.Marshal(alias)
 	if err != nil {
@@ -382,7 +437,7 @@ func (vm *VM) Destroy() error {
 	// Delete the floating IP first before destroying the VM
 	var errors []error
 	if vm.FloatingIP != nil {
-		err = floatingips.DisassociateInstance(client, vm.InstanceID, floatingips.DisassociateOpts{vm.FloatingIP.IP}).ExtractErr()
+		err = floatingips.DisassociateInstance(client, vm.InstanceID, floatingips.DisassociateOpts{FloatingIP: vm.FloatingIP.IP}).ExtractErr()
 		if err != nil {
 			errors = append(errors, fmt.Errorf("unable to disassociate floating ip from instance: %s", err))
 		} else {

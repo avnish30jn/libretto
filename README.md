@@ -27,7 +27,7 @@ Supported Providers
 Getting Started
 ================
 
-Go version 1.7+ is required.
+Go version 1.9+ is required.
 
 ``` sh
 go get -u github.com/apcera/libretto

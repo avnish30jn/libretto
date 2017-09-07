@@ -927,6 +927,7 @@ const opGetSessionToken = "GetSessionToken"
 // client's request for the GetSessionToken operation. The "output" return
 // value will be populated with the request's response once the request complets
 // successfuly.
+<<<<<<< HEAD
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -934,6 +935,15 @@ const opGetSessionToken = "GetSessionToken"
 // See GetSessionToken for more information on using the GetSessionToken
 // API call, and error handling.
 //
+=======
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetSessionToken for more information on using the GetSessionToken
+// API call, and error handling.
+//
+>>>>>>> Update deps for Sep 12 2017
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //

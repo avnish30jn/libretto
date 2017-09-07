@@ -30,8 +30,12 @@ import (
 type service struct {
 	*flags.HostSystemFlag
 
+<<<<<<< HEAD
 	Enable  bool
 	Disable bool
+=======
+	Enable bool
+>>>>>>> Update deps for Sep 12 2017
 }
 
 func init() {
@@ -42,18 +46,25 @@ func (cmd *service) Register(ctx context.Context, f *flag.FlagSet) {
 	cmd.HostSystemFlag, ctx = flags.NewHostSystemFlag(ctx)
 	cmd.HostSystemFlag.Register(ctx, f)
 
+<<<<<<< HEAD
 	f.BoolVar(&cmd.Enable, "enable", false, "Enable service")
 	f.BoolVar(&cmd.Disable, "disable", false, "Disable service")
+=======
+	f.BoolVar(&cmd.Enable, "enable", true, "Enable service")
+>>>>>>> Update deps for Sep 12 2017
 }
 
 func (cmd *service) Process(ctx context.Context) error {
 	if err := cmd.HostSystemFlag.Process(ctx); err != nil {
 		return err
 	}
+<<<<<<< HEAD
 	// Either may be true or none may be true.
 	if cmd.Enable && cmd.Disable {
 		return flag.ErrHelp
 	}
+=======
+>>>>>>> Update deps for Sep 12 2017
 
 	return nil
 }
@@ -81,7 +92,11 @@ Where DEVICE is one of: %s
 
 Examples:
   govc host.vnic.service -host hostname -enable vsan vmk0
+<<<<<<< HEAD
 `,
+=======
+  govc host.vnic.service -host hostname -enable=false vmotion vmk1`,
+>>>>>>> Update deps for Sep 12 2017
 		strings.Join(nicTypes, "|"),
 		strings.Join([]string{"vmk0", "vmk1", "..."}, "|"))
 }
@@ -108,7 +123,11 @@ func (cmd *service) Run(ctx context.Context, f *flag.FlagSet) error {
 
 	if cmd.Enable {
 		method = m.SelectVnic
+<<<<<<< HEAD
 	} else if cmd.Disable {
+=======
+	} else {
+>>>>>>> Update deps for Sep 12 2017
 		method = m.DeselectVnic
 	}
 

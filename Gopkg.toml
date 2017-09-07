@@ -1,32 +1,40 @@
 
 [[constraint]]
+  name = "github.com/Azure/azure-sdk-for-go"
+  version = "10.3.1-beta"
+
+[[constraint]]
   name = "github.com/Azure/go-autorest"
-  version = "^7.0.0"
+  version = "8.3.1"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/apcera/util"
 
 [[constraint]]
   name = "github.com/aws/aws-sdk-go"
-  version = "^1.0.0"
+  version = "1.10.43"
 
 [[constraint]]
-  name = "github.com/dgrijalva/jwt-go"
-  version = "^3.0.0"
+  branch = "master"
+  name = "github.com/gophercloud/gophercloud"
 
 [[constraint]]
-  name = "github.com/go-ini/ini"
-  version = "^1.0.0"
+  branch = "master"
+  name = "github.com/pyr/egoscale"
 
 [[constraint]]
-  name = "github.com/jmespath/go-jmespath"
-  version = ">=0.0.0, <1.0.0"
-
-[[constraint]]
+  branch = "master"
   name = "github.com/vmware/govmomi"
-  version = ">=0.13.0, <1.0.0"
 
 [[constraint]]
-  name = "google.golang.org/appengine"
-  version = "^1.0.0"
+  branch = "master"
+  name = "golang.org/x/crypto"
 
 [[constraint]]
-  name = "google.golang.org/grpc"
-  version = "^1.0.0"
+  branch = "master"
+  name = "golang.org/x/oauth2"
+
+[[constraint]]
+  branch = "master"
+  name = "google.golang.org/api"

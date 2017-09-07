@@ -5,6 +5,7 @@ package aws
 import "time"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // An emptyCtx is a copy of the Go 1.7 context.emptyCtx type. This is copied to
 // provide a 1.6 and 1.5 safe version of context that is compatible with Go
 // 1.7's Context.
@@ -13,6 +14,11 @@ import "time"
 // is copied to provide a 1.6 and 1.5 safe version of context that is compatible
 // with Go 1.7's Context.
 >>>>>>> Revendor using dep tool
+=======
+// An emptyCtx is a copy of the Go 1.7 context.emptyCtx type. This is copied to
+// provide a 1.6 and 1.5 safe version of context that is compatible with Go
+// 1.7's Context.
+>>>>>>> Update deps for Sep 12 2017
 //
 // An emptyCtx is never canceled, has no values, and has no deadline. It is not
 // struct{}, since vars of this type must have distinct addresses.

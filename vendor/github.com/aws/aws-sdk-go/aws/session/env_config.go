@@ -80,10 +80,14 @@ type envConfig struct {
 
 	// Sets the path to a custom Credentials Authroity (CA) Bundle PEM file
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// that the SDK will use instead of the system's root CA bundle.
 =======
 	// that the SDK will use instead of the the system's root CA bundle.
 >>>>>>> Revendor using dep tool
+=======
+	// that the SDK will use instead of the system's root CA bundle.
+>>>>>>> Update deps for Sep 12 2017
 	// Only use this if you want to configure the SDK to use a custom set
 	// of CAs.
 	//

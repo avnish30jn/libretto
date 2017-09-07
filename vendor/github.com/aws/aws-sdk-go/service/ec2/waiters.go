@@ -1058,6 +1058,7 @@ func (c *EC2) WaitUntilSpotInstanceRequestFulfilledWithContext(ctx aws.Context, 
 				Matcher:  request.ErrorWaiterMatch,
 				Expected: "InvalidSpotInstanceRequestID.NotFound",
 			},
+<<<<<<< HEAD
 		},
 		Logger: c.Config.Logger,
 		NewRequest: func(opts []request.Option) (*request.Request, error) {
@@ -1070,6 +1071,8 @@ func (c *EC2) WaitUntilSpotInstanceRequestFulfilledWithContext(ctx aws.Context, 
 			req.SetContext(ctx)
 			req.ApplyOptions(opts...)
 			return req, nil
+=======
+>>>>>>> Update deps for Sep 12 2017
 		},
 		Logger: c.Config.Logger,
 		NewRequest: func(opts []request.Option) (*request.Request, error) {
@@ -1442,8 +1445,12 @@ func (c *EC2) WaitUntilVpcExistsWithContext(ctx aws.Context, input *DescribeVpcs
 
 // WaitUntilVpcPeeringConnectionDeleted uses the Amazon EC2 API operation
 // DescribeVpcPeeringConnections to wait for a condition to be met before returning.
+<<<<<<< HEAD
 // If the condition is not meet within the max attempt window an error will
 >>>>>>> Revendor using dep tool
+=======
+// If the condition is not met within the max attempt window, an error will
+>>>>>>> Update deps for Sep 12 2017
 // be returned.
 func (c *EC2) WaitUntilVpcPeeringConnectionDeleted(input *DescribeVpcPeeringConnectionsInput) error {
 	return c.WaitUntilVpcPeeringConnectionDeletedWithContext(aws.BackgroundContext(), input)

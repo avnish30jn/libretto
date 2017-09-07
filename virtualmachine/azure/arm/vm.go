@@ -15,6 +15,7 @@ import (
 	lvm "github.com/apcera/libretto/virtualmachine"
 
 	"github.com/Azure/azure-sdk-for-go/arm/compute"
+	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 )
 
@@ -148,11 +149,12 @@ func (vm *VM) Provision() error {
 func (vm *VM) GetIPs() ([]net.IP, error) {
 	ips := make([]net.IP, 2)
 
-	// Set up the authorizer
-	authorizer, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
+	// Set up the auth token.
+	tok, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
 	if err != nil {
 		return nil, err
 	}
+	authorizer := autorest.NewBearerAuthorizer(tok)
 
 	// Get the Public IP
 	ip, err := vm.getPublicIP(authorizer)
@@ -194,10 +196,11 @@ func (vm *VM) GetSSH(options ssh.Options) (ssh.Client, error) {
 //     "stopped"
 func (vm *VM) GetState() (string, error) {
 	// Set up the authorizer
-	authorizer, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
+	tok, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
 	if err != nil {
 		return "", err
 	}
+	authorizer := autorest.NewBearerAuthorizer(tok)
 
 	virtualMachinesClient := compute.NewVirtualMachinesClient(vm.Creds.SubscriptionID)
 	virtualMachinesClient.Authorizer = authorizer
@@ -218,10 +221,11 @@ func (vm *VM) GetState() (string, error) {
 // Destroy deletes the VM on Azure.
 func (vm *VM) Destroy() error {
 	// Set up the authorizer
-	authorizer, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
+	tok, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
 	if err != nil {
 		return err
 	}
+	authorizer := autorest.NewBearerAuthorizer(tok)
 
 	// Delete the VM
 	virtualMachinesClient := compute.NewVirtualMachinesClient(vm.Creds.SubscriptionID)
@@ -296,10 +300,11 @@ func (vm *VM) Destroy() error {
 // Halt shuts down the VM.
 func (vm *VM) Halt() error {
 	// Set up the authorizer
-	authorizer, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
+	tok, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
 	if err != nil {
 		return err
 	}
+	authorizer := autorest.NewBearerAuthorizer(tok)
 
 	// Poweroff the VM
 	virtualMachinesClient := compute.NewVirtualMachinesClient(vm.Creds.SubscriptionID)
@@ -328,10 +333,11 @@ func (vm *VM) Halt() error {
 // Start boots a stopped VM.
 func (vm *VM) Start() error {
 	// Set up the authorizer
-	authorizer, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
+	tok, err := getServicePrincipalToken(&vm.Creds, azure.PublicCloud.ResourceManagerEndpoint)
 	if err != nil {
 		return err
 	}
+	authorizer := autorest.NewBearerAuthorizer(tok)
 
 	// Start the VM
 	virtualMachinesClient := compute.NewVirtualMachinesClient(vm.Creds.SubscriptionID)

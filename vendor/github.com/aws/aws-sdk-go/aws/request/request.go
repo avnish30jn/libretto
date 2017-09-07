@@ -29,10 +29,14 @@ const (
 	ErrCodeRead = "ReadError"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// ErrCodeResponseTimeout is the connection timeout error that is received
 =======
 	// ErrCodeResponseTimeout is the connection timeout error that is recieved
 >>>>>>> Update all deps
+=======
+	// ErrCodeResponseTimeout is the connection timeout error that is received
+>>>>>>> Update deps for Sep 12 2017
 	// during body reads.
 	ErrCodeResponseTimeout = "ResponseTimeout"
 
