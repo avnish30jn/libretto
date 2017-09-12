@@ -586,12 +586,11 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 	}
 	config.DeviceChange = deviceChangeSpec
 
-	customSpecName := "static-ip-libretto"
 	customizationSpecManager := object.NewCustomizationSpecManager(
 		vm.client.Client)
 	// check if customization specification exists
 	exists, err := customizationSpecManager.DoesCustomizationSpecExist(
-		vm.ctx, customSpecName)
+		vm.ctx, STATICIP_CUSTOM_SPEC_NAME)
 	if err != nil {
 		return err
 	}
@@ -605,7 +604,7 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 	}
 
 	customSpecItem, err := customizationSpecManager.GetCustomizationSpec(
-		vm.ctx, customSpecName)
+		vm.ctx, STATICIP_CUSTOM_SPEC_NAME)
 	if err != nil {
 		return fmt.Errorf("Error retrieving custom spec: %s",
 			err)
@@ -618,6 +617,7 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		PowerOn:  false,
 		Config:   &config,
 	}
+	// add the custom spec to vm clone spec if not nil
 	if customSpec != nil {
 		cisp.Customization = customSpec
 	}
@@ -1260,48 +1260,30 @@ func init() {
 	}
 }
 
+// createCustomSpecStaticIp: creates custom spec for static ip from xml
 func createCustomSpecStaticIp(vm *VM) error {
-	// get the customization specification
-	customSpecName := "static-ip-libretto"
-	customSpecDesc := "Custom spec to assign static-ip to the vm"
-	customSpecType := "linux"
-	customSpec := new(types.CustomizationSpec)
-
-	customSpec = updateCustomSpec(vm, customSpec)
-	customSpecInfo := types.CustomizationSpecInfo{
-		Name:        customSpecName,
-		Description: customSpecDesc,
-		Type:        customSpecType,
-	}
-
-	csItem := types.CustomizationSpecItem{
-		Info: customSpecInfo,
-		Spec: *customSpec,
-	}
-
 	csMgr := object.NewCustomizationSpecManager(
 		vm.client.Client)
-	err := csMgr.CreateCustomizationSpec(vm.ctx, csItem)
+	csSpec, err := csMgr.XmlToCustomizationSpecItem(vm.ctx, XML_STATIC_IP_SPEC)
+	if err != nil {
+		return err
+	}
+	err = csMgr.CreateCustomizationSpec(vm.ctx, *csSpec)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func updateCustomSpec(vm *VM, customSpec *types.CustomizationSpec) *types.CustomizationSpec {
+// updateCustomSpec: updates custom spec structure with the ip settings
+func updateCustomSpec(vm *VM,
+	customSpec *types.CustomizationSpec) *types.CustomizationSpec {
+	// if ip or subnet is not passed return nil
 	if vm.IpSetting.Ip == "" || vm.IpSetting.SubnetMask == "" {
 		return nil
 	}
-
-	if len(customSpec.NicSettingMap) == 0 {
-		customSpec.NicSettingMap = make(
-			[]types.CustomizationAdapterMapping, 1)
-	}
 	nicSetting := customSpec.NicSettingMap[0]
 	ip := nicSetting.Adapter.Ip
-	if ip == nil {
-		ip = new(types.CustomizationIpGenerator)
-	}
 	ipValue := reflect.ValueOf(ip).Elem()
 	ipAddress := ipValue.FieldByName("IpAddress")
 	if ipAddress.CanSet() || ipAddress.IsValid() {
