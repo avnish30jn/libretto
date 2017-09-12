@@ -15,6 +15,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"reflect"
 	"regexp"
 	"strings"
 
@@ -482,8 +483,8 @@ func reconfigureNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirt
 			nw = vm.Networks[idx]
 			for _, nwMappingObj := range networkMapping {
 				if nwMappingObj.Name == nw["name"] {
-					device.GetVirtualDevice().Backing = &types.VirtualEthernetCardNetworkBackingInfo {
-						VirtualDeviceDeviceBackingInfo: types.VirtualDeviceDeviceBackingInfo {
+					device.GetVirtualDevice().Backing = &types.VirtualEthernetCardNetworkBackingInfo{
+						VirtualDeviceDeviceBackingInfo: types.VirtualDeviceDeviceBackingInfo{
 							DeviceName: nwMappingObj.Name,
 						},
 						Network: &nwMappingObj.Network,
@@ -585,11 +586,40 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 	}
 	config.DeviceChange = deviceChangeSpec
 
+	customSpecName := "static-ip-libretto"
+	customizationSpecManager := object.NewCustomizationSpecManager(
+		vm.client.Client)
+	// check if customization specification exists
+	exists, err := customizationSpecManager.DoesCustomizationSpecExist(
+		vm.ctx, customSpecName)
+	if err != nil {
+		return err
+	}
+
+	if !exists {
+		err = createCustomSpecStaticIp(vm)
+		if err != nil {
+			return fmt.Errorf("Error creating custom spec: %s",
+				err)
+		}
+	}
+
+	customSpecItem, err := customizationSpecManager.GetCustomizationSpec(
+		vm.ctx, customSpecName)
+	if err != nil {
+		return fmt.Errorf("Error retrieving custom spec: %s",
+			err)
+	}
+	customSpec := updateCustomSpec(vm, &customSpecItem.Spec)
+
 	cisp := types.VirtualMachineCloneSpec{
 		Location: relocateSpec,
 		Template: false,
 		PowerOn:  false,
 		Config:   &config,
+	}
+	if customSpec != nil {
+		cisp.Customization = customSpec
 	}
 
 	// To create a linked clone, we need to set the DiskMoveType and reference
@@ -1228,4 +1258,58 @@ func init() {
 		}
 		return nil, NewErrorObjectNotFound(errors.New("Could not find the mob"), name)
 	}
+}
+
+func createCustomSpecStaticIp(vm *VM) error {
+	// get the customization specification
+	customSpecName := "static-ip-libretto"
+	customSpecDesc := "Custom spec to assign static-ip to the vm"
+	customSpecType := "linux"
+	customSpec := new(types.CustomizationSpec)
+
+	customSpec = updateCustomSpec(vm, customSpec)
+	customSpecInfo := types.CustomizationSpecInfo{
+		Name:        customSpecName,
+		Description: customSpecDesc,
+		Type:        customSpecType,
+	}
+
+	csItem := types.CustomizationSpecItem{
+		Info: customSpecInfo,
+		Spec: *customSpec,
+	}
+
+	csMgr := object.NewCustomizationSpecManager(
+		vm.client.Client)
+	err := csMgr.CreateCustomizationSpec(vm.ctx, csItem)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func updateCustomSpec(vm *VM, customSpec *types.CustomizationSpec) *types.CustomizationSpec {
+	if vm.IpSetting.Ip == "" || vm.IpSetting.SubnetMask == "" {
+		return nil
+	}
+
+	if len(customSpec.NicSettingMap) == 0 {
+		customSpec.NicSettingMap = make(
+			[]types.CustomizationAdapterMapping, 1)
+	}
+	nicSetting := customSpec.NicSettingMap[0]
+	ip := nicSetting.Adapter.Ip
+	if ip == nil {
+		ip = new(types.CustomizationIpGenerator)
+	}
+	ipValue := reflect.ValueOf(ip).Elem()
+	ipAddress := ipValue.FieldByName("IpAddress")
+	if ipAddress.CanSet() || ipAddress.IsValid() {
+		ipAddress.SetString(vm.IpSetting.Ip)
+	}
+	nicSetting.Adapter.SubnetMask = vm.IpSetting.SubnetMask
+	gateway := vm.IpSetting.Gateway
+	nicSetting.Adapter.Gateway = append(nicSetting.Adapter.Gateway, gateway)
+
+	return customSpec
 }
