@@ -131,10 +131,11 @@ func (vm *VM) Provision() error {
 		vm.DeploymentName = tempName + "-deploy"
 	}
 
-	// Create and send the deployment
-	vm.deploy()
+	err = vm.deploy()
+	if err != nil {
+		return err
+	}
 
-	// Use GetSSH to try to connect to machine
 	cli, err := vm.GetSSH(ssh.Options{KeepAlive: 2})
 	if err != nil {
 		return err
