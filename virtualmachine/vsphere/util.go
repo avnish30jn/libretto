@@ -598,28 +598,23 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 	if !exists {
 		err = createCustomSpecStaticIp(vm)
 		if err != nil {
-			return fmt.Errorf("Error creating custom spec: %s",
-				err)
+			return fmt.Errorf("Error creating custom spec: %v", err)
 		}
 	}
 
 	customSpecItem, err := customizationSpecManager.GetCustomizationSpec(
 		vm.ctx, STATICIP_CUSTOM_SPEC_NAME)
 	if err != nil {
-		return fmt.Errorf("Error retrieving custom spec: %s",
-			err)
+		return fmt.Errorf("Error retrieving custom spec: %v", err)
 	}
 	customSpec := updateCustomSpec(vm, &customSpecItem.Spec)
 
 	cisp := types.VirtualMachineCloneSpec{
-		Location: relocateSpec,
-		Template: false,
-		PowerOn:  false,
-		Config:   &config,
-	}
-	// add the custom spec to vm clone spec if not nil
-	if customSpec != nil {
-		cisp.Customization = customSpec
+		Location:      relocateSpec,
+		Template:      false,
+		PowerOn:       false,
+		Config:        &config,
+		Customization: customSpec,
 	}
 
 	// To create a linked clone, we need to set the DiskMoveType and reference
@@ -1262,9 +1257,9 @@ func init() {
 
 // createCustomSpecStaticIp: creates custom spec for static ip from xml
 func createCustomSpecStaticIp(vm *VM) error {
-	csMgr := object.NewCustomizationSpecManager(
-		vm.client.Client)
-	csSpec, err := csMgr.XmlToCustomizationSpecItem(vm.ctx, XML_STATIC_IP_SPEC)
+	csMgr := object.NewCustomizationSpecManager(vm.client.Client)
+	csSpec, err := csMgr.XmlToCustomizationSpecItem(vm.ctx,
+		XML_STATIC_IP_SPEC)
 	if err != nil {
 		return err
 	}
@@ -1279,7 +1274,7 @@ func createCustomSpecStaticIp(vm *VM) error {
 func updateCustomSpec(vm *VM,
 	customSpec *types.CustomizationSpec) *types.CustomizationSpec {
 	// if ip or subnet is not passed return nil
-	if vm.IpSetting.Ip == "" || vm.IpSetting.SubnetMask == "" {
+	if vm.NetworkSettings.Ip == "" || vm.NetworkSettings.SubnetMask == "" {
 		return nil
 	}
 	nicSetting := customSpec.NicSettingMap[0]
@@ -1287,10 +1282,10 @@ func updateCustomSpec(vm *VM,
 	ipValue := reflect.ValueOf(ip).Elem()
 	ipAddress := ipValue.FieldByName("IpAddress")
 	if ipAddress.CanSet() || ipAddress.IsValid() {
-		ipAddress.SetString(vm.IpSetting.Ip)
+		ipAddress.SetString(vm.NetworkSettings.Ip)
 	}
-	nicSetting.Adapter.SubnetMask = vm.IpSetting.SubnetMask
-	gateway := vm.IpSetting.Gateway
+	nicSetting.Adapter.SubnetMask = vm.NetworkSettings.SubnetMask
+	gateway := vm.NetworkSettings.Gateway
 	nicSetting.Adapter.Gateway = append(nicSetting.Adapter.Gateway, gateway)
 
 	return customSpec

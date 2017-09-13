@@ -520,15 +520,15 @@ type VM struct {
 	// linked clones.
 	UseLinkedClones bool
 	// Skip waiting for IP to be assigned to VM in create/start actions
-	SkipIPWait bool
-	uri        *url.URL
-	ctx        context.Context
-	cancel     context.CancelFunc
-	client     *govmomi.Client
-	finder     finder
-	collector  collector
-	datastore  string
-	IpSetting  lvm.IpSetting
+	SkipIPWait      bool
+	uri             *url.URL
+	ctx             context.Context
+	cancel          context.CancelFunc
+	client          *govmomi.Client
+	finder          finder
+	collector       collector
+	datastore       string
+	NetworkSettings lvm.NetworkSettings
 }
 
 // Provision provisions this VM.

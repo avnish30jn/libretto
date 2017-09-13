@@ -27,7 +27,7 @@ type VirtualMachine interface {
 	RemoveDisk([]string) error
 }
 
-type IpSetting struct {
+type NetworkSettings struct {
 	Ip         string `json:"ip"`
 	Gateway    string `json:"gateway"`
 	SubnetMask string `json:"subnet_mask"`
