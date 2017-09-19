@@ -24,7 +24,7 @@ const XML_STATIC_IP_SPEC = `
       <dnsSuffixList>
         <_length>1</_length>
         <_type>string[]</_type>
-        <e id="0">google.com</e>
+        <e id="0">gsintlab.com</e>
       </dnsSuffixList>
     </globalIPSettings>
     <identity>
@@ -33,8 +33,6 @@ const XML_STATIC_IP_SPEC = `
       <hostName>
         <_type>vim.vm.customization.VirtualMachineNameGenerator</_type>
       </hostName>
-      <hwClockUTC>true</hwClockUTC>
-      <timeZone>Indian/Antananarivo</timeZone>
     </identity>
     <nicSettingMap>
       <_length>1</_length>
