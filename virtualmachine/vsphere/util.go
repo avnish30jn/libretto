@@ -725,6 +725,7 @@ var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) ([]string, error) {
 	var (
 		vDisk           *types.VirtualDisk
 		thinProvisioned bool
+		datastore       string
 	)
 	vmObj := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
 
@@ -738,17 +739,21 @@ var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) ([]string, error) {
 		return nil, err
 	}
 
-	dsMo, err := findDatastore(vm, dcMo, vm.datastore)
-	if err != nil {
-		return nil, err
-	}
-
 	for _, disk := range vm.Disks {
+		if disk.Datastore == "" {
+			datastore = vm.datastore
+		} else {
+			datastore = disk.Datastore
+		}
 		devices, err := vmObj.Device(vm.ctx)
 		if err != nil {
 			return nil, err
 		}
 		controller, err := devices.FindDiskController(disk.Controller)
+		if err != nil {
+			return nil, err
+		}
+		dsMo, err := findDatastore(vm, dcMo, datastore)
 		if err != nil {
 			return nil, err
 		}
