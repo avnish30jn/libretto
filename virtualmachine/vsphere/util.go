@@ -1285,6 +1285,7 @@ func updateCustomSpec(vm *VM,
 	if vm.NetworkSettings.Ip == "" || vm.NetworkSettings.SubnetMask == "" {
 		return nil
 	}
+	// set ip address, subnet mask, default gateway
 	nicSetting := customSpec.NicSettingMap[0]
 	ip := nicSetting.Adapter.Ip
 	ipValue := reflect.ValueOf(ip).Elem()
@@ -1295,6 +1296,12 @@ func updateCustomSpec(vm *VM,
 	nicSetting.Adapter.SubnetMask = vm.NetworkSettings.SubnetMask
 	gateway := vm.NetworkSettings.Gateway
 	nicSetting.Adapter.Gateway = append(nicSetting.Adapter.Gateway, gateway)
+
+	// set dns server
+	if vm.NetworkSettings.DnsServer != "" {
+		customSpec.GlobalIPSettings.DnsServerList = []string{
+			vm.NetworkSettings.DnsServer}
+	}
 
 	return customSpec
 }
