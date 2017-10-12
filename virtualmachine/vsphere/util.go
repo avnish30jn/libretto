@@ -791,6 +791,19 @@ var waitForIP = func(vm *VM, vmMo *mo.VirtualMachine) error {
 
 var halt = func(vm *VM) error {
 	// Get a reference to the datacenter with host and vm folders populated
+	state, err := getState(vm)
+	if err != nil {
+		return fmt.Errorf("Error getting state of vm : %v", err)
+	}
+	if state == "standby" {
+		err = start(vm)
+		if err != nil {
+			return err
+		}
+	}
+	if state == "notRunning" {
+		return nil
+	}
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
 		return err
