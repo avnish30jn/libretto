@@ -802,7 +802,8 @@ var halt = func(vm *VM) error {
 	vmo := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
 	poweroffTask, err := vmo.PowerOff(vm.ctx)
 	if err != nil {
-		return fmt.Errorf("error creating a poweroff task on the vm: %s", err)
+		return fmt.Errorf(
+			"error creating a poweroff task on the vm: %s", err)
 	}
 	tInfo, err := poweroffTask.WaitForResult(vm.ctx, nil)
 	if err != nil {

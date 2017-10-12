@@ -1587,3 +1587,36 @@ func getVirtualMachines(vm *VM) ([]mo.VirtualMachine, error) {
 	}
 	return vmList, nil
 }
+
+// ConvertToTemplate : converts vm to vm template
+func ConvertToTemplate(vm *VM) error {
+	// set up session to vcenter server
+	if err := SetupSession(vm); err != nil {
+		return err
+	}
+	defer vm.cancel()
+
+	dcMo, err := GetDatacenter(vm)
+	if err != nil {
+		return err
+	}
+
+	vmMo, err := findVM(vm, dcMo, vm.Name)
+	if err != nil {
+		return fmt.Errorf("error getting the uploaded VM: %s", err)
+	}
+
+	err = halt(vm)
+	if err != nil {
+		return fmt.Errorf("error halting the VM: %s", err)
+	}
+
+	vmo := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
+	err = vmo.MarkAsTemplate(vm.ctx)
+	if err != nil {
+		return fmt.Errorf(
+			"error converting the uploaded VM to a template: %s",
+			err)
+	}
+	return nil
+}
