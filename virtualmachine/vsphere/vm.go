@@ -543,7 +543,7 @@ type VM struct {
 // Provision provisions this VM.
 func (vm *VM) Provision() (err error) {
 	if err := SetupSession(vm); err != nil {
-		return fmt.Errorf("Error setting up vSphere session: %s", err)
+		return fmt.Errorf("Error setting up vSphere session: %v", err)
 	}
 
 	// Cancel the sdk context
@@ -552,7 +552,7 @@ func (vm *VM) Provision() (err error) {
 	// Get a reference to the datacenter with host and vm folders populated
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
-		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
+		return fmt.Errorf("Failed to retrieve datacenter: %v", err)
 	}
 
 	// Upload a template to all the datastores if `UseLocalTemplates` is set.
@@ -574,7 +574,7 @@ func (vm *VM) Provision() (err error) {
 		// Does the VM template already exist?
 		e, err := Exists(vm, dcMo, template)
 		if err != nil {
-			return fmt.Errorf("failed to check if the template already exists: %s", err)
+			return fmt.Errorf("failed to check if the template already exists: %v", err)
 		}
 
 		// If it does exist, return an error if the skip existing is set to 0/SKIPTEMPLATE_ERROR
@@ -608,7 +608,7 @@ func (vm *VM) Provision() (err error) {
 	// Does the VM already exist?
 	e, err := Exists(vm, dcMo, vm.Name)
 	if err != nil {
-		return fmt.Errorf("failed to check if the vm already exists: %s", err)
+		return fmt.Errorf("failed to check if the vm already exists: %v", err)
 	}
 	if e {
 		return ErrorVMExists
@@ -616,7 +616,7 @@ func (vm *VM) Provision() (err error) {
 
 	err = cloneFromTemplate(vm, dcMo, usableDatastores)
 	if err != nil {
-		return fmt.Errorf("error while cloning vm from template: %s", err)
+		return fmt.Errorf("error while cloning vm from template: %v", err)
 	}
 	return
 }
@@ -629,7 +629,7 @@ func (vm *VM) GetName() string {
 // AddDisk to the vm
 func (vm *VM) AddDisk() ([]string, error) {
 	if err := SetupSession(vm); err != nil {
-		return nil, fmt.Errorf("Error setting up vSphere session: %s", err)
+		return nil, fmt.Errorf("Error setting up vSphere session: %v", err)
 	}
 
 	// Cancel the sdk context
@@ -638,13 +638,14 @@ func (vm *VM) AddDisk() ([]string, error) {
 	// Get a reference to the datacenter with host and vm folders populated
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve datacenter: %s", err)
+		return nil, fmt.Errorf("Failed to retrieve datacenter: %v", err)
 	}
 
 	// Finds the vm with name vm.Name
 	vmMo, err := findVM(vm, dcMo, vm.Name)
 	if err != nil {
-		return nil, fmt.Errorf("VM not found", vm.Name, err)
+		return nil, fmt.Errorf("VM :%s not found. Error : %v",
+			vm.Name, err)
 	}
 
 	// Gets a random datastore from the list of datastores to create disk
@@ -654,7 +655,7 @@ func (vm *VM) AddDisk() ([]string, error) {
 	// Reconfigures vm with the new Disk
 	diskList, err := reconfigureVM(vm, vmMo)
 	if err != nil {
-		return nil, fmt.Errorf("Reconfigure failed : ", err)
+		return nil, fmt.Errorf("Reconfigure failed : %v", err)
 	}
 	return diskList, nil
 }
@@ -663,7 +664,7 @@ func (vm *VM) AddDisk() ([]string, error) {
 func (vm *VM) RemoveDisk(vmdkFiles []string) error {
 	var errorMessage string
 	if err := SetupSession(vm); err != nil {
-		return fmt.Errorf("Error setting up vSphere session: %s", err)
+		return fmt.Errorf("Error setting up vSphere session: %v", err)
 	}
 
 	// Cancel the sdk context
@@ -672,14 +673,15 @@ func (vm *VM) RemoveDisk(vmdkFiles []string) error {
 	// Get a reference to the datacenter with host and vm folders populated
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
-		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
+		return fmt.Errorf("Failed to retrieve datacenter: %v", err)
 	}
 
 	for _, vmdkName := range vmdkFiles {
 		// finds the virtualmachine with name vm.Name
 		vmMo, err := findVM(vm, dcMo, vm.Name)
 		if err != nil {
-			return fmt.Errorf("VM not found", vm.Name, err)
+			return fmt.Errorf("VM :%s not found. Error : %v",
+				vm.Name, err)
 		}
 
 		// find the virtual disk to be removed from the vm
@@ -835,14 +837,14 @@ func (vm *VM) Destroy() (err error) {
 	vmo := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
 	destroyTask, err := vmo.Destroy(vm.ctx)
 	if err != nil {
-		return fmt.Errorf("error creating a destroy task on the vm: %s", err)
+		return fmt.Errorf("error creating a destroy task on the vm: %v", err)
 	}
 	tInfo, err := destroyTask.WaitForResult(vm.ctx, nil)
 	if err != nil {
-		return fmt.Errorf("error waiting for destroy task: %s", err)
+		return fmt.Errorf("error waiting for destroy task: %v", err)
 	}
 	if tInfo.Error != nil {
-		return fmt.Errorf("destroy task returned an error: %s", err)
+		return fmt.Errorf("destroy task returned an error: %v", err)
 	}
 	return nil
 }
@@ -919,14 +921,14 @@ func (vm *VM) Suspend() (err error) {
 	vmo := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
 	suspendTask, err := vmo.Suspend(vm.ctx)
 	if err != nil {
-		return fmt.Errorf("error creating a suspend task on the vm: %s", err)
+		return fmt.Errorf("error creating a suspend task on the vm: %v", err)
 	}
 	tInfo, err := suspendTask.WaitForResult(vm.ctx, nil)
 	if err != nil {
-		return fmt.Errorf("error waiting for suspend task: %s", err)
+		return fmt.Errorf("error waiting for suspend task: %v", err)
 	}
 	if tInfo.Error != nil {
-		return fmt.Errorf("suspend task returned an error: %s", err)
+		return fmt.Errorf("suspend task returned an error: %v", err)
 	}
 	return nil
 }
@@ -1002,10 +1004,10 @@ func deleteVM(vm *VM, vmMor *mo.VirtualMachine) error {
 	// wait for the task to complete and checks for the errors if any
 	tInfo, err := task.WaitForResult(vm.ctx, nil)
 	if err != nil {
-		return fmt.Errorf("Error waiting for task : %s", err)
+		return fmt.Errorf("Error waiting for task : %v", err)
 	}
 	if tInfo.Error != nil {
-		return fmt.Errorf("Destroy task returned error : %s", tInfo.Error)
+		return fmt.Errorf("Destroy task returned error : %v", tInfo.Error)
 	}
 	return nil
 }
@@ -1019,7 +1021,7 @@ func DeleteTemplate(vm *VM) error {
 	}
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
-		return fmt.Errorf("Failed to retrieve datacenter: %s", err)
+		return fmt.Errorf("Failed to retrieve datacenter: %v", err)
 	}
 	// find and delete vm-templates from all provided datastores
 	if !vm.UseLocalTemplates {
@@ -1603,19 +1605,19 @@ func ConvertToTemplate(vm *VM) error {
 
 	vmMo, err := findVM(vm, dcMo, vm.Name)
 	if err != nil {
-		return fmt.Errorf("error getting the uploaded VM: %s", err)
+		return fmt.Errorf("error getting the uploaded VM: %v", err)
 	}
 
 	err = halt(vm)
 	if err != nil {
-		return fmt.Errorf("error halting the VM: %s", err)
+		return fmt.Errorf("error halting the VM: %v", err)
 	}
 
 	vmo := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
 	err = vmo.MarkAsTemplate(vm.ctx)
 	if err != nil {
 		return fmt.Errorf(
-			"error converting the uploaded VM to a template: %s",
+			"error converting the uploaded VM to a template: %v",
 			err)
 	}
 	return nil
