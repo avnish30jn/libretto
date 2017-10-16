@@ -719,8 +719,9 @@ func CreateDisk(l object.VirtualDeviceList, c types.BaseVirtualController, ds ty
 	return device
 }
 
-//reconfigureVM :reconfigureVM adds the disks to the vm and returns the vmdk
+// reconfigureVM :reconfigureVM adds the disks to the vm and returns the vmdk
 // file names of the disks added
+// root disk datastore is used by default
 var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) ([]string, error) {
 	var (
 		vDisk           *types.VirtualDisk
@@ -740,6 +741,7 @@ var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) ([]string, error) {
 	}
 
 	for _, disk := range vm.Disks {
+		// root disk datastore is used by default
 		if disk.Datastore == "" {
 			datastore = vm.datastore
 		} else {
