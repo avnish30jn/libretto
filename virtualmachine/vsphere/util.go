@@ -801,9 +801,6 @@ var halt = func(vm *VM) error {
 			return err
 		}
 	}
-	if state == "notRunning" {
-		return nil
-	}
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
 		return err
