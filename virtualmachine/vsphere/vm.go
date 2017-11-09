@@ -570,18 +570,17 @@ func (vm *VM) Provision() (err error) {
 	// Upload a template to all the datastores if `UseLocalTemplates` is set.
 	// Otherwise pick a random datastore out of the list that was passed in.
 	var datastores = vm.Datastores
-	if !vm.UseLocalTemplates {
+	if !vm.UseLocalTemplates && len(vm.Datastores) != 0 {
 		n := util.Random(1, len(vm.Datastores))
 		datastores = []string{vm.Datastores[n-1]}
 	}
 
+	var template string
+	template = vm.Template
 	usableDatastores := []string{}
 	for _, d := range datastores {
-		var template string
 		if vm.UseLocalTemplates {
 			template = createTemplateName(vm.Template, d)
-		} else {
-			template = vm.Template
 		}
 		// Does the VM template already exist?
 		e, err := Exists(vm, dcMo, template)
