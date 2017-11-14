@@ -11,6 +11,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -409,6 +410,7 @@ type Disk struct {
 	Controller   string
 	Provisioning string
 	Datastore    string
+	DiskName     string
 }
 
 // Snapshot represents a vSphere snapshot to create
@@ -481,6 +483,7 @@ type VMInfo struct {
 	NumCpu             int32
 	PowerState         string
 	MemorySizeMB       int32
+	DisksInfo          []Disk
 }
 
 type Flavor struct {
@@ -886,6 +889,44 @@ func getToolsRunningStatus(status string) bool {
 	return false
 }
 
+//getDisksInfo  returns the disks info of this VM.
+func getDisksInfo(vmMo mo.VirtualMachine) []Disk {
+	var disksInfo []Disk
+	devices := object.VirtualDeviceList(vmMo.Config.Hardware.Device)
+	deviceKeyMap := make(map[int32]types.BaseVirtualDevice)
+	for _, device := range devices {
+		if disk, ok := device.(*types.VirtualDisk); ok {
+			//Find out the device using key try to search in map first
+			//If not found then try to search in device list
+			c, present := deviceKeyMap[disk.ControllerKey]
+			if !present {
+				c = devices.FindByKey(disk.ControllerKey)
+				deviceKeyMap[disk.ControllerKey] = c
+			}
+			if c != nil {
+				controller := c.GetVirtualDevice().DeviceInfo.GetDescription().Label
+				if disk.UnitNumber != nil {
+					controller = controller + ":" + strconv.Itoa(int(*disk.UnitNumber))
+				}
+				var diskInfo Disk
+				diskInfo.Controller = controller
+				backing := disk.Backing
+				fileBackingInfo := backing.(types.BaseVirtualDeviceFileBackingInfo).GetVirtualDeviceFileBackingInfo()
+				diskInfo.DiskName = fileBackingInfo.FileName
+				if *(backing.(*types.VirtualDiskFlatVer2BackingInfo)).ThinProvisioned {
+					diskInfo.Provisioning = "thin"
+				} else {
+					diskInfo.Provisioning = "thick"
+				}
+				diskInfo.Size = disk.CapacityInBytes
+				disksInfo = append(disksInfo, diskInfo)
+			}
+		}
+
+	}
+	return disksInfo
+}
+
 //GetVMInfo returns information of this VM.
 func (vm *VM) GetVMInfo() (VMInfo, error) {
 	var vmInfo VMInfo
@@ -917,7 +958,7 @@ func (vm *VM) GetVMInfo() (VMInfo, error) {
 	vmInfo.PowerState = string(vmMo.Runtime.PowerState)
 	vmInfo.NumCpu = vmMo.Summary.Config.NumCpu
 	vmInfo.MemorySizeMB = vmMo.Summary.Config.MemorySizeMB
-
+	vmInfo.DisksInfo = getDisksInfo(*vmMo)
 	return vmInfo, nil
 }
 
