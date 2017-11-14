@@ -421,7 +421,11 @@ func searchTree(vm *VM, mor types.ManagedObjectReference, name string) (*mo.Virt
 	case "VirtualMachine":
 		// Base recursive case, compare for value
 		vmMo := mo.VirtualMachine{}
-		err := vm.collector.RetrieveOne(vm.ctx, mor, []string{"name", "config", "datastore", "guest.ipAddress", "guest.guestState", "guest.net", "runtime.question", "snapshot.currentSnapshot", "guest.toolsRunningStatus", "summary", "runtime"}, &vmMo)
+		err := vm.collector.RetrieveOne(vm.ctx, mor, []string{"name",
+			"config", "datastore", "guest.ipAddress",
+			"guest.guestState", "guest.net", "runtime.question",
+			"snapshot.currentSnapshot", "guest.toolsRunningStatus",
+			"summary", "runtime"}, &vmMo)
 		if err != nil {
 			return nil, NewErrorObjectNotFound(errors.New("could not find the vm"), name)
 		}
@@ -565,9 +569,8 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		dsMo  *mo.Datastore
 		dsMor types.ManagedObjectReference
 	)
-	if len(usableDatastores) != 0 {
-		n := util.Random(1, len(usableDatastores))
-		vm.datastore = usableDatastores[n-1]
+	vm.datastore = util.ChooseRandomString(usableDatastores)
+	if vm.datastore != "" {
 		dsMo, err = findDatastore(vm, dcMo, vm.datastore)
 		if err != nil {
 			return err
@@ -598,14 +601,11 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		Pool: &l.ResourcePool,
 	}
 
-	crMo, err := findClusterComputeResource(vm, dcMo, vm.Destination.DestinationName)
+	isDrsEnabled, err := IsClusterDrsEnabled(vm)
 	if err != nil {
 		return err
 	}
-
-	drsEnabled := *crMo.Configuration.DrsConfig.Enabled
-
-	if vm.Destination.HostSystem != "" || !drsEnabled {
+	if vm.Destination.HostSystem != "" || !isDrsEnabled {
 		relocateSpec.Host = &l.Host
 	}
 	if dsMo != nil {
@@ -775,8 +775,7 @@ var getDatastoreForVm = func(vm *VM, vmMo *mo.VirtualMachine) ([]string,
 	err = vm.collector.Retrieve(vm.ctx, dsMors, []string{"info"}, &dsMos)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"Error retrieving datastores used by vm: %v",
-			err)
+			"Error retrieving datastores used by vm: %v", err)
 	}
 	for _, dsMo := range dsMos {
 		datastores = append(datastores,
@@ -811,8 +810,7 @@ var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) ([]string, error) {
 		if err != nil {
 			return nil, err
 		}
-		n := util.Random(1, len(datastores))
-		vm.datastore = datastores[n-1]
+		vm.datastore = util.ChooseRandomString(datastores)
 	}
 
 	for _, disk := range vm.Disks {
@@ -1162,8 +1160,8 @@ var getVMLocation = func(vm *VM, dcMo *mo.Datacenter) (l location, err error) {
 				err = fmt.Errorf("No suitable hosts found in the cluster")
 				return
 			}
-			n := util.Random(1, len(filteredHosts))
-			l.Host = filteredHosts[n-1]
+			n := util.Random(0, len(filteredHosts)-1)
+			l.Host = filteredHosts[n]
 		}
 		if crMo.ResourcePool == nil {
 			err = fmt.Errorf("No valid resource pool found on the host")
@@ -1523,4 +1521,24 @@ func updateCustomSpec(vm *VM, tempMo *mo.VirtualMachine,
 	}
 
 	return customSpec
+}
+
+// IsClusterDrsEnabled: returns true if the cluster is drs enabled
+func IsClusterDrsEnabled(vm *VM) (bool, error) {
+	dcMo, err := GetDatacenter(vm)
+	if err != nil {
+		return false, err
+	}
+	crMo, err := findClusterComputeResource(vm, dcMo,
+		vm.Destination.DestinationName)
+	if err != nil {
+		return false, err
+	}
+
+	drsEnabled := crMo.Configuration.DrsConfig.Enabled
+	if drsEnabled != nil {
+		return *drsEnabled, nil
+	}
+
+	return false, errors.New("error fetching cluster config details")
 }
