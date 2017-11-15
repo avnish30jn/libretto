@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/vmware/govmomi"
@@ -59,6 +60,9 @@ func StringInSlice(str string, list []string) bool {
 	}
 	return false
 }
+
+// mutex for custom spec creation
+var checkCustomSpecMutex sync.Mutex
 
 // Exists checks if the VM already exists.
 var Exists = func(vm *VM, dc *mo.Datacenter, tName string) (bool, error) {
@@ -637,7 +641,10 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 
 	customizationSpecManager := object.NewCustomizationSpecManager(
 		vm.client.Client)
-	// check if customization specification exists
+
+	checkCustomSpecMutex.Lock()
+	// Critical section - Only one thread should create custom spec
+	// if not present
 	exists, err := customizationSpecManager.DoesCustomizationSpecExist(
 		vm.ctx, STATICIP_CUSTOM_SPEC_NAME)
 	if err != nil {
@@ -650,6 +657,7 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 			return fmt.Errorf("Error creating custom spec: %v", err)
 		}
 	}
+	checkCustomSpecMutex.Unlock()
 
 	customSpecItem, err := customizationSpecManager.GetCustomizationSpec(
 		vm.ctx, STATICIP_CUSTOM_SPEC_NAME)
