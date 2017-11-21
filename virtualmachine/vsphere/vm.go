@@ -11,6 +11,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -470,6 +471,11 @@ type VirtualEthernetCard struct {
 	NetworkName string `json:"network_name"`
 	MacAddress  string `json:"mac_address"`
 	NicName     string `json:"nic_name"`
+	// for distributed virtual port group
+	PortgroupKey      string `json:"port_group_key"`
+	SwitchUuid        string `json:"switch_uuid"`
+	OpaqueNetworkId   string `json:opaque_network_id""`
+	OpaqueNetworkType string `json:"opaque_network_type"`
 }
 
 type VMInfo struct {
@@ -735,7 +741,16 @@ func getNicInfo(vmMo mo.VirtualMachine) []VirtualEthernetCard {
 			nwcard := c.GetVirtualEthernetCard()
 			nic.MacAddress = nwcard.MacAddress
 			nic.NicName = nwcard.DeviceInfo.GetDescription().Label
-			nic.NetworkName = nwcard.Backing.(*types.VirtualEthernetCardNetworkBackingInfo).DeviceName
+			switch b := nwcard.Backing.(type) {
+			case *types.VirtualEthernetCardNetworkBackingInfo:
+				nic.NetworkName = b.DeviceName
+			case *types.VirtualEthernetCardDistributedVirtualPortBackingInfo:
+				nic.SwitchUuid = b.Port.SwitchUuid
+				nic.PortgroupKey = b.Port.PortgroupKey
+			case *types.VirtualEthernetCardOpaqueNetworkBackingInfo:
+				nic.OpaqueNetworkId = b.OpaqueNetworkId
+				nic.OpaqueNetworkType = b.OpaqueNetworkType
+			}
 			nicInfo = append(nicInfo, nic)
 		}
 	}
