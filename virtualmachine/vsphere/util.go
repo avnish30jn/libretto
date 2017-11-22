@@ -518,12 +518,12 @@ func reconfigureNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirt
 				var backing types.BaseVirtualDeviceBackingInfo
 				switch nwMappingObj.Network.Type {
 				case "Network":
-					nwObj := object.NewNetwork(
-						vm.client.Client,
-						nwMappingObj.Network)
-					backing, err =
-						nwObj.EthernetCardBackingInfo(
-							vm.ctx)
+					backing = &types.VirtualEthernetCardNetworkBackingInfo{
+						VirtualDeviceDeviceBackingInfo: types.VirtualDeviceDeviceBackingInfo{
+							DeviceName: nwMappingObj.Name,
+						},
+						Network: &nwMappingObj.Network,
+					}
 				case "DistributedVirtualPortgroup":
 					dvsObj := object.NewDistributedVirtualPortgroup(
 						vm.client.Client,
@@ -531,11 +531,10 @@ func reconfigureNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirt
 					backing, err =
 						dvsObj.EthernetCardBackingInfo(
 							vm.ctx)
-				}
-				if err != nil {
-					return nil, fmt.Errorf(
-						"error fetching ethernet card "+
+					if err != nil {
+						return nil, fmt.Errorf("error fetching ethernet card "+
 							"backing info: %v", err)
+					}
 				}
 				device.GetVirtualDevice().Backing = backing
 				spec := &types.VirtualDeviceConfigSpec{
