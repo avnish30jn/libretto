@@ -4,17 +4,8 @@ package aws
 // into a json string. This type can be used just like any other map.
 //
 //	Example:
-<<<<<<< HEAD
-<<<<<<< HEAD
 //
 //	values := aws.JSONValue{
-=======
-//	values := JSONValue{
->>>>>>> Revendor using dep tool
-=======
-//
-//	values := aws.JSONValue{
->>>>>>> Update all deps
 //		"Foo": "Bar",
 //	}
 //	values["Baz"] = "Qux"

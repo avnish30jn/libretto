@@ -28,14 +28,7 @@ func WithRetryer(cfg *aws.Config, retryer Retryer) *aws.Config {
 var retryableCodes = map[string]struct{}{
 	"RequestError":            {},
 	"RequestTimeout":          {},
-<<<<<<< HEAD
-<<<<<<< HEAD
 	ErrCodeResponseTimeout:    {},
-=======
->>>>>>> Revendor using dep tool
-=======
-	ErrCodeResponseTimeout:    {},
->>>>>>> Update all deps
 	"RequestTimeoutException": {}, // Glacier's flavor of RequestTimeout
 }
 
@@ -77,22 +70,8 @@ func isCodeExpiredCreds(code string) bool {
 }
 
 var validParentCodes = map[string]struct{}{
-<<<<<<< HEAD
-<<<<<<< HEAD
 	ErrCodeSerialization: {},
 	ErrCodeRead:          {},
-}
-
-type temporaryError interface {
-	Temporary() bool
-=======
-	ErrCodeSerialization: struct{}{},
-	ErrCodeRead:          struct{}{},
->>>>>>> Update all deps
-=======
-	ErrCodeSerialization: {},
-	ErrCodeRead:          {},
->>>>>>> Update deps for Sep 12 2017
 }
 
 type temporaryError interface {
@@ -117,19 +96,10 @@ func isNestedErrorRetryable(parentErr awserr.Error) bool {
 		return isCodeRetryable(aerr.Code())
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Update all deps
 	if t, ok := err.(temporaryError); ok {
 		return t.Temporary()
 	}
 
-<<<<<<< HEAD
-=======
->>>>>>> Update all deps
-=======
->>>>>>> Update all deps
 	return isErrConnectionReset(err)
 }
 

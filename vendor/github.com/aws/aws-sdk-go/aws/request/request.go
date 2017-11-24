@@ -16,10 +16,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/client/metadata"
 )
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Update all deps
 const (
 	// ErrCodeSerialization is the serialization error code that is received
 	// during protocol unmarshaling.
@@ -28,15 +24,7 @@ const (
 	// ErrCodeRead is an error that is returned during HTTP reads.
 	ErrCodeRead = "ReadError"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	// ErrCodeResponseTimeout is the connection timeout error that is received
-=======
-	// ErrCodeResponseTimeout is the connection timeout error that is recieved
->>>>>>> Update all deps
-=======
-	// ErrCodeResponseTimeout is the connection timeout error that is received
->>>>>>> Update deps for Sep 12 2017
 	// during body reads.
 	ErrCodeResponseTimeout = "ResponseTimeout"
 
@@ -45,15 +33,6 @@ const (
 	// return this error when canceled.
 	CanceledErrorCode = "RequestCanceled"
 )
-<<<<<<< HEAD
-=======
-// CanceledErrorCode is the error code that will be returned by an
-// API request that was canceled. Requests given a aws.Context may
-// return this error when canceled.
-const CanceledErrorCode = "RequestCanceled"
->>>>>>> Revendor using dep tool
-=======
->>>>>>> Update all deps
 
 // A Request is the service request to be made.
 type Request struct {
@@ -80,11 +59,6 @@ type Request struct {
 	SignedHeaderVals       http.Header
 	LastSignedAt           time.Time
 	DisableFollowRedirects bool
-<<<<<<< HEAD
-
-	context aws.Context
-=======
->>>>>>> Update all deps
 
 	context aws.Context
 
@@ -392,9 +366,6 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	// Related golang/go#18257
 	l, err := computeBodyLength(r.Body)
 	if err != nil {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 		return nil, awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
 	}
 
@@ -403,27 +374,6 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 		body = NoBody
 	} else if l > 0 {
 		body = r.safeBody
-=======
-		r.Error = awserr.New("SerializationError", "failed to compute request body size", err)
-=======
-		r.Error = awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
->>>>>>> Update all deps
-		return
-=======
-		return nil, awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
->>>>>>> Update all deps
-	}
-
-	var body io.ReadCloser
-	if l == 0 {
-		body = NoBody
-	} else if l > 0 {
-<<<<<<< HEAD
-		r.HTTPRequest.Body = r.safeBody
->>>>>>> Revendor using dep tool
-=======
-		body = r.safeBody
->>>>>>> Update all deps
 	} else {
 		// Hack to prevent sending bodies for methods where the body
 		// should be ignored by the server. Sending bodies on these
@@ -435,8 +385,6 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 		// a io.Reader that was not also an io.Seeker.
 		switch r.Operation.HTTPMethod {
 		case "GET", "HEAD", "DELETE":
-<<<<<<< HEAD
-<<<<<<< HEAD
 			body = NoBody
 		default:
 			body = r.safeBody
@@ -444,21 +392,6 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	}
 
 	return body, nil
-=======
-			r.HTTPRequest.Body = noBodyReader
-=======
-			body = NoBody
->>>>>>> Update all deps
-		default:
-			body = r.safeBody
-		}
-	}
-<<<<<<< HEAD
->>>>>>> Revendor using dep tool
-=======
-
-	return body, nil
->>>>>>> Update all deps
 }
 
 // Attempts to compute the length of the body of the reader using the

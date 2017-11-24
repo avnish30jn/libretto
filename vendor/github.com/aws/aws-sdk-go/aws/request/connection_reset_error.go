@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 // +build !appengine,!plan9
-=======
-// +build !appengine
->>>>>>> Update all deps
-=======
-// +build !appengine,!plan9
->>>>>>> Update all deps
 
 package request
 

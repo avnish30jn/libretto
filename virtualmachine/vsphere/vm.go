@@ -258,7 +258,7 @@ func (r ReadProgress) StartProgress() {
 	r.wg.Add(1)
 	go func() {
 		var bytesReceived int64
-		var percent int32
+		var percent int
 		tick := time.NewTicker(5 * time.Second)
 		defer tick.Stop()
 		defer r.wg.Done()
@@ -266,7 +266,7 @@ func (r ReadProgress) StartProgress() {
 			select {
 			case b := <-r.ch:
 				bytesReceived += b
-				percent = int32((float32(bytesReceived) / float32(r.TotalBytes)) * 100)
+				percent = int((float32(bytesReceived) / float32(r.TotalBytes)) * 100)
 			case <-tick.C:
 				// TODO: Preet This can return an error as well, should return it
 				r.Lease.Progress(percent)

@@ -56,8 +56,6 @@
 //
 // Using the Client
 //
-<<<<<<< HEAD
-<<<<<<< HEAD
 // To AWS Security Token Service with the SDK use the New function to create
 // a new service client. With that client you can make API requests to the service.
 // These clients are safe to use concurrently.
@@ -71,62 +69,4 @@
 // See the AWS Security Token Service client STS for more
 // information on creating client for this service.
 // https://docs.aws.amazon.com/sdk-for-go/api/service/sts/#New
-=======
-// To use the client for AWS Security Token Service you will first need
-// to create a new instance of it.
-=======
-// To AWS Security Token Service with the SDK use the New function to create
-// a new service client. With that client you can make API requests to the service.
-// These clients are safe to use concurrently.
->>>>>>> Update deps for Sep 12 2017
-//
-// See the SDK's documentation for more information on how to use the SDK.
-// https://docs.aws.amazon.com/sdk-for-go/api/
-//
-// See aws.Config documentation for more information on configuring SDK clients.
-// https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config
-//
-// See the AWS Security Token Service client STS for more
-// information on creating client for this service.
-// https://docs.aws.amazon.com/sdk-for-go/api/service/sts/#New
-<<<<<<< HEAD
-//
-// Once the client is created you can make an API request to the service.
-// Each API method takes a input parameter, and returns the service response
-// and an error.
-//
-// The API method will document which error codes the service can be returned
-// by the operation if the service models the API operation's errors. These
-// errors will also be available as const strings prefixed with "ErrCode".
-//
-//   result, err := svc.AssumeRole(params)
-//   if err != nil {
-//       // Cast err to awserr.Error to handle specific error codes.
-//       aerr, ok := err.(awserr.Error)
-//       if ok && aerr.Code() == <error code to check for> {
-//           // Specific error code handling
-//       }
-//       return err
-//   }
-//
-//   fmt.Println("AssumeRole result:")
-//   fmt.Println(result)
-//
-// Using the Client with Context
-//
-// The service's client also provides methods to make API requests with a Context
-// value. This allows you to control the timeout, and cancellation of pending
-// requests. These methods also take request Option as variadic parameter to apply
-// additional configuration to the API request.
-//
-//   ctx := context.Background()
-//
-//   result, err := svc.AssumeRoleWithContext(ctx, params)
-//
-// See the request package documentation for more information on using Context pattern
-// with the SDK.
-// https://docs.aws.amazon.com/sdk-for-go/api/aws/request/
->>>>>>> Update all deps
-=======
->>>>>>> Update deps for Sep 12 2017
 package sts

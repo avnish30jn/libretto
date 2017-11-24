@@ -174,24 +174,26 @@ func typeHeader(contentType string) textproto.MIMEHeader {
 // PrepareUpload determines whether the data in the supplied reader should be
 // uploaded in a single request, or in sequential chunks.
 // chunkSize is the size of the chunk that media should be split into.
-//
-// If chunkSize is zero, media is returned as the first value, and the other
-// two return values are nil, true.
-//
-// Otherwise, a MediaBuffer is returned, along with a bool indicating whether the
-// contents of media fit in a single chunk.
+// If chunkSize is non-zero and the contents of media do not fit in a single
+// chunk (or there is an error reading media), then media will be returned as a
+// MediaBuffer.  Otherwise, media will be returned as a Reader.
 //
 // After PrepareUpload has been called, media should no longer be used: the
 // media content should be accessed via one of the return values.
-func PrepareUpload(media io.Reader, chunkSize int) (r io.Reader, mb *MediaBuffer, singleChunk bool) {
+func PrepareUpload(media io.Reader, chunkSize int) (io.Reader, *MediaBuffer) {
 	if chunkSize == 0 { // do not chunk
-		return media, nil, true
+		return media, nil
 	}
-	mb = NewMediaBuffer(media, chunkSize)
-	_, _, _, err := mb.Chunk()
-	// If err is io.EOF, we can upload this in a single request. Otherwise, err is
-	// either nil or a non-EOF error. If it is the latter, then the next call to
-	// mb.Chunk will return the same error. Returning a MediaBuffer ensures that this
-	// error will be handled at some point.
-	return nil, mb, err == io.EOF
+
+	mb := NewMediaBuffer(media, chunkSize)
+	rdr, _, _, err := mb.Chunk()
+
+	if err == io.EOF { // we can upload this in a single request
+		return rdr, nil
+	}
+	// err might be a non-EOF error. If it is, the next call to mb.Chunk will
+	// return the same error. Returning a MediaBuffer ensures that this error
+	// will be handled at some point.
+
+	return nil, mb
 }

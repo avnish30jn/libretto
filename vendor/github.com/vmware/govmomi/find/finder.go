@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
-Copyright (c) 2014-2016 VMware, Inc. All Rights Reserved.
-=======
 Copyright (c) 2014-2017 VMware, Inc. All Rights Reserved.
->>>>>>> Revendor using dep tool
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -282,15 +278,11 @@ func (f *Finder) Element(ctx context.Context, ref types.ManagedObjectReference) 
 		return ref, nil
 	}
 
-<<<<<<< HEAD
-	e, err := f.find(ctx, rl, false, ".")
-=======
 	s := &spec{
 		Relative: rl,
 	}
 
 	e, err := f.find(ctx, "./", s)
->>>>>>> Revendor using dep tool
 	if err != nil {
 		return nil, err
 	}
@@ -304,38 +296,6 @@ func (f *Finder) Element(ctx context.Context, ref types.ManagedObjectReference) 
 	}
 
 	return &e[0], nil
-<<<<<<< HEAD
-}
-
-// ObjectReference converts the given ManagedObjectReference to a type from the object package via object.NewReference
-// with the object.Common.InventoryPath field set.
-func (f *Finder) ObjectReference(ctx context.Context, ref types.ManagedObjectReference) (object.Reference, error) {
-	e, err := f.Element(ctx, ref)
-	if err != nil {
-		return nil, err
-	}
-
-	r := object.NewReference(f.client, ref)
-
-	type common interface {
-		SetInventoryPath(string)
-	}
-
-	r.(common).SetInventoryPath(e.Path)
-
-	if f.dc != nil {
-		if ds, ok := r.(*object.Datastore); ok {
-			ds.DatacenterPath = f.dc.InventoryPath
-		}
-	}
-
-	return r, nil
-}
-
-func (f *Finder) ManagedObjectList(ctx context.Context, path string) ([]list.Element, error) {
-	return f.managedObjectList(ctx, path, false)
-=======
->>>>>>> Revendor using dep tool
 }
 
 // ObjectReference converts the given ManagedObjectReference to a type from the object package via object.NewReference
@@ -507,15 +467,11 @@ func (f *Finder) DatastoreOrDefault(ctx context.Context, path string) (*object.D
 }
 
 func (f *Finder) DatastoreClusterList(ctx context.Context, path string) ([]*object.StoragePod, error) {
-<<<<<<< HEAD
-	es, err := f.find(ctx, f.datastoreFolder, false, path)
-=======
 	s := &spec{
 		Relative: f.datastoreFolder,
 	}
 
 	es, err := f.find(ctx, path, s)
->>>>>>> Revendor using dep tool
 	if err != nil {
 		return nil, err
 	}

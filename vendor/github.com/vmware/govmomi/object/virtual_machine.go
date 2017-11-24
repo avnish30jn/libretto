@@ -725,8 +725,6 @@ func (v VirtualMachine) QueryConfigTarget(ctx context.Context) (*types.ConfigTar
 
 	return res.Returnval, nil
 }
-<<<<<<< HEAD
-=======
 
 func (v VirtualMachine) MountToolsInstaller(ctx context.Context) error {
 	req := types.MountToolsInstaller{
@@ -759,4 +757,3 @@ func (v VirtualMachine) UpgradeTools(ctx context.Context, options string) (*Task
 
 	return NewTask(v.c, res.Returnval), nil
 }
->>>>>>> Revendor using dep tool

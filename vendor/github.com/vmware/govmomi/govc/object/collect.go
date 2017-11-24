@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
-Copyright (c) 2016 VMware, Inc. All Rights Reserved.
-=======
 Copyright (c) 2016-2017 VMware, Inc. All Rights Reserved.
->>>>>>> Update deps for Sep 12 2017
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,10 +29,7 @@ import (
 	"github.com/vmware/govmomi/govc/cli"
 	"github.com/vmware/govmomi/govc/flags"
 	"github.com/vmware/govmomi/property"
-<<<<<<< HEAD
-=======
 	"github.com/vmware/govmomi/view"
->>>>>>> Update deps for Sep 12 2017
 	"github.com/vmware/govmomi/vim25/methods"
 	"github.com/vmware/govmomi/vim25/types"
 )
@@ -47,13 +40,10 @@ type collect struct {
 	single bool
 	simple bool
 	n      int
-<<<<<<< HEAD
-=======
 	kind   kinds
 
 	filter property.Filter
 	obj    string
->>>>>>> Update deps for Sep 12 2017
 }
 
 func init() {
@@ -66,10 +56,7 @@ func (cmd *collect) Register(ctx context.Context, f *flag.FlagSet) {
 
 	f.BoolVar(&cmd.simple, "s", false, "Output property value only")
 	f.IntVar(&cmd.n, "n", 0, "Wait for N property updates")
-<<<<<<< HEAD
-=======
 	f.Var(&cmd.kind, "type", "Resource type.  If specified, MOID is used for a container view root")
->>>>>>> Update deps for Sep 12 2017
 }
 
 func (cmd *collect) Usage() string {
@@ -80,11 +67,6 @@ func (cmd *collect) Description() string {
 	return `Collect managed object properties.
 
 MOID can be an inventory path or ManagedObjectReference.
-<<<<<<< HEAD
-MOID defaults to '-', an alias for 'ServiceInstance:ServiceInstance'.
-
-By default only the current property value(s) are collected.  Use the '-n' flag to wait for updates.
-=======
 MOID defaults to '-', an alias for 'ServiceInstance:ServiceInstance' or the root folder if a '-type' flag is given.
 
 If a '-type' flag is given, properties are collected using a ContainerView object where MOID is the root of the view.
@@ -92,17 +74,13 @@ If a '-type' flag is given, properties are collected using a ContainerView objec
 By default only the current property value(s) are collected.  To wait for updates, use the '-n' flag or
 specify a property filter.  A property filter can be specified by prefixing the property name with a '-',
 followed by the value to match.
->>>>>>> Update deps for Sep 12 2017
 
 Examples:
   govc object.collect - content
   govc object.collect -s HostSystem:ha-host hardware.systemInfo.uuid
   govc object.collect -s /ha-datacenter/vm/foo overallStatus
-<<<<<<< HEAD
-=======
   govc object.collect -s /ha-datacenter/vm/foo -guest.guestOperationsReady true # property filter
   govc object.collect -type m / name runtime.powerState # collect properties for multiple objects
->>>>>>> Update deps for Sep 12 2017
   govc object.collect -json -n=-1 EventManager:ha-eventmgr latestEvent | jq .
   govc object.collect -json -s $(govc object.collect -s - content.perfManager) description.counterType | jq .`
 }
@@ -117,14 +95,6 @@ func (cmd *collect) Process(ctx context.Context) error {
 var stringer = reflect.TypeOf((*fmt.Stringer)(nil)).Elem()
 
 type change struct {
-<<<<<<< HEAD
-	cmd            *collect
-	PropertyChange []types.PropertyChange
-}
-
-func (pc *change) MarshalJSON() ([]byte, error) {
-	return json.Marshal(pc.PropertyChange)
-=======
 	cmd    *collect
 	Update types.ObjectUpdate
 }
@@ -135,7 +105,6 @@ func (pc *change) MarshalJSON() ([]byte, error) {
 	}
 
 	return json.Marshal(pc.Update)
->>>>>>> Update deps for Sep 12 2017
 }
 
 func (pc *change) output(name string, rval reflect.Value, rtype reflect.Type) {
@@ -192,11 +161,6 @@ func (pc *change) output(name string, rval reflect.Value, rtype reflect.Type) {
 		return
 	}
 
-<<<<<<< HEAD
-	fmt.Fprintf(pc.cmd.Out, "%s\t%s\t%s\n", name, rtype, s)
-}
-
-=======
 	if pc.cmd.obj != "" {
 		fmt.Fprintf(pc.cmd.Out, "%s\t", pc.cmd.obj)
 	}
@@ -219,16 +183,11 @@ func (pc *change) writeStruct(name string, rval reflect.Value, rtype reflect.Typ
 	}
 }
 
->>>>>>> Update deps for Sep 12 2017
 func (pc *change) Write(w io.Writer) error {
 	tw := tabwriter.NewWriter(pc.cmd.Out, 4, 0, 2, ' ', 0)
 	pc.cmd.Out = tw
 
-<<<<<<< HEAD
-	for _, c := range pc.PropertyChange {
-=======
 	for _, c := range pc.Update.ChangeSet {
->>>>>>> Update deps for Sep 12 2017
 		if c.Val == nil {
 			// type is unknown in this case, as xsi:type was not provided - just skip for now
 			continue
@@ -242,27 +201,12 @@ func (pc *change) Write(w io.Writer) error {
 			rtype = rval.Type()
 		}
 
-<<<<<<< HEAD
-		if pc.cmd.single && rtype.Kind() == reflect.Struct && !rtype.Implements(stringer) {
-			for i := 0; i < rval.NumField(); i++ {
-				fval := rval.Field(i)
-				field := rtype.Field(i)
-
-				if field.Anonymous {
-					continue
-				}
-
-				fname := fmt.Sprintf("%s.%s%s", c.Name, strings.ToLower(field.Name[:1]), field.Name[1:])
-				pc.output(fname, fval, field.Type)
-			}
-=======
 		if len(pc.cmd.kind) != 0 {
 			pc.cmd.obj = pc.Update.Obj.String()
 		}
 
 		if pc.cmd.single && rtype.Kind() == reflect.Struct && !rtype.Implements(stringer) {
 			pc.writeStruct(c.Name, rval, rtype)
->>>>>>> Update deps for Sep 12 2017
 			continue
 		}
 
@@ -272,8 +216,6 @@ func (pc *change) Write(w io.Writer) error {
 	return tw.Flush()
 }
 
-<<<<<<< HEAD
-=======
 func (cmd *collect) match(update types.ObjectUpdate) bool {
 	if len(cmd.filter) == 0 {
 		return false
@@ -301,7 +243,6 @@ func (cmd *collect) toFilter(f *flag.FlagSet, props []string) ([]string, error) 
 	return cmd.filter.Keys(), nil
 }
 
->>>>>>> Update deps for Sep 12 2017
 func (cmd *collect) Run(ctx context.Context, f *flag.FlagSet) error {
 	client, err := cmd.Client()
 	if err != nil {
@@ -316,13 +257,10 @@ func (cmd *collect) Run(ctx context.Context, f *flag.FlagSet) error {
 	ref := methods.ServiceInstance
 	arg := f.Arg(0)
 
-<<<<<<< HEAD
-=======
 	if len(cmd.kind) != 0 {
 		ref = client.ServiceContent.RootFolder
 	}
 
->>>>>>> Update deps for Sep 12 2017
 	switch arg {
 	case "", "-":
 	default:
@@ -344,10 +282,7 @@ func (cmd *collect) Run(ctx context.Context, f *flag.FlagSet) error {
 	}
 
 	p := property.DefaultCollector(client)
-<<<<<<< HEAD
-=======
 	filter := new(property.WaitFilter)
->>>>>>> Update deps for Sep 12 2017
 
 	var props []string
 	if f.NArg() > 1 {
@@ -355,10 +290,6 @@ func (cmd *collect) Run(ctx context.Context, f *flag.FlagSet) error {
 		cmd.single = len(props) == 1
 	}
 
-<<<<<<< HEAD
-	return property.Wait(ctx, p, ref, props, func(pc []types.PropertyChange) bool {
-		_ = cmd.WriteResult(&change{cmd, pc})
-=======
 	props, err = cmd.toFilter(f, props)
 	if err != nil {
 		return err
@@ -416,7 +347,6 @@ func (cmd *collect) Run(ctx context.Context, f *flag.FlagSet) error {
 
 			return false
 		}
->>>>>>> Update deps for Sep 12 2017
 
 		cmd.n--
 

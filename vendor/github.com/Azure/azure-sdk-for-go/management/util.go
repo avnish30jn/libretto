@@ -1,10 +1,8 @@
-// +build go1.7
-
 package management
 
 import (
+	"github.com/Azure/azure-sdk-for-go/core/http"
 	"io/ioutil"
-	"net/http"
 )
 
 func getResponseBody(response *http.Response) ([]byte, error) {

@@ -79,15 +79,7 @@ type envConfig struct {
 	SharedConfigFile string
 
 	// Sets the path to a custom Credentials Authroity (CA) Bundle PEM file
-<<<<<<< HEAD
-<<<<<<< HEAD
 	// that the SDK will use instead of the system's root CA bundle.
-=======
-	// that the SDK will use instead of the the system's root CA bundle.
->>>>>>> Revendor using dep tool
-=======
-	// that the SDK will use instead of the system's root CA bundle.
->>>>>>> Update deps for Sep 12 2017
 	// Only use this if you want to configure the SDK to use a custom set
 	// of CAs.
 	//
@@ -183,11 +175,6 @@ func envConfigLoad(enableSharedConfig bool) envConfig {
 
 	setFromEnvVal(&cfg.SharedCredentialsFile, sharedCredsFileEnvKey)
 	setFromEnvVal(&cfg.SharedConfigFile, sharedConfigFileEnvKey)
-<<<<<<< HEAD
-
-	cfg.CustomCABundle = os.Getenv("AWS_CA_BUNDLE")
-=======
->>>>>>> Dep updates for June 26, 2017
 
 	cfg.CustomCABundle = os.Getenv("AWS_CA_BUNDLE")
 

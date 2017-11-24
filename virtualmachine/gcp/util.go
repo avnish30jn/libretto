@@ -13,14 +13,13 @@ import (
 	"os"
 	"strings"
 	"time"
-	"context"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"golang.org/x/oauth2/jwt"
 
-	googlecloud "google.golang.org/api/compute/v1"
 	googleresourcemanager "google.golang.org/api/cloudresourcemanager/v1"
+	googlecloud "google.golang.org/api/compute/v1"
 )
 
 var (
@@ -725,7 +724,7 @@ func (svc *googleService) removeFirewallRules() error {
 				newRules[indexEndp].Ports[indPort] = ""
 				newRules[indexEndp].Ports = append(
 					newRules[indexEndp].Ports[:indPort],
-					newRules[indexEndp].Ports[indPort+1:]...
+					newRules[indexEndp].Ports[indPort+1:]...,
 				)
 				// Set the index back by one because we have
 				// shifted elements from indP onwards to left

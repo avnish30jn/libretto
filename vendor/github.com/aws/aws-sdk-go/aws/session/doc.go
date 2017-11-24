@@ -84,15 +84,7 @@ override the shared config state (AWS_SDK_LOAD_CONFIG).
 
 	// Force enable Shared Config support
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
-<<<<<<< HEAD
-<<<<<<< HEAD
 		SharedConfigState: session.SharedConfigEnable,
-=======
-		SharedConfigState: SharedConfigEnable,
->>>>>>> Revendor using dep tool
-=======
-		SharedConfigState: session.SharedConfigEnable,
->>>>>>> Update all deps
 	}))
 
 Adding Handlers

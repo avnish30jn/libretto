@@ -105,8 +105,6 @@ func (m HostConfigManager) VsanSystem(ctx context.Context) (*HostVsanSystem, err
 	return NewHostVsanSystem(m.c, *h.ConfigManager.VsanSystem), nil
 }
 
-<<<<<<< HEAD
-=======
 func (m HostConfigManager) VsanInternalSystem(ctx context.Context) (*HostVsanInternalSystem, error) {
 	var h mo.HostSystem
 
@@ -123,7 +121,6 @@ func (m HostConfigManager) VsanInternalSystem(ctx context.Context) (*HostVsanInt
 	return NewHostVsanInternalSystem(m.c, *h.ConfigManager.VsanInternalSystem), nil
 }
 
->>>>>>> Revendor using dep tool
 func (m HostConfigManager) AccountManager(ctx context.Context) (*HostAccountManager, error) {
 	var h mo.HostSystem
 

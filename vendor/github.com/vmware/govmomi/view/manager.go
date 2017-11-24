@@ -50,8 +50,6 @@ func (m Manager) CreateListView(ctx context.Context, objects []types.ManagedObje
 
 	return NewListView(m.Client(), res.Returnval), nil
 }
-<<<<<<< HEAD
-=======
 
 func (m Manager) CreateContainerView(ctx context.Context, container types.ManagedObjectReference, managedObjectTypes []string, recursive bool) (*ContainerView, error) {
 
@@ -69,4 +67,3 @@ func (m Manager) CreateContainerView(ctx context.Context, container types.Manage
 
 	return NewContainerView(m.Client(), res.Returnval), nil
 }
->>>>>>> Update deps for Sep 12 2017

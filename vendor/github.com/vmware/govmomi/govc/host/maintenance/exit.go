@@ -14,11 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-<<<<<<< HEAD
-package maintenancec
-=======
 package maintenance
->>>>>>> Update deps for Sep 12 2017
 
 import (
 	"context"

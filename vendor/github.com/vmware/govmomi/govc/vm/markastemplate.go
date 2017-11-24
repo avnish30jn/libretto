@@ -25,10 +25,6 @@ import (
 )
 
 type markastemplate struct {
-<<<<<<< HEAD
-	*flags.ClientFlag
-=======
->>>>>>> Update deps for Sep 12 2017
 	*flags.SearchFlag
 }
 
@@ -37,31 +33,17 @@ func init() {
 }
 
 func (cmd *markastemplate) Register(ctx context.Context, f *flag.FlagSet) {
-<<<<<<< HEAD
-	cmd.ClientFlag, ctx = flags.NewClientFlag(ctx)
-	cmd.ClientFlag.Register(ctx, f)
-
-=======
->>>>>>> Update deps for Sep 12 2017
 	cmd.SearchFlag, ctx = flags.NewSearchFlag(ctx, flags.SearchVirtualMachines)
 	cmd.SearchFlag.Register(ctx, f)
 }
 
 func (cmd *markastemplate) Process(ctx context.Context) error {
-<<<<<<< HEAD
-	if err := cmd.ClientFlag.Process(ctx); err != nil {
-		return err
-	}
-=======
->>>>>>> Update deps for Sep 12 2017
 	if err := cmd.SearchFlag.Process(ctx); err != nil {
 		return err
 	}
 	return nil
 }
 
-<<<<<<< HEAD
-=======
 func (cmd *markastemplate) Usage() string {
 	return "VM..."
 }
@@ -73,7 +55,6 @@ Examples:
   govc vm.markastemplate $name`
 }
 
->>>>>>> Update deps for Sep 12 2017
 func (cmd *markastemplate) Run(ctx context.Context, f *flag.FlagSet) error {
 	vms, err := cmd.VirtualMachines(f.Args())
 	if err != nil {

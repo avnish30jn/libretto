@@ -66,8 +66,6 @@ func (cmd *info) Process(ctx context.Context) error {
 	return nil
 }
 
-<<<<<<< HEAD
-=======
 func (cmd *info) Usage() string {
 	return "DVS"
 }
@@ -80,7 +78,6 @@ Examples:
   govc find / -type DistributedVirtualSwitch | xargs -n1 govc dvs.portgroup.info`
 }
 
->>>>>>> Update deps for Sep 12 2017
 func (cmd *info) Run(ctx context.Context, f *flag.FlagSet) error {
 	if f.NArg() != 1 {
 		return flag.ErrHelp

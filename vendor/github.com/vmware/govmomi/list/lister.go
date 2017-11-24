@@ -116,26 +116,6 @@ type Lister struct {
 	All       bool
 }
 
-<<<<<<< HEAD
-func traversable(ref types.ManagedObjectReference) bool {
-	switch ref.Type {
-	case "Folder":
-	case "Datacenter":
-	case "ComputeResource", "ClusterComputeResource":
-		// Treat ComputeResource and ClusterComputeResource as one and the same.
-		// It doesn't matter from the perspective of the lister.
-	case "HostSystem":
-	case "VirtualApp":
-	case "StoragePod":
-	default:
-		return false
-	}
-
-	return true
-}
-
-=======
->>>>>>> Revendor using dep tool
 func (l Lister) retrieveProperties(ctx context.Context, req types.RetrieveProperties, dst *[]interface{}) error {
 	res, err := l.Collector.RetrieveProperties(ctx, req)
 	if err != nil {

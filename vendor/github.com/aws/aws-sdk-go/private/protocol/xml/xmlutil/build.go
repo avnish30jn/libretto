@@ -130,14 +130,7 @@ func (b *xmlBuilder) buildStruct(value reflect.Value, current *XMLNode, tag refl
 		if field.Tag.Get("ignore") != "" {
 			continue
 		}
-<<<<<<< HEAD
-=======
 
-<<<<<<< HEAD
->>>>>>> Revendor using dep tool
-
-=======
->>>>>>> Update all deps
 		mTag := field.Tag
 		if mTag.Get("location") != "" { // skip non-body members
 			continue

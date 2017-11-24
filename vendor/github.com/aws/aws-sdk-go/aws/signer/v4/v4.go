@@ -45,15 +45,7 @@
 // If signing a request intended for HTTP2 server, and you're using Go 1.6.2
 // through 1.7.4 you should use the URL.RawPath as the pre-escaped form of the
 // request URL. https://github.com/golang/go/issues/16847 points to a bug in
-<<<<<<< HEAD
-<<<<<<< HEAD
 // Go pre 1.8 that fails to make HTTP2 requests using absolute URL in the HTTP
-=======
-// Go pre 1.8 that failes to make HTTP2 requests using absolute URL in the HTTP
->>>>>>> Revendor using dep tool
-=======
-// Go pre 1.8 that fails to make HTTP2 requests using absolute URL in the HTTP
->>>>>>> Dep updates for June 26, 2017
 // message. URL.Opaque generally will force Go to make requests with absolute URL.
 // URL.RawPath does not do this, but RawPath must be a valid escaping of Path
 // or url.EscapedPath will ignore the RawPath escaping.
@@ -735,53 +727,6 @@ func stripExcessSpaces(vals []string) {
 		// Trim trailing spaces
 		for j = len(str) - 1; j >= 0 && str[j] == ' '; j-- {
 		}
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-		// Trim leading spaces
-		for k = 0; k < j && str[k] == ' '; k++ {
-		}
-		str = str[k : j+1]
-
-		// Strip multiple spaces.
-		j = strings.Index(str, doubleSpace)
-		if j < 0 {
-			vals[i] = str
-			continue
-		}
-
-		buf := []byte(str)
-		for k, m, l = j, j, len(buf); k < l; k++ {
-			if buf[k] == ' ' {
-				if spaces == 0 {
-					// First space.
-					buf[m] = buf[k]
-					m++
-=======
-		idx := strings.Index(trimmed, doubleSpaces)
-		if idx < 0 {
-			vals[i] = trimmed
-			continue
-		}
-
-		buf := []byte(trimmed)
-		for idx > -1 {
-			stripToIdx := -1
-			for j := idx + 1; j < len(buf); j++ {
-				if buf[j] != ' ' {
-					buf = append(buf[:idx+1], buf[j:]...)
-					stripToIdx = j - idx - 1
-					break
-				}
-			}
-
-			if stripToIdx >= 0 {
-				// Find next double space
-				idx = bytes.Index(buf[stripToIdx:], doubleSpaceBytes)
-				if idx >= 0 {
-					idx += stripToIdx
->>>>>>> Update deps for July 14th.
-=======
 
 		// Trim leading spaces
 		for k = 0; k < j && str[k] == ' '; k++ {
@@ -802,7 +747,6 @@ func stripExcessSpaces(vals []string) {
 					// First space.
 					buf[m] = buf[k]
 					m++
->>>>>>> Update deps for Sep 12 2017
 				}
 				spaces++
 			} else {
@@ -813,14 +757,6 @@ func stripExcessSpaces(vals []string) {
 			}
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 		vals[i] = string(buf[:m])
-=======
-		vals[i] = string(buf)
->>>>>>> Update deps for July 14th.
-=======
-		vals[i] = string(buf[:m])
->>>>>>> Update deps for Sep 12 2017
 	}
 }

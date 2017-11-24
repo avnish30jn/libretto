@@ -22,15 +22,10 @@ func NewBody(s string) *Body {
 	return (&Body{s: s}).reset()
 }
 
-// NewBodyClose creates a new instance of Body.
-func NewBodyClose(s string) *Body {
-	return &Body{s: s}
-}
-
 // Read reads into the passed byte slice and returns the bytes read.
 func (body *Body) Read(b []byte) (n int, err error) {
 	if !body.IsOpen() {
-		return 0, fmt.Errorf("ERROR: Body has been closed")
+		return 0, fmt.Errorf("ERROR: Body has been closed\n")
 	}
 	if len(body.b) == 0 {
 		return 0, io.EOF
@@ -122,7 +117,7 @@ func (c *Sender) AppendResponse(resp *http.Response) {
 }
 
 // AppendAndRepeatResponse adds the passed http.Response to the response stack along with a
-// repeat count. A negative repeat count will return the response for all remaining calls to Do.
+// repeat count. A negative repeat count will return the reponse for all remaining calls to Do.
 func (c *Sender) AppendAndRepeatResponse(resp *http.Response, repeat int) {
 	if c.responses == nil {
 		c.responses = []*http.Response{resp}
