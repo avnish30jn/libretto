@@ -404,14 +404,39 @@ var findVM = func(vm *VM, dc *mo.Datacenter, name string) (*mo.VirtualMachine, e
 	return moVM, vm.answerQuestion(moVM)
 }
 
+// splitPathToList: splits path containgin special character including delimiter
+// for slash "/" (\/) and returning slice of strings containing folder/vm names
+// for eg:  "vms\/test\/rec/rec\/1/rhel\/template\/vm"	: [vms/test/rec rec/1 rhel/template/vm]
+// Directory structure: vm/test/rec -> rec/1 -> rhel/template/vm
+func splitPathToList(path string) []string {
+	pathList := make([]string, 0)
+
+	slashInName := strings.SplitN(path, "\\/", 2)
+
+	pathList = append(pathList, strings.Split(slashInName[0], "/")...)
+
+	if len(slashInName) == 1 {
+		return pathList
+	}
+
+	morePathList := splitPathToList(slashInName[1])
+	lPathList := len(pathList)
+
+	pathList[lPathList-1] += "/" + morePathList[0]
+	pathList = append(pathList, morePathList[1:]...)
+	return pathList
+}
+
 func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 	*mo.VirtualMachine, error) {
 	var (
 		ref types.ManagedObjectReference
 	)
 
-	splitPath := strings.SplitN(name, "/", 2)
+	pathList := splitPathToList(name)
+	lPathList := len(pathList)
 
+	i := 0
 	for mor != nil {
 		// Fetch the childEntity property of the folder and check them
 		folderMo := mo.Folder{}
@@ -425,7 +450,7 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 		for _, child := range folderMo.ChildEntity {
 			switch child.Type {
 			case "Folder":
-				if len(splitPath) == 1 {
+				if i == lPathList-1 {
 					continue
 				}
 				childMo := mo.Folder{}
@@ -435,15 +460,20 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 					return nil, err
 				}
 
-				if childMo.Name == splitPath[0] {
-					splitPath = strings.SplitN(splitPath[1],
-						"/", 2)
+				// unescaping to convert any escaped character
+				childName, err := url.QueryUnescape(
+					childMo.Name)
+				if err != nil {
+					return nil, err
+				}
+				if childName == pathList[i] {
+					i++
 					ref = child
 					mor = &ref
 					break
 				}
 			case "VirtualMachine":
-				if len(splitPath) == 2 {
+				if i != lPathList-1 {
 					continue
 				}
 				// Base recursive case, compare for value
@@ -459,7 +489,12 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 							"could not find vm"),
 						name)
 				}
-				if vmMo.Name == splitPath[0] {
+				// unescaping to convert any escaped character
+				vmName, err := url.QueryUnescape(vmMo.Name)
+				if err != nil {
+					return nil, err
+				}
+				if vmName == pathList[i] {
 					return &vmMo, nil
 				}
 			}
@@ -470,7 +505,6 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 				"could not find the vm"), name)
 		}
 	}
-
 	return nil, NewErrorObjectNotFound(errors.New("could not find the vm"),
 		name)
 }

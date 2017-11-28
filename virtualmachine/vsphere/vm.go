@@ -1438,10 +1438,19 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			if err != nil {
 				return nil, err
 			}
+			// unescaping to convert any escaped character
+			folderName, err := url.QueryUnescape(folderMo.Name)
+			if err != nil {
+				return nil, err
+			}
+			// Adding delimitter in case "/" is present in name
+			folderName = strings.Replace(folderName, "/", "\\/",
+				-1)
 			folder := object.NewFolder(vm.client.Client,
 				mor)
+			// Getting vms in the folder
 			vms, err := getVmsInFolder(vm, folder,
-				path+folderMo.Name+"/")
+				path+folderName+"/")
 			if err != nil {
 				return nil, err
 			}
@@ -1455,7 +1464,14 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			if err != nil {
 				return nil, err
 			}
-			vmName := path + vmMo.Name
+			// unescaping to convert any escaped character
+			vmName, err := url.QueryUnescape(vmMo.Name)
+			if err != nil {
+				return nil, err
+			}
+			// Adding delimitter in case "/" is present in name
+			vmName = path + strings.Replace(vmName, "/", "\\/",
+				-1)
 			allVms[vmName] = vmMo
 		}
 	}
