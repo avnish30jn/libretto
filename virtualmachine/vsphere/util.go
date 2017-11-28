@@ -953,9 +953,18 @@ var shutDown = func(vm *VM) error {
 
 // waitForGuestStatus: wait for guest vm status to turn to either of the
 // statuses sent as 'status'
-func waitForGuestStatus(vm *VM, vmMo *mo.VirtualMachine, status int) error {
-	ctx, cancelFunc := context.WithTimeout(vm.ctx, STATUS_CHECK_TIMEOUT)
-	defer cancelFunc()
+func waitForGuestStatus(vm *VM, vmMo *mo.VirtualMachine, status int,
+	timeout ...time.Duration) error {
+	var (
+		ctx        context.Context
+		cancelFunc context.CancelFunc
+	)
+	if len(timeout) != 0 {
+		ctx, cancelFunc = context.WithTimeout(vm.ctx, timeout[0])
+		defer cancelFunc()
+	} else {
+		ctx = vm.ctx
+	}
 
 	collector := property.DefaultCollector(vm.client.Client)
 	err := property.Wait(ctx, collector, vmMo.Reference(), []string{
@@ -991,30 +1000,6 @@ func waitForGuestStatus(vm *VM, vmMo *mo.VirtualMachine, status int) error {
 	return err
 }
 
-// waitForRunningTools: wait for vmware tools status to be running
-func waitForRunningTools(vm *VM, vmMo *mo.VirtualMachine) error {
-	var (
-		toolsRunning bool
-		err          error
-	)
-	vmo := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
-	timeout := time.After(STATUS_CHECK_TIMEOUT)
-	for !toolsRunning {
-		select {
-		case <-timeout:
-			return fmt.Errorf("timeout waiting for tools to start")
-		default:
-			toolsRunning, err = vmo.IsToolsRunning(vm.ctx)
-			if err != nil {
-				return fmt.Errorf(
-					"Error checking status of tools : %v",
-					err)
-			}
-		}
-	}
-	return nil
-}
-
 // restart Initiates guest reboot of this VM.
 var restart = func(vm *VM) error {
 	// Get a reference to the datacenter with host and vm folders populated
@@ -1032,14 +1017,12 @@ var restart = func(vm *VM) error {
 		return fmt.Errorf("error initiating reboot on the vm: %v", err)
 	}
 	// wait for machine to shutdown - status will turn to gray
-	err = waitForGuestStatus(vm, vmMo, GRAY_HEART_BEAT)
+	// ignoring the error if timeout waiting for gray status
+	waitForGuestStatus(vm, vmMo, GRAY_HEART_BEAT, STATUS_CHECK_TIMEOUT)
+	// wait for machine to come up again - status will turn to green
+	err = waitForGuestStatus(vm, vmMo, GREEN_HEART_BEAT|YELLOW_HEART_BEAT)
 	if err != nil {
 		return fmt.Errorf("error wating for vm to reboot : %v", err)
-	}
-	// wait for machine to come up again - status will turn to green
-	err = waitForRunningTools(vm, vmMo)
-	if err != nil {
-		return fmt.Errorf("error wating for vm to boot up: %v", err)
 	}
 	return nil
 }
@@ -1111,9 +1094,11 @@ var reset = func(vm *VM) error {
 		err = waitForGuestStatus(vm, vmMo,
 			GRAY_HEART_BEAT|RED_HEART_BEAT)
 		if err != nil {
-			return fmt.Errorf("error wating for vm to reboot : %v", err)
+			return fmt.Errorf("error wating for vm to reset: %v",
+				err)
 		}
-		err = waitForRunningTools(vm, vmMo)
+		err = waitForGuestStatus(vm, vmMo,
+			GREEN_HEART_BEAT|YELLOW_HEART_BEAT)
 		if err != nil {
 			return fmt.Errorf("error wating for vm to reset : %v",
 				err)
