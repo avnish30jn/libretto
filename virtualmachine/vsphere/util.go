@@ -34,8 +34,9 @@ import (
 )
 
 const (
-	RETRY_COUNT          = 20
-	STATUS_CHECK_TIMEOUT = 5 * time.Minute
+	RETRY_COUNT                = 20
+	GRAY_STATUS_CHECK_TIMEOUT  = 1 * time.Minute
+	GREEN_STATUS_CHECK_TIMEOUT = 10 * time.Minute
 )
 
 /*
@@ -1018,9 +1019,10 @@ var restart = func(vm *VM) error {
 	}
 	// wait for machine to shutdown - status will turn to gray
 	// ignoring the error if timeout waiting for gray status
-	waitForGuestStatus(vm, vmMo, GRAY_HEART_BEAT, STATUS_CHECK_TIMEOUT)
+	waitForGuestStatus(vm, vmMo, GRAY_HEART_BEAT, GRAY_STATUS_CHECK_TIMEOUT)
 	// wait for machine to come up again - status will turn to green
-	err = waitForGuestStatus(vm, vmMo, GREEN_HEART_BEAT|YELLOW_HEART_BEAT)
+	err = waitForGuestStatus(vm, vmMo, GREEN_HEART_BEAT|YELLOW_HEART_BEAT,
+		GREEN_STATUS_CHECK_TIMEOUT)
 	if err != nil {
 		return fmt.Errorf("error wating for vm to reboot : %v", err)
 	}
