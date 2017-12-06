@@ -1412,17 +1412,20 @@ func getDcVMList(vm *VM, datacenter *object.Datacenter) (
 	if err != nil {
 		return nil, err
 	}
+	// datacenter's vmFolder has all the vms in all the clusters/hosts in
+	// that datacetner, returning the vm in datacenter vmfolder
 	return getVmsInFolder(vm, folders.VmFolder, "")
 }
 
 // getVmsInFolder: returns map of full path and mo.Virtualmachine struct of vms
-// in a vcenter folder
+// in a vcenter vm folder
 func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 	map[string]mo.VirtualMachine, error) {
 	var (
 		allVms map[string]mo.VirtualMachine
 	)
 	allVms = make(map[string]mo.VirtualMachine)
+	// get list of folders/vms/templates in folder
 	children, err := folder.Children(vm.ctx)
 	if err != nil {
 		return nil, err
@@ -1430,6 +1433,8 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 	for _, entity := range children {
 		mor := entity.Reference()
 		switch mor.Type {
+		// if child is a folder, look for vms in the folder recursively
+		// and add to the hash
 		case "Folder":
 			// Fetch the childEntity property of the folder
 			folderMo := mo.Folder{}
@@ -1448,16 +1453,19 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 				-1)
 			folder := object.NewFolder(vm.client.Client,
 				mor)
-			// Getting vms in the folder
+			// gettings vm in folder recursively
 			vms, err := getVmsInFolder(vm, folder,
 				path+folderName+"/")
 			if err != nil {
 				return nil, err
 			}
-			for k, v := range vms {
-				allVms[k] = v
+			// updating the allVMs hash
+			for name, vmMo := range vms {
+				allVms[name] = vmMo
 			}
 		case "VirtualMachine":
+			// if child is vm/template, return the full path and
+			// mo of the vm
 			vmMo := mo.VirtualMachine{}
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
 				"name", "config", "runtime", "summary"}, &vmMo)
@@ -1661,6 +1669,7 @@ func GetTemplateList(vm *VM) ([]map[string]interface{}, error) {
 		if vmo.Config != nil && !vmo.Config.Template {
 			continue
 		}
+		// fetching fisk info
 		diskInfo := make([]map[string]interface{}, 0)
 		for _, device := range vmo.Config.Hardware.Device {
 			disk, ok := device.(*types.VirtualDisk)
@@ -1691,7 +1700,7 @@ func GetTemplateList(vm *VM) ([]map[string]interface{}, error) {
 	return vmList, nil
 }
 
-// getVirtualMachines : Return the virtual machines in a dc/cluster/host
+// getVirtualMachines : Returns the virtual machines in a dc/cluster/host
 func getVirtualMachines(vm *VM) (map[string]mo.VirtualMachine, error) {
 	var (
 		vmsInDc, vmsInCluster map[string]mo.VirtualMachine
@@ -1718,17 +1727,19 @@ func getVirtualMachines(vm *VM) (map[string]mo.VirtualMachine, error) {
 		return nil, err
 	}
 
+	// if cluster name not given, return vms in datacenter
 	if vm.Destination.DestinationName == "" {
 		return vmsInDc, nil
 	}
 
-	// Get the cluster resource and its host, datastore and datastore
+	// Get the cluster resource and its host, datastore
 	crMo, err := findClusterComputeResource(vm, dcMo,
 		vm.Destination.DestinationName)
 	if err != nil {
 		return nil, err
 	}
 
+	// get the hosts in cluster
 	err = vm.collector.Retrieve(vm.ctx, crMo.Host, []string{"name"}, &hsMos)
 	if err != nil {
 		return nil, err
@@ -1737,6 +1748,7 @@ func getVirtualMachines(vm *VM) (map[string]mo.VirtualMachine, error) {
 	for _, host := range hsMos {
 		hosts[host.Name] = ""
 	}
+	// if host is provided update the hosts map to have one host only
 	if vm.Destination.HostSystem != "" {
 		hosts = map[string]string{
 			vm.Destination.HostSystem: "",
