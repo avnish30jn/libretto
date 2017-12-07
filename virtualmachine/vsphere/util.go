@@ -411,10 +411,11 @@ var findVM = func(vm *VM, dc *mo.Datacenter, name string) (*mo.VirtualMachine, e
 func splitPathToList(path string) []string {
 	pathList := make([]string, 0)
 
-	// split at escaped '/', if none length of returned slice will be 1
+	// split at escaped '/'
+	// if no escaped '/' are present length of returned slice will be 1
 	slashInName := strings.SplitN(path, "\\/", 2)
 
-	// split at '/' (path separatore) and append to pathList to return
+	// split at '/' (path separator) and append to pathList to return
 	pathList = append(pathList, strings.Split(slashInName[0], "/")...)
 
 	// if there are no escaped '/'

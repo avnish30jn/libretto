@@ -1703,12 +1703,11 @@ func GetTemplateList(vm *VM) ([]map[string]interface{}, error) {
 // getVirtualMachines : Returns the virtual machines in a dc/cluster/host
 func getVirtualMachines(vm *VM) (map[string]mo.VirtualMachine, error) {
 	var (
-		vmsInDc, vmsInCluster map[string]mo.VirtualMachine
-		hsMos                 []mo.HostSystem
-		hsMo                  mo.HostSystem
+		hsMos []mo.HostSystem
+		hsMo  mo.HostSystem
 	)
-	vmsInDc = make(map[string]mo.VirtualMachine)
-	vmsInCluster = make(map[string]mo.VirtualMachine)
+	vmsInDc := make(map[string]mo.VirtualMachine)
+	vmsInCluster := make(map[string]mo.VirtualMachine)
 	// set up session to vcenter server
 	if err := SetupSession(vm); err != nil {
 		return nil, err
@@ -1732,26 +1731,28 @@ func getVirtualMachines(vm *VM) (map[string]mo.VirtualMachine, error) {
 		return vmsInDc, nil
 	}
 
-	// Get the cluster resource and its host, datastore
-	crMo, err := findClusterComputeResource(vm, dcMo,
-		vm.Destination.DestinationName)
-	if err != nil {
-		return nil, err
-	}
-
-	// get the hosts in cluster
-	err = vm.collector.Retrieve(vm.ctx, crMo.Host, []string{"name"}, &hsMos)
-	if err != nil {
-		return nil, err
-	}
-	hosts := make(map[string]string)
-	for _, host := range hsMos {
-		hosts[host.Name] = ""
-	}
-	// if host is provided update the hosts map to have one host only
+	// using hostsLookup to check if a vm is related to a host in map
+	hostsLookup := make(map[string]bool)
+	// if host is provided update the hostsLookup map to have one host only
 	if vm.Destination.HostSystem != "" {
-		hosts = map[string]string{
-			vm.Destination.HostSystem: "",
+		hostsLookup = map[string]bool{
+			vm.Destination.HostSystem: false,
+		}
+	} else {
+		// Get the cluster resource and its host
+		crMo, err := findClusterComputeResource(vm, dcMo,
+			vm.Destination.DestinationName)
+		if err != nil {
+			return nil, err
+		}
+		// get the hosts in cluster
+		err = vm.collector.Retrieve(vm.ctx, crMo.Host, []string{"name"},
+			&hsMos)
+		if err != nil {
+			return nil, err
+		}
+		for _, host := range hsMos {
+			hostsLookup[host.Name] = false
 		}
 	}
 
@@ -1764,7 +1765,7 @@ func getVirtualMachines(vm *VM) (map[string]mo.VirtualMachine, error) {
 		if err != nil {
 			return nil, err
 		}
-		if _, ok := hosts[hsMo.Name]; ok {
+		if _, ok := hostsLookup[hsMo.Name]; ok {
 			vmsInCluster[path] = vmMo
 		}
 	}
