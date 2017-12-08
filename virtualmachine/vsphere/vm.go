@@ -740,8 +740,6 @@ func getNicInfo(vmMo mo.VirtualMachine) []VirtualEthernetCard {
 			switch b := nwcard.Backing.(type) {
 			case *types.VirtualEthernetCardNetworkBackingInfo:
 				nic.NetworkName = b.DeviceName
-			default:
-				continue
 			}
 			nicInfo = append(nicInfo, nic)
 		}
