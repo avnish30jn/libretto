@@ -522,6 +522,35 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 		name)
 }
 
+// searchVmByUuid: searches a datacenter for vm with uuid: instanceUuid
+func searchVmByUuid(vm *VM, instanceUuid string) (*mo.VirtualMachine, error) {
+	vmMo := mo.VirtualMachine{}
+	s := object.NewSearchIndex(vm.client.Client)
+	isInstanceUuid := new(bool)
+	*isInstanceUuid = true
+	dcMo, err := GetDatacenter(vm)
+	if err != nil {
+		return nil, err
+	}
+	dcObj := object.NewDatacenter(vm.client.Client, dcMo.Self)
+	obj, err := s.FindByUuid(vm.ctx, dcObj, instanceUuid, true,
+		isInstanceUuid)
+	if err != nil {
+		return nil, err
+	}
+	vmObj, ok := obj.(*object.VirtualMachine)
+	if !ok {
+		return nil, NewErrorObjectNotFound(errors.New(
+			"Invalid object with uuid found"), instanceUuid)
+	}
+	err = vm.collector.RetrieveOne(vm.ctx, vmObj.Reference(), []string{
+		"name", "config", "runtime", "summary"}, &vmMo)
+	if err != nil {
+		return nil, err
+	}
+	return &vmMo, nil
+}
+
 func getEthernetBacking(vm *VM, nwMor types.ManagedObjectReference,
 	name string) (types.BaseVirtualDeviceBackingInfo, error) {
 	var (

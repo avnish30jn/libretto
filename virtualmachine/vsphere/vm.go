@@ -536,6 +536,8 @@ type VM struct {
 	Networks []map[string]string
 	// Name is the name to use for the VM on vSphere and internally.
 	Name string
+	// InstanceUuids is the list of instance uuids for the VMs on vcenter server
+	InstanceUuids []string
 	// Template is the name to use for the VM's template
 	Template string
 	// Datastores is a slice of permissible datastores. One is picked out of these.
@@ -1748,12 +1750,28 @@ func getVmInfo(vmMo mo.VirtualMachine, vmPath string) map[string]interface{} {
 
 // GetVmList : Returns the VMs/templates info in a dc/cluster/host
 func GetVmList(vm *VM, template bool) ([]map[string]interface{}, error) {
+	var err error
+	vmMoList := make(map[string]mo.VirtualMachine)
 	vmList := make([]map[string]interface{}, 0)
-	vmMoList, err := getVirtualMachines(vm)
-	if err != nil {
+	// set up session to vcenter server
+	if err := SetupSession(vm); err != nil {
 		return nil, err
 	}
 
+	if len(vm.InstanceUuids) != 0 {
+		for _, instanceUuid := range vm.InstanceUuids {
+			vmMo, err := searchVmByUuid(vm, instanceUuid)
+			if err != nil {
+				return nil, err
+			}
+			vmMoList[vmMo.Name] = *vmMo
+		}
+	} else {
+		vmMoList, err = getVirtualMachines(vm)
+		if err != nil {
+			return nil, err
+		}
+	}
 	if vmMoList == nil {
 		return vmList, nil
 	}
@@ -1782,10 +1800,6 @@ func getVirtualMachines(vm *VM) (map[string]mo.VirtualMachine, error) {
 	)
 	vmsInDc := make(map[string]mo.VirtualMachine)
 	vmsInCluster := make(map[string]mo.VirtualMachine)
-	// set up session to vcenter server
-	if err := SetupSession(vm); err != nil {
-		return nil, err
-	}
 
 	// Return virtual machines for the whole datacenter
 	dcMo, err := GetDatacenter(vm)
