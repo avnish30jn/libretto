@@ -24,6 +24,7 @@ import (
 	"github.com/vmware/govmomi/object"
 	"github.com/vmware/govmomi/property"
 	"github.com/vmware/govmomi/vim25/mo"
+	"github.com/vmware/govmomi/vim25/soap"
 	"github.com/vmware/govmomi/vim25/types"
 )
 
@@ -1443,6 +1444,9 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
 				"name"}, &folderMo)
 			if err != nil {
+				if soap.IsSoapFault(err) {
+					continue
+				}
 				return nil, err
 			}
 			// unescaping to convert any escaped character
@@ -1472,6 +1476,9 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
 				"name", "config", "runtime", "summary"}, &vmMo)
 			if err != nil {
+				if soap.IsSoapFault(err) {
+					continue
+				}
 				return nil, err
 			}
 			// unescaping to convert any escaped character
@@ -1668,7 +1675,7 @@ func GetTemplateList(vm *VM) ([]map[string]interface{}, error) {
 	}
 	for name, vmo := range vmMoList {
 		// Filter out the templates
-		if vmo.Config != nil && !vmo.Config.Template {
+		if vmo.Config == nil || !vmo.Config.Template {
 			continue
 		}
 		// fetching fisk info

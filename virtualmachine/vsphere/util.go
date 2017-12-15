@@ -27,6 +27,7 @@ import (
 	"github.com/vmware/govmomi/property"
 	"github.com/vmware/govmomi/vim25"
 	"github.com/vmware/govmomi/vim25/mo"
+	"github.com/vmware/govmomi/vim25/soap"
 	"github.com/vmware/govmomi/vim25/types"
 
 	"github.com/apcera/libretto/util"
@@ -466,6 +467,9 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 				err = vm.collector.RetrieveOne(vm.ctx, child,
 					[]string{"name"}, &childMo)
 				if err != nil {
+					if soap.IsSoapFault(err) {
+						continue
+					}
 					return nil, err
 				}
 
@@ -494,10 +498,11 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 						"snapshot.currentSnapshot",
 						"summary", "runtime"}, &vmMo)
 				if err != nil {
+					if soap.IsSoapFault(err) {
+						continue
+					}
 					return nil, NewErrorObjectNotFound(
-						errors.New(
-							"could not find vm"),
-						name)
+						err, name)
 				}
 				// unescaping to convert any escaped character
 				vmName, err := url.QueryUnescape(vmMo.Name)
