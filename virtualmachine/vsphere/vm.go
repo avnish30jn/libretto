@@ -399,7 +399,7 @@ func isObjectOfType(object interface{}, objectType string) bool {
 	return false
 }
 
-func isManagedObjectNotFoundError(err error) bool {
+func isObjectDeleted(err error) bool {
 	fault := soap.ToSoapFault(err).Detail.Fault
 	return isObjectOfType(fault, "ManagedObjectNotFound")
 }
@@ -1460,7 +1460,7 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
 				"name"}, &folderMo)
 			if err != nil {
-				if isManagedObjectNotFoundError(err) {
+				if isObjectDeleted(err) {
 					continue
 				}
 				return nil, err
@@ -1492,7 +1492,7 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
 				"name", "config", "runtime", "summary"}, &vmMo)
 			if err != nil {
-				if isManagedObjectNotFoundError(err) {
+				if isObjectDeleted(err) {
 					continue
 				}
 				return nil, err

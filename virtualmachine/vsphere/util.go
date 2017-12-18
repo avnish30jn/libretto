@@ -466,7 +466,7 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 				err = vm.collector.RetrieveOne(vm.ctx, child,
 					[]string{"name"}, &childMo)
 				if err != nil {
-					if isManagedObjectNotFoundError(err) {
+					if isObjectDeleted(err) {
 						continue
 					}
 					return nil, err
@@ -497,7 +497,7 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 						"snapshot.currentSnapshot",
 						"summary", "runtime"}, &vmMo)
 				if err != nil {
-					if isManagedObjectNotFoundError(err) {
+					if isObjectDeleted(err) {
 						continue
 					}
 					return nil, err
