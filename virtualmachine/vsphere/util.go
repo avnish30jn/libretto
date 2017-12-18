@@ -466,7 +466,10 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 				err = vm.collector.RetrieveOne(vm.ctx, child,
 					[]string{"name"}, &childMo)
 				if err != nil {
-					continue
+					if isManagedObjectNotFoundError(err) {
+						continue
+					}
+					return nil, err
 				}
 
 				// unescaping to convert any escaped character
@@ -494,7 +497,10 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 						"snapshot.currentSnapshot",
 						"summary", "runtime"}, &vmMo)
 				if err != nil {
-					continue
+					if isManagedObjectNotFoundError(err) {
+						continue
+					}
+					return nil, err
 				}
 				// unescaping to convert any escaped character
 				vmName, err := url.QueryUnescape(vmMo.Name)
