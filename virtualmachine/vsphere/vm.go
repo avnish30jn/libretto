@@ -11,6 +11,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -391,13 +392,16 @@ func NewErrorBadResponse(r *http.Response) ErrorBadResponse {
 	return ErrorBadResponse{resp: r}
 }
 
-func isManagedObjectNotFoundError(err error) bool {
-	fault := soap.ToSoapFault(err).Detail.Fault
-	switch fault.(type) {
-	case types.ManagedObjectNotFound:
+func isObjectOfType(object interface{}, objectType string) bool {
+	if reflect.TypeOf(object).Name() == objectType {
 		return true
 	}
 	return false
+}
+
+func isManagedObjectNotFoundError(err error) bool {
+	fault := soap.ToSoapFault(err).Detail.Fault
+	return isObjectOfType(fault, "ManagedObjectNotFound")
 }
 
 const (
@@ -908,6 +912,9 @@ func getToolsRunningStatus(status string) bool {
 //getDisksInfo  returns the disks info of this VM.
 func getDisksInfo(vmMo mo.VirtualMachine) []Disk {
 	var disksInfo []Disk
+	if vmMo.Config == nil {
+		return disksInfo
+	}
 	devices := object.VirtualDeviceList(vmMo.Config.Hardware.Device)
 	deviceKeyMap := make(map[int32]types.BaseVirtualDevice)
 	for _, device := range devices {
