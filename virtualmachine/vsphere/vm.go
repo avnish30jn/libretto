@@ -11,6 +11,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -24,6 +25,7 @@ import (
 	"github.com/vmware/govmomi/object"
 	"github.com/vmware/govmomi/property"
 	"github.com/vmware/govmomi/vim25/mo"
+	"github.com/vmware/govmomi/vim25/soap"
 	"github.com/vmware/govmomi/vim25/types"
 )
 
@@ -388,6 +390,18 @@ func NewErrorPropertyRetrieval(m types.ManagedObjectReference, p []string, e err
 // NewErrorBadResponse returns an  ErrorBadResponse error.
 func NewErrorBadResponse(r *http.Response) ErrorBadResponse {
 	return ErrorBadResponse{resp: r}
+}
+
+func isObjectOfType(object interface{}, objectType string) bool {
+	if reflect.TypeOf(object).Name() == objectType {
+		return true
+	}
+	return false
+}
+
+func isObjectDeleted(err error) bool {
+	fault := soap.ToSoapFault(err).Detail.Fault
+	return isObjectOfType(fault, "ManagedObjectNotFound")
 }
 
 const (
@@ -898,6 +912,9 @@ func getToolsRunningStatus(status string) bool {
 //getDisksInfo  returns the disks info of this VM.
 func getDisksInfo(vmMo mo.VirtualMachine) []Disk {
 	var disksInfo []Disk
+	if vmMo.Config == nil {
+		return disksInfo
+	}
 	devices := object.VirtualDeviceList(vmMo.Config.Hardware.Device)
 	deviceKeyMap := make(map[int32]types.BaseVirtualDevice)
 	for _, device := range devices {
@@ -1443,6 +1460,9 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
 				"name"}, &folderMo)
 			if err != nil {
+				if isObjectDeleted(err) {
+					continue
+				}
 				return nil, err
 			}
 			// unescaping to convert any escaped character
@@ -1472,6 +1492,9 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
 				"name", "config", "runtime", "summary"}, &vmMo)
 			if err != nil {
+				if isObjectDeleted(err) {
+					continue
+				}
 				return nil, err
 			}
 			// unescaping to convert any escaped character
@@ -1668,7 +1691,7 @@ func GetTemplateList(vm *VM) ([]map[string]interface{}, error) {
 	}
 	for name, vmo := range vmMoList {
 		// Filter out the templates
-		if vmo.Config != nil && !vmo.Config.Template {
+		if vmo.Config == nil || !vmo.Config.Template {
 			continue
 		}
 		// fetching fisk info
