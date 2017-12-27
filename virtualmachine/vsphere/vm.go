@@ -746,7 +746,7 @@ func (vm *VM) RemoveDisk(vmdkFiles []string) error {
 
 // getNicInfo returns the nic info of this VM.
 func getNicInfo(vmMo mo.VirtualMachine) []VirtualEthernetCard {
-	var nicInfo []VirtualEthernetCard
+	nicInfo := make([]VirtualEthernetCard, 0)
 	for _, dev := range vmMo.Config.Hardware.Device {
 		if c, ok := dev.(types.BaseVirtualEthernetCard); ok {
 			var nic VirtualEthernetCard
@@ -763,7 +763,7 @@ func getNicInfo(vmMo mo.VirtualMachine) []VirtualEthernetCard {
 // getIpFromVmMo: gets ip from vm managed object
 func getIpFromVmMo(vmMo *mo.VirtualMachine) []net.IP {
 	// Lazy initialized when there is an IP address later.
-	var ips []net.IP
+	ips := make([]net.IP, 0)
 	if vmMo.Guest == nil {
 		return ips
 	}
@@ -773,13 +773,10 @@ func getIpFromVmMo(vmMo *mo.VirtualMachine) []net.IP {
 			if netIP == nil {
 				continue
 			}
-			if ips == nil {
-				ips = make([]net.IP, 0, 1)
-			}
 			ips = append(ips, netIP)
 		}
 	}
-	if ips == nil && vmMo.Guest.IpAddress != "" {
+	if len(ips) == 0 && vmMo.Guest.IpAddress != "" {
 		ip := net.ParseIP(vmMo.Guest.IpAddress)
 		if ip != nil {
 			ips = append(ips, ip)
@@ -1710,7 +1707,7 @@ func getVmInfo(vmMo mo.VirtualMachine, vmPath string) map[string]interface{} {
 	var (
 		toolsStatus bool
 	)
-	// fetching fisk info
+	// fetching disk info
 	diskInfo := make([]map[string]interface{}, 0)
 	for _, device := range vmMo.Config.Hardware.Device {
 		disk, ok := device.(*types.VirtualDisk)
@@ -1749,7 +1746,7 @@ func getVmInfo(vmMo mo.VirtualMachine, vmPath string) map[string]interface{} {
 }
 
 // GetVmList : Returns the VMs/templates info in a dc/cluster/host
-func GetVmList(vm *VM, template bool) ([]map[string]interface{}, error) {
+func GetVmList(vm *VM, markedTemplate bool) ([]map[string]interface{}, error) {
 	var err error
 	vmMoList := make(map[string]mo.VirtualMachine)
 	vmList := make([]map[string]interface{}, 0)
@@ -1757,6 +1754,7 @@ func GetVmList(vm *VM, template bool) ([]map[string]interface{}, error) {
 	if err := SetupSession(vm); err != nil {
 		return nil, err
 	}
+	defer vm.cancel()
 
 	if len(vm.InstanceUuids) != 0 {
 		for _, instanceUuid := range vm.InstanceUuids {
@@ -1782,8 +1780,8 @@ func GetVmList(vm *VM, template bool) ([]map[string]interface{}, error) {
 		}
 		// if asked for template and object is not template or
 		// if asked for vm and object is a template then skip object
-		if template && !vmo.Config.Template ||
-			!template && vmo.Config.Template {
+		if markedTemplate && !vmo.Config.Template ||
+			!markedTemplate && vmo.Config.Template {
 			continue
 		}
 		vminfo := getVmInfo(vmo, name)
