@@ -536,6 +536,8 @@ type VM struct {
 	Networks []map[string]string
 	// Name is the name to use for the VM on vSphere and internally.
 	Name string
+	// InstanceUuids is the list of instance uuids for the VMs on vcenter server
+	InstanceUuids []string
 	// Template is the name to use for the VM's template
 	Template string
 	// Datastores is a slice of permissible datastores. One is picked out of these.
@@ -744,7 +746,7 @@ func (vm *VM) RemoveDisk(vmdkFiles []string) error {
 
 // getNicInfo returns the nic info of this VM.
 func getNicInfo(vmMo mo.VirtualMachine) []VirtualEthernetCard {
-	var nicInfo []VirtualEthernetCard
+	nicInfo := make([]VirtualEthernetCard, 0)
 	for _, dev := range vmMo.Config.Hardware.Device {
 		if c, ok := dev.(types.BaseVirtualEthernetCard); ok {
 			var nic VirtualEthernetCard
@@ -756,6 +758,31 @@ func getNicInfo(vmMo mo.VirtualMachine) []VirtualEthernetCard {
 	}
 
 	return nicInfo
+}
+
+// getIpFromVmMo: gets ip from vm managed object
+func getIpFromVmMo(vmMo *mo.VirtualMachine) []net.IP {
+	// Lazy initialized when there is an IP address later.
+	ips := make([]net.IP, 0)
+	if vmMo.Guest == nil {
+		return ips
+	}
+	for _, nic := range vmMo.Guest.Net {
+		for _, ip := range nic.IpAddress {
+			netIP := net.ParseIP(ip)
+			if netIP == nil {
+				continue
+			}
+			ips = append(ips, netIP)
+		}
+	}
+	if len(ips) == 0 && vmMo.Guest.IpAddress != "" {
+		ip := net.ParseIP(vmMo.Guest.IpAddress)
+		if ip != nil {
+			ips = append(ips, ip)
+		}
+	}
+	return ips
 }
 
 // GetIPsAndId returns the IPs and reference Id of this VM. Returns all the IPs known to the API for
@@ -775,26 +802,7 @@ func (vm *VM) GetIPsAndId() ([]net.IP, string, error) {
 	if err != nil {
 		return nil, "", err
 	}
-	// Lazy initialized when there is an IP address later.
-	var ips []net.IP
-	for _, nic := range vmMo.Guest.Net {
-		for _, ip := range nic.IpAddress {
-			netIP := net.ParseIP(ip)
-			if netIP == nil {
-				continue
-			}
-			if ips == nil {
-				ips = make([]net.IP, 0, 1)
-			}
-			ips = append(ips, netIP)
-		}
-	}
-	if ips == nil && vmMo.Guest.IpAddress != "" {
-		ip := net.ParseIP(vmMo.Guest.IpAddress)
-		if ip != nil {
-			ips = append(ips, ip)
-		}
-	}
+	ips := getIpFromVmMo(vmMo)
 	return ips, vmMo.Self.Value, nil
 }
 
@@ -1490,7 +1498,8 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			// mo of the vm
 			vmMo := mo.VirtualMachine{}
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
-				"name", "config", "runtime", "summary"}, &vmMo)
+				"name", "guest", "config", "runtime",
+				"summary"}, &vmMo)
 			if err != nil {
 				if isObjectDeleted(err) {
 					continue
@@ -1678,49 +1687,105 @@ func CreateTemplate(vm *VM) error {
 	return err
 }
 
-// GetTemplateList : Returns the template VMs in a cluster
-func GetTemplateList(vm *VM) ([]map[string]interface{}, error) {
-	vmList := make([]map[string]interface{}, 0)
-	vmMoList, err := getVirtualMachines(vm)
-	if err != nil {
-		return nil, err
+// getOsDetails: returns details of guest os
+func getOsDetails(vmMo mo.VirtualMachine) map[string]interface{} {
+	osDetails := make(map[string]interface{})
+	if vmMo.Guest == nil {
+		return osDetails
+	}
+	osDetails = map[string]interface{}{
+		"guest_id":        vmMo.Guest.GuestId,
+		"guest_family":    vmMo.Guest.GuestFamily,
+		"guest_full_name": vmMo.Guest.GuestFullName,
+		"hostname":        vmMo.Guest.HostName,
+	}
+	return osDetails
+}
+
+// getVmInfo : get vm info from vm managed object
+func getVmInfo(vmMo mo.VirtualMachine, vmPath string) map[string]interface{} {
+	var (
+		toolsStatus bool
+	)
+	// fetching disk info
+	diskInfo := make([]map[string]interface{}, 0)
+	for _, device := range vmMo.Config.Hardware.Device {
+		disk, ok := device.(*types.VirtualDisk)
+		if !ok {
+			continue
+		}
+		devinfo, ok := disk.DeviceInfo.(*types.Description)
+		if !ok {
+			continue
+		}
+		backing := disk.Backing.(types.BaseVirtualDeviceFileBackingInfo)
+		fileBackingInfo := backing.GetVirtualDeviceFileBackingInfo()
+		diskInfo = append(diskInfo, map[string]interface{}{
+			"name":      devinfo.Label,
+			"size":      disk.CapacityInKB,
+			"disk_file": fileBackingInfo.FileName,
+		})
+	}
+	if vmMo.Guest != nil {
+		toolsStatus = getToolsRunningStatus(
+			vmMo.Guest.ToolsRunningStatus)
 	}
 
+	return map[string]interface{}{
+		"name":           vmPath, // full name/path of vm
+		"id":             vmMo.Self.Value,
+		"instance_uuid":  vmMo.Summary.Config.InstanceUuid,
+		"memory_size_mb": vmMo.Summary.Config.MemorySizeMB,
+		"num_cpu":        vmMo.Summary.Config.NumCpu,
+		"disks":          diskInfo,
+		"ip_addresses":   getIpFromVmMo(&vmMo),
+		"nic_info":       getNicInfo(vmMo),
+		"os_details":     getOsDetails(vmMo),
+		"tool_status":    toolsStatus,
+	}
+}
+
+// GetVmList : Returns the VMs/templates info in a dc/cluster/host
+func GetVmList(vm *VM, markedTemplate bool) ([]map[string]interface{}, error) {
+	var err error
+	vmMoList := make(map[string]mo.VirtualMachine)
+	vmList := make([]map[string]interface{}, 0)
+	// set up session to vcenter server
+	if err := SetupSession(vm); err != nil {
+		return nil, err
+	}
+	defer vm.cancel()
+
+	if len(vm.InstanceUuids) != 0 {
+		for _, instanceUuid := range vm.InstanceUuids {
+			vmMo, err := searchVmByUuid(vm, instanceUuid)
+			if err != nil {
+				return nil, err
+			}
+			vmMoList[vmMo.Name] = *vmMo
+		}
+	} else {
+		vmMoList, err = getVirtualMachines(vm)
+		if err != nil {
+			return nil, err
+		}
+	}
 	if vmMoList == nil {
 		return vmList, nil
 	}
 	for name, vmo := range vmMoList {
 		// Filter out the templates
-		if vmo.Config == nil || !vmo.Config.Template {
+		if vmo.Config == nil {
 			continue
 		}
-		// fetching fisk info
-		diskInfo := make([]map[string]interface{}, 0)
-		for _, device := range vmo.Config.Hardware.Device {
-			disk, ok := device.(*types.VirtualDisk)
-			if !ok {
-				continue
-			}
-			devinfo, ok := disk.DeviceInfo.(*types.Description)
-			if !ok {
-				continue
-			}
-			backing := disk.Backing
-			fileBackingInfo := backing.(types.BaseVirtualDeviceFileBackingInfo).GetVirtualDeviceFileBackingInfo()
-			diskInfo = append(diskInfo, map[string]interface{}{
-				"name":      devinfo.Label,
-				"size":      disk.CapacityInKB,
-				"disk_file": fileBackingInfo.FileName,
-			})
+		// if asked for template and object is not template or
+		// if asked for vm and object is a template then skip object
+		if markedTemplate && !vmo.Config.Template ||
+			!markedTemplate && vmo.Config.Template {
+			continue
 		}
-		vmList = append(vmList, map[string]interface{}{
-			"name":           name, // full name/path of vm
-			"id":             vmo.Self.Value,
-			"disks":          diskInfo,
-			"nic_info":       getNicInfo(vmo),
-			"memory_size_mb": vmo.Summary.Config.MemorySizeMB,
-			"num_cpu":        vmo.Summary.Config.NumCpu,
-		})
+		vminfo := getVmInfo(vmo, name)
+		vmList = append(vmList, vminfo)
 	}
 	return vmList, nil
 }
@@ -1733,10 +1798,6 @@ func getVirtualMachines(vm *VM) (map[string]mo.VirtualMachine, error) {
 	)
 	vmsInDc := make(map[string]mo.VirtualMachine)
 	vmsInCluster := make(map[string]mo.VirtualMachine)
-	// set up session to vcenter server
-	if err := SetupSession(vm); err != nil {
-		return nil, err
-	}
 
 	// Return virtual machines for the whole datacenter
 	dcMo, err := GetDatacenter(vm)
