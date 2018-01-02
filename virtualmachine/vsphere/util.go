@@ -824,11 +824,13 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 	}
 	config.DeviceChange = deviceChangeSpec
 
-	// Resize (increase)/delete existing volumes in VM template
-	conf, err := resizeAndDeleteVols(*vmMo, vm.FixedDisks)
-	config.DeviceChange = append(config.DeviceChange, conf...)
-	if err != nil {
-		return err
+	if len(vm.FixedDisks) != 0 {
+		// Resize (increase)/delete existing volumes in VM template
+		conf, err := resizeAndDeleteVols(*vmMo, vm.FixedDisks)
+		if err != nil {
+			return err
+		}
+		config.DeviceChange = append(config.DeviceChange, conf...)
 	}
 
 	err = checkAndCreateCustomSpec(vm)
