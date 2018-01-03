@@ -1882,3 +1882,42 @@ func (vm *VM) ValidateAuth() error {
 	defer vm.cancel()
 	return nil
 }
+
+// GetFilteredHosts: Lists the hosts compatible with the network and datastores
+func GetFilteredHosts(vm *VM) ([]string, error) {
+	if err := SetupSession(vm); err != nil {
+		return nil, err
+	}
+	defer vm.cancel()
+
+	hosts := make([]string, 0)
+	switch vm.Destination.DestinationType {
+	case DestinationTypeCluster:
+		dcMo, err := GetDatacenter(vm)
+		if err != nil {
+			return hosts, err
+		}
+		crMo, err := findClusterComputeResource(vm, dcMo, vm.Destination.DestinationName)
+		if err != nil {
+			return hosts, err
+		}
+		if len(crMo.Host) <= 0 {
+			err = errNoHostsInCluster
+			return hosts, err
+		}
+		filteredHosts, err := filterHosts(vm, crMo.Host)
+		if err != nil {
+			return hosts, err
+		}
+		hsMos := []mo.HostSystem{}
+		err = vm.collector.Retrieve(vm.ctx, filteredHosts, []string{
+			"name"}, &hsMos)
+		if err != nil {
+			return err
+		}
+		for _, host := range hsMos {
+			hosts = append(hosts, host.Name)
+		}
+	}
+	return hosts, nil
+}
