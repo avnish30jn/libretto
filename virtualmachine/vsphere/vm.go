@@ -63,6 +63,10 @@ func (v vmwareFinder) NetworkList(c context.Context, p string) ([]object.Network
 	return v.finder.NetworkList(c, p)
 }
 
+func (v vmwareFinder) ResourcePoolList(c context.Context, p string) ([]*object.ResourcePool, error) {
+	return v.finder.ResourcePoolList(c, p)
+}
+
 // NewLease creates a VMwareLease.
 var NewLease = func(ctx context.Context, lease *object.HttpNfcLease) Lease {
 	return VMwareLease{
@@ -440,6 +444,7 @@ type finder interface {
 	ClusterComputeResourceList(context.Context, string) ([]*object.ClusterComputeResource, error)
 	VirtualMachineList(context.Context, string) ([]*object.VirtualMachine, error)
 	NetworkList(context.Context, string) ([]object.NetworkReference, error)
+	ResourcePoolList(context.Context, string) ([]*object.ResourcePool, error)
 	SetDatacenter(*object.Datacenter) *find.Finder
 }
 
@@ -471,6 +476,8 @@ type Destination struct {
 	// HostSystem specifies the name of the host to run the VM on. DestinationType ESXi
 	// will have one host system. A cluster will have more than one,
 	HostSystem string
+	// MorefID of managed object
+	MOID string `json:"MOID"`
 }
 
 // Lease represents a type that wraps around a HTTPNfcLease
@@ -1576,6 +1583,61 @@ func GetDcClusterList(vm *VM) ([]ClusterComputeResource, error) {
 		dcClusterList = append(dcClusterList, cr)
 	}
 	return dcClusterList, nil
+}
+
+// GetResourcePoolList : GetResourcePoolList returns the resource_pool_list in the datacenter
+func GetResourcePoolList(vm *VM) ([]map[string]interface{}, error) {
+	allRpList := make([]map[string]interface{}, 0)
+	// set up session to vcenter server
+	if err := SetupSession(vm); err != nil {
+		return nil, err
+	}
+
+	// get datacenter in the vcenter server
+	dcMo, err := GetDatacenter(vm)
+	if err != nil {
+		return nil, err
+	}
+
+	dc := object.NewDatacenter(vm.client.Client, dcMo.Self)
+	// Set datacenter
+	vm.finder.SetDatacenter(dc)
+
+	// get resource pool list in the vcenter server
+	rpListPath := "*/Resources"
+	for n := 0; n < types.RESOURCE_POOL_DEPTH; n++ {
+		rpListPath = rpListPath + "/*"
+		prop := []string{"name", "runtime", "summary", "owner", "config", "overallStatus"}
+		allRpMo, _ := findResourcePoolListAtPath(vm, rpListPath, prop)
+		for _, rp := range allRpMo {
+			cpuAllocation := rp.Config.CpuAllocation.GetResourceAllocationInfo()
+			memAllocation := rp.Config.MemoryAllocation.GetResourceAllocationInfo()
+			cr := mo.ClusterComputeResource{}
+			err := vm.collector.RetrieveOne(vm.ctx, rp.Owner, []string{"name"}, &cr)
+			if err != nil {
+				return nil, err
+			}
+
+			allRpList = append(allRpList, map[string]interface{}{
+				"name":        rp.Name,
+				"respool_ref": rp.Self.Value,
+				"cluster":     cr.Name,
+				"status":      rp.OverallStatus,
+				"cpu": map[string]interface{}{
+					"share":       cpuAllocation.Shares.Shares,
+					"reservation": cpuAllocation.Reservation,
+					"limit":       cpuAllocation.Limit,
+				},
+				"memory": map[string]interface{}{
+					"share":       memAllocation.Shares.Shares,
+					"reservation": memAllocation.Reservation,
+					"limit":       memAllocation.Limit,
+				},
+			})
+		}
+	}
+	return allRpList, nil
+
 }
 
 // GetDatacenterList : return the list of datacenters in vcenter server

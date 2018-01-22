@@ -32,6 +32,10 @@ const (
 	ActionParameterAlarm             = ActionParameter("alarm")
 )
 
+const (
+	RESOURCE_POOL_DEPTH = 8
+)
+
 func init() {
 	t["ActionParameter"] = reflect.TypeOf((*ActionParameter)(nil)).Elem()
 }

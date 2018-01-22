@@ -752,6 +752,49 @@ func resizeAndDeleteVols(vmMo mo.VirtualMachine, disks []Disk) ([]types.BaseVirt
 	return deviceSpecs, nil
 }
 
+func findResourcePoolListAtPath(vm *VM, path string, properties []string) ([]mo.ResourcePool, error) {
+	var (
+		rpMor   []types.ManagedObjectReference
+		allRpMo []mo.ResourcePool
+	)
+	// get resource pool list in the vcenter server
+	allRps, err := vm.finder.ResourcePoolList(vm.ctx, path)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, rp := range allRps {
+		rpMor = append(rpMor, rp.Reference())
+	}
+
+	// get the datacenter names
+	err = vm.collector.Retrieve(vm.ctx, rpMor, properties, &allRpMo)
+	if err != nil {
+		return nil, err
+	}
+
+	return allRpMo, nil
+}
+
+func findResourcePoolByMOID(vm *VM, moid string) (*mo.ResourcePool, error) {
+	// get resource pool list in the vcenter server
+	rpListPath := "*/Resources"
+	allRpList := make([]mo.ResourcePool, 0)
+	for n := 0; n < types.RESOURCE_POOL_DEPTH; n++ {
+		rpListPath = rpListPath + "/*"
+		prop := []string{"name", "owner"}
+		rpList, _ := findResourcePoolListAtPath(vm, rpListPath, prop)
+		for _, rp := range rpList {
+			if moid == rp.Self.Value {
+				return &rp, nil
+			}
+		}
+		allRpList = append(allRpList, rpList...)
+	}
+	return nil, NewErrorObjectNotFound(errors.New("could not find the resourcepool with moref id"),
+	moid)
+}
+
 var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []string) error {
 	var (
 		err   error
@@ -790,12 +833,14 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		Pool: &l.ResourcePool,
 	}
 
-	isDrsEnabled, err := IsClusterDrsEnabled(vm)
-	if err != nil {
-		return err
-	}
-	if vm.Destination.HostSystem != "" || !isDrsEnabled {
-		relocateSpec.Host = &l.Host
+	if vm.Destination.DestinationType == DestinationTypeCluster {
+		isDrsEnabled, err := IsClusterDrsEnabled(vm)
+		if err != nil {
+			return err
+		}
+		if vm.Destination.HostSystem != "" || !isDrsEnabled {
+			relocateSpec.Host = &l.Host
+		}
 	}
 	if dsMo != nil {
 		relocateSpec.Datastore = &dsMor
@@ -1369,6 +1414,23 @@ var getVMLocation = func(vm *VM, dcMo *mo.Datacenter) (l location, err error) {
 		}
 		l.ResourcePool = *crMo.ResourcePool
 		l.Networks = crMo.Network
+	case DestinationTypeResourcePool:
+		var rp *mo.ResourcePool
+		dc := object.NewDatacenter(vm.client.Client, dcMo.Self)
+		// Set datacenter
+		vm.finder.SetDatacenter(dc)
+
+		rp, err = findResourcePoolByMOID(vm, vm.Destination.MOID)
+		if err != nil {
+			return
+		}
+		cr := mo.ClusterComputeResource{}
+		err = vm.collector.RetrieveOne(vm.ctx, rp.Owner, []string{"network"}, &cr)
+		if err != nil {
+			return
+		}
+		l.ResourcePool = rp.Reference()
+		l.Networks = cr.Network
 	default:
 		err = ErrorDestinationNotSupported
 		return
