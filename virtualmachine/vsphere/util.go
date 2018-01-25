@@ -767,7 +767,6 @@ func findResourcePoolListAtPath(vm *VM, path string, properties []string) ([]mo.
 		rpMor = append(rpMor, rp.Reference())
 	}
 
-	// get the datacenter names
 	err = vm.collector.Retrieve(vm.ctx, rpMor, properties, &allRpMo)
 	if err != nil {
 		return nil, err
@@ -779,7 +778,6 @@ func findResourcePoolListAtPath(vm *VM, path string, properties []string) ([]mo.
 func findResourcePoolByMOID(vm *VM, moid string) (*mo.ResourcePool, error) {
 	// get resource pool list in the vcenter server
 	rpListPath := "*/Resources"
-	allRpList := make([]mo.ResourcePool, 0)
 	for n := 0; n < types.RESOURCE_POOL_DEPTH; n++ {
 		rpListPath = rpListPath + "/*"
 		prop := []string{"name", "owner"}
@@ -789,7 +787,6 @@ func findResourcePoolByMOID(vm *VM, moid string) (*mo.ResourcePool, error) {
 				return &rp, nil
 			}
 		}
-		allRpList = append(allRpList, rpList...)
 	}
 	return nil, NewErrorObjectNotFound(errors.New("could not find the resourcepool with moref id"),
 	moid)
