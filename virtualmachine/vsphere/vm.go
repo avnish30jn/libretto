@@ -476,7 +476,7 @@ type Destination struct {
 	// HostSystem specifies the name of the host to run the VM on. DestinationType ESXi
 	// will have one host system. A cluster will have more than one,
 	HostSystem string
-	// MorefID of managed object
+	// MorefID of managed object [Currently only use with resource pool]
 	MOID string `json:"MOID"`
 }
 
@@ -1191,13 +1191,31 @@ func GetDatastores(vm *VM) ([]Datastore, error) {
 	}
 
 	// set up session to vcenter server
-	dc, err := GetDatacenter(vm)
+	dcMo, err := GetDatacenter(vm)
 	if err != nil {
 		return nil, err
 	}
 
+	cluster := vm.Destination.DestinationName
+
+	//If we want to get datastores associated with resource pool
+	// Step 1 Find out cluster of resource pool
+	// Step 2 Find out all datastores with cluster
+
+	if vm.Destination.DestinationType == DestinationTypeResourcePool {
+		dc := object.NewDatacenter(vm.client.Client, dcMo.Self)
+		vm.finder.SetDatacenter(dc)
+		rp, err := findResourcePoolByMOID(vm, vm.Destination.MOID)
+		cr := mo.ClusterComputeResource{}
+		err = vm.collector.RetrieveOne(vm.ctx, rp.Owner, []string{"name"}, &cr)
+		if err != nil {
+			return nil, err
+		}
+		cluster = cr.Name
+	}
+
 	// Get the cluster resource and its host, datastore and datastore
-	crMo, err := findClusterComputeResource(vm, dc, vm.Destination.DestinationName)
+	crMo, err := findClusterComputeResource(vm, dcMo, cluster)
 	if err != nil {
 		return nil, err
 	}
