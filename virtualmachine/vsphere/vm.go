@@ -1190,7 +1190,6 @@ func GetDatastores(vm *VM) ([]Datastore, error) {
 		return nil, err
 	}
 
-	// set up session to vcenter server
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
 		return nil, err
@@ -1198,7 +1197,7 @@ func GetDatastores(vm *VM) ([]Datastore, error) {
 
 	cluster := vm.Destination.DestinationName
 
-	//If we want to get datastores associated with resource pool
+	// If we want to get datastores associated with resource pool
 	// Step 1 Find out cluster of resource pool
 	// Step 2 Find out all datastores with cluster
 
