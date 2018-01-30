@@ -13,7 +13,7 @@ import (
 )
 
 func getSession(region string) (*session.Session, error) {
-	//TODO Use getSession for ec2 service too
+	// TODO Use getSession for ec2 service too
 	creds := credentials.NewChainCredentials(
 		[]credentials.Provider{
 			&credentials.EnvProvider{},               // check environment
