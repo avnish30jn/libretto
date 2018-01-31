@@ -789,7 +789,7 @@ func findResourcePoolByMOID(vm *VM, moid string) (*mo.ResourcePool, error) {
 		}
 	}
 	return nil, NewErrorObjectNotFound(errors.New("could not find the resourcepool with moref id"),
-	moid)
+		moid)
 }
 
 var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []string) error {
@@ -875,6 +875,7 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		config.DeviceChange = append(config.DeviceChange, conf...)
 	}
 
+	checkCustomSpecMutex.Lock()
 	err = checkAndCreateCustomSpec(vm)
 	if err != nil {
 		return fmt.Errorf("Error creating custom spec: %v", err)
@@ -888,6 +889,7 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 		return fmt.Errorf("Error retrieving custom spec: %v", err)
 	}
 	customSpec := updateCustomSpec(vm, vmMo, &customSpecItem.Spec)
+	checkCustomSpecMutex.Unlock()
 
 	cisp := types.VirtualMachineCloneSpec{
 		Location:      relocateSpec,
@@ -1810,8 +1812,6 @@ func checkAndCreateCustomSpec(vm *VM) error {
 
 	// Critical section - Only one thread should create custom spec
 	// if not present
-	checkCustomSpecMutex.Lock()
-	defer checkCustomSpecMutex.Unlock()
 	exists, err := customizationSpecManager.DoesCustomizationSpecExist(
 		vm.ctx, STATICIP_CUSTOM_SPEC_NAME)
 	if err != nil {
