@@ -876,8 +876,11 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 	}
 
 	checkCustomSpecMutex.Lock()
+	// Critical section - Only one thread should create custom spec
+	// if not present
 	err = checkAndCreateCustomSpec(vm)
 	if err != nil {
+		checkCustomSpecMutex.Unlock()
 		return fmt.Errorf("Error creating custom spec: %v", err)
 	}
 
@@ -886,6 +889,7 @@ var cloneFromTemplate = func(vm *VM, dcMo *mo.Datacenter, usableDatastores []str
 	customSpecItem, err := customizationSpecManager.GetCustomizationSpec(
 		vm.ctx, STATICIP_CUSTOM_SPEC_NAME)
 	if err != nil {
+		checkCustomSpecMutex.Unlock()
 		return fmt.Errorf("Error retrieving custom spec: %v", err)
 	}
 	customSpec := updateCustomSpec(vm, vmMo, &customSpecItem.Spec)
@@ -1810,8 +1814,6 @@ func checkAndCreateCustomSpec(vm *VM) error {
 	customizationSpecManager := object.NewCustomizationSpecManager(
 		vm.client.Client)
 
-	// Critical section - Only one thread should create custom spec
-	// if not present
 	exists, err := customizationSpecManager.DoesCustomizationSpecExist(
 		vm.ctx, STATICIP_CUSTOM_SPEC_NAME)
 	if err != nil {
