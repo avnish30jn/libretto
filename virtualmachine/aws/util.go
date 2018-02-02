@@ -30,8 +30,6 @@ const (
 
 	// RegionEnv is the env var for the AWS region.
 	RegionEnv = "AWS_DEFAULT_REGION"
-
-	HttpClientTimeout = 30
 )
 
 // ValidCredentials sends a dummy request to AWS to check if credentials are

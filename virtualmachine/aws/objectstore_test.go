@@ -38,32 +38,22 @@ func TestCreateBucket(t *testing.T) {
 		Prefix: "",
 	}
 
-	fmt.Println("Creating bucket with name %s", bucketName)
 	err := s3.CreateBucket()
 	if err != nil {
 		fmt.Println(err)
 		t.Fail()
 	}
 
-	list, err := s3.GetS3BucketsList()
-	found := false
-
-	for _, val := range list {
-		if val == bucketName {
-			found = true
-		}
+	if exist, err := s3.BucketExist(); !exist {
+		t.Errorf("Bucket not found: %v", err)
 	}
 
-	if !found {
-		fmt.Println("Bucket not found")
-		t.Fail()
-	}
-
-	fmt.Println("Deleting bucket with name %s", bucketName)
 	err = s3.DeleteBucket()
 	if err != nil {
-		fmt.Println("Failed in deleting bucket")
-		t.Fail()
+		t.Errorf("Failed in deleting bucket: %v", err)
 	}
 
+	if exist, err := s3.BucketExist(); exist {
+		t.Errorf("Bucket still exists: %v", err)
+	}
 }

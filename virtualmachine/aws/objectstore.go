@@ -15,19 +15,14 @@ type S3 struct {
 	// TODO Add support for user details
 }
 
-func (s *S3) GetS3BucketsList() ([]string, error) {
+func (bkt *S3) GetS3BucketsList() ([]string, error) {
 	// 1. Get s3 service client
 	// 2. Fetch the list
 	var bucketList []string
 
-	region := s.Region
-	if region == "" {
-		region = getRegionFromEnv()
-	}
-
-	s3Svc, err := getS3Client(region)
+	s3Svc, err := getS3Client(bkt.Region)
 	if err != nil {
-		aoerr := fmt.Errorf("Failed to create s3 client")
+		aoerr := fmt.Errorf("Failed to create s3 client: %v", err)
 		return bucketList, aoerr
 	}
 
@@ -37,31 +32,26 @@ func (s *S3) GetS3BucketsList() ([]string, error) {
 		return bucketList, aoerr
 	}
 
-	for _, b := range result.Buckets {
-		bucketList = append(bucketList, aws.StringValue(b.Name))
+	for _, s3bkt := range result.Buckets {
+		bucketList = append(bucketList, aws.StringValue(s3bkt.Name))
 	}
 
 	return bucketList, nil
 }
 
-func (s *S3) CreateBucket() error {
+func (bkt *S3) CreateBucket() error {
 
-	region := s.Region
-	if region == "" {
-		region = getRegionFromEnv()
-	}
-
-	svc, err := getS3Client(region)
+	svc, err := getS3Client(bkt.Region)
 	if err != nil {
-		aoerr := fmt.Errorf("Failed to create s3 client")
+		aoerr := fmt.Errorf("Failed to create s3 client: %v", err)
 		return aoerr
 	}
 
 	s3Input := new(s3.CreateBucketInput)
-	s3Input.Bucket = aws.String(s.Name)
+	s3Input.Bucket = aws.String(bkt.Name)
 
-	if region != "us-east-1" {
-		s3Input.CreateBucketConfiguration.LocationConstraint = aws.String(s.Region)
+	if bkt.Region != "us-east-1" {
+		s3Input.CreateBucketConfiguration.LocationConstraint = aws.String(bkt.Region)
 	}
 
 	_, err = svc.CreateBucket(s3Input)
@@ -71,7 +61,7 @@ func (s *S3) CreateBucket() error {
 			case s3.ErrCodeBucketAlreadyExists:
 				return fmt.Errorf("A bucket with same name already exists")
 			case s3.ErrCodeBucketAlreadyOwnedByYou:
-				return fmt.Errorf("The bucket is already owned by you")
+				return fmt.Errorf("The bucket is already owned by the user")
 			default:
 				return err
 			}
@@ -83,21 +73,16 @@ func (s *S3) CreateBucket() error {
 	return nil
 }
 
-func (s *S3) DeleteBucket() error {
+func (bkt *S3) DeleteBucket() error {
 
-	region := s.Region
-	if region == "" {
-		region = getRegionFromEnv()
-	}
-
-	svc, err := getS3Client(region)
+	svc, err := getS3Client(bkt.Region)
 	if err != nil {
-		aoerr := fmt.Errorf("Failed to create s3 client")
+		aoerr := fmt.Errorf("Failed to create s3 client: %v", err)
 		return aoerr
 	}
 
 	input := &s3.DeleteBucketInput{
-		Bucket: aws.String(s.Name),
+		Bucket: aws.String(bkt.Name),
 	}
 
 	_, err = svc.DeleteBucket(input)
@@ -106,4 +91,20 @@ func (s *S3) DeleteBucket() error {
 	}
 
 	return nil
+}
+
+func (bkt *S3) BucketExist() (bool, error) {
+	list, err := bkt.GetS3BucketsList()
+	if err != nil {
+		aoerr := fmt.Errorf("Unable to fetch bucket list: %v", err)
+		return false, aoerr
+	}
+
+	for _, s3bkt := range list {
+		if s3bkt == bkt.Name {
+			return true, nil
+		}
+	}
+
+	return false, nil
 }
