@@ -155,7 +155,8 @@ func getService(region string) (*ec2.EC2, error) {
 		Credentials: creds,
 		Region:      &region,
 		CredentialsChainVerboseErrors: aws.Bool(true),
-		HTTPClient:                    &http.Client{Timeout: 30 * time.Second},
+		HTTPClient: &http.Client{
+			Timeout: HttpClientTimeout * time.Second},
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to create AWS session: %v", err)
@@ -424,4 +425,15 @@ func getVMAWSImage(image *ec2.Image) Image {
 		EbsVolumes:         ebsVolumes}
 
 	return img
+}
+
+func getRegionFromEnv() string {
+	region := ""
+	region = os.Getenv("AWS_DEFAULT_REGION") // aws cli checks this
+
+	if isRegionEmpty(region) {
+		region = os.Getenv("AWS_REGION") // aws sdk checks this
+	}
+
+	return region
 }

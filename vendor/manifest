@@ -65,6 +65,330 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/apcera/libretto/ssh",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "ssh",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/util",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "/util",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/cloud.google.com/go/compute/metadata",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/cloud.google.com/go/compute/metadata",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/Azure/azure-sdk-for-go/arm/compute",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/Azure/azure-sdk-for-go/arm/compute",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/Azure/azure-sdk-for-go/arm/network",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/Azure/azure-sdk-for-go/arm/network",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/Azure/azure-sdk-for-go/arm/resources/resources",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/Azure/azure-sdk-for-go/arm/resources/resources",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/Azure/azure-sdk-for-go/arm/storage",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/Azure/azure-sdk-for-go/arm/storage",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/Azure/azure-sdk-for-go/management",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/Azure/azure-sdk-for-go/management",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/Azure/azure-sdk-for-go/storage",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/Azure/azure-sdk-for-go/storage",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/Azure/go-autorest/autorest",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/Azure/go-autorest/autorest",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/apcera/util/uuid",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/apcera/util/uuid",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/aws/aws-sdk-go/aws",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/aws/aws-sdk-go/aws",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/aws/aws-sdk-go/internal/shareddefaults",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/aws/aws-sdk-go/internal/shareddefaults",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/aws/aws-sdk-go/private/protocol",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/aws/aws-sdk-go/private/protocol",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/aws/aws-sdk-go/service/ec2",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/aws/aws-sdk-go/service/ec2",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/aws/aws-sdk-go/service/sts",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/aws/aws-sdk-go/service/sts",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/dgrijalva/jwt-go",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/dgrijalva/jwt-go",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/go-ini/ini",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/go-ini/ini",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/golang/protobuf/proto",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/golang/protobuf/proto",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/golang/protobuf/ptypes/any",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/golang/protobuf/ptypes/any",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/gophercloud/gophercloud",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/gophercloud/gophercloud",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/jmespath/go-jmespath",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/jmespath/go-jmespath",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/pyr/egoscale",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/pyr/egoscale",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/satori/uuid",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/satori/uuid",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/github.com/vmware/govmomi",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/github.com/vmware/govmomi",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/golang.org/x/crypto/curve25519",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/golang.org/x/crypto/curve25519",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/golang.org/x/crypto/ed25519",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/golang.org/x/crypto/ed25519",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/golang.org/x/crypto/pkcs12",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/golang.org/x/crypto/pkcs12",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/golang.org/x/crypto/ssh",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/golang.org/x/crypto/ssh",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/golang.org/x/net/context",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/golang.org/x/net/context",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/golang.org/x/oauth2",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/golang.org/x/oauth2",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/google.golang.org/api/compute/v1",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/google.golang.org/api/compute/v1",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/google.golang.org/api/gensupport",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/google.golang.org/api/gensupport",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/google.golang.org/api/googleapi",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/google.golang.org/api/googleapi",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/vendor/google.golang.org/appengine",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "vendor/google.golang.org/appengine",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/apcera/libretto/virtualmachine",
+			"repository": "https://github.com/apcera/libretto",
+			"vcs": "git",
+			"revision": "3178799fbb1e39c74b02e3ecf46330b3ef0ed486",
+			"branch": "master",
+			"path": "virtualmachine",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/apcera/util/uuid",
 			"repository": "https://github.com/apcera/util",
 			"vcs": "git",
@@ -110,6 +434,24 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/aws/aws-sdk-go/service/kms",
+			"repository": "https://github.com/aws/aws-sdk-go",
+			"vcs": "git",
+			"revision": "ee65a5337cdcef249a6cda35f46c6a14004c1cdf",
+			"branch": "master",
+			"path": "service/kms",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/aws/aws-sdk-go/service/s3",
+			"repository": "https://github.com/aws/aws-sdk-go",
+			"vcs": "git",
+			"revision": "ee65a5337cdcef249a6cda35f46c6a14004c1cdf",
+			"branch": "master",
+			"path": "/service/s3",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/aws/aws-sdk-go/service/sts",
 			"repository": "https://github.com/aws/aws-sdk-go",
 			"vcs": "git",
@@ -134,6 +476,24 @@
 			"revision": "ee1f179877b2daf2aaabf71fa900773bf8842253",
 			"branch": "HEAD",
 			"path": "/vendor/github.com/jmespath/go-jmespath",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/davecgh/go-spew/spew",
+			"repository": "https://github.com/davecgh/go-spew",
+			"vcs": "git",
+			"revision": "ecdeabc65495df2dec95d7c4a4c3e021903035e5",
+			"branch": "master",
+			"path": "/spew",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/davecgh/go-xdr/xdr2",
+			"repository": "https://github.com/davecgh/go-xdr",
+			"vcs": "git",
+			"revision": "e6a2ba005892b6a5b27cb5352f64c2e96942dd28",
+			"branch": "master",
+			"path": "/xdr2",
 			"notests": true
 		},
 		{
@@ -188,6 +548,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/google/uuid",
+			"repository": "https://github.com/google/uuid",
+			"vcs": "git",
+			"revision": "dec09d789f3dba190787f8b4454c7d3c936fed9e",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/jmespath/go-jmespath",
 			"repository": "https://github.com/jmespath/go-jmespath",
 			"vcs": "git",
@@ -226,6 +594,33 @@
 			"vcs": "git",
 			"revision": "c8df70bf7e64cb14c5305f4e16597c501a2eba8b",
 			"branch": "HEAD",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/vmware/vmw-guestinfo/bdoor",
+			"repository": "https://github.com/vmware/vmw-guestinfo",
+			"vcs": "git",
+			"revision": "25eff159a728be87e103a0b8045e08273f4dbec4",
+			"branch": "master",
+			"path": "bdoor",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/vmware/vmw-guestinfo/message",
+			"repository": "https://github.com/vmware/vmw-guestinfo",
+			"vcs": "git",
+			"revision": "25eff159a728be87e103a0b8045e08273f4dbec4",
+			"branch": "master",
+			"path": "/message",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/vmware/vmw-guestinfo/vmcheck",
+			"repository": "https://github.com/vmware/vmw-guestinfo",
+			"vcs": "git",
+			"revision": "25eff159a728be87e103a0b8045e08273f4dbec4",
+			"branch": "master",
+			"path": "vmcheck",
 			"notests": true
 		},
 		{
@@ -324,6 +719,24 @@
 			"vcs": "git",
 			"revision": "f6093e37b6cb4092101a298aba5d794eb570757f",
 			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "golang.org/x/sys/unix",
+			"repository": "https://go.googlesource.com/sys",
+			"vcs": "git",
+			"revision": "2c42eef0765b9837fbdab12011af7830f55f88f0",
+			"branch": "master",
+			"path": "unix",
+			"notests": true
+		},
+		{
+			"importpath": "golang.org/x/sys/windows",
+			"repository": "https://go.googlesource.com/sys",
+			"vcs": "git",
+			"revision": "2c42eef0765b9837fbdab12011af7830f55f88f0",
+			"branch": "master",
+			"path": "/windows",
 			"notests": true
 		},
 		{
