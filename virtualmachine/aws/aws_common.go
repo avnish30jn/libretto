@@ -3,7 +3,6 @@ package aws
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -15,7 +14,7 @@ const (
 	HttpClientTimeout = 30
 )
 
-func getSession(region string) (*session.Session, error) {
+func getSession(region string) (ss *session.Session, err error) {
 	// TODO Use getSession for ec2 service too
 	creds := credentials.NewChainCredentials(
 		[]credentials.Provider{
@@ -24,14 +23,15 @@ func getSession(region string) (*session.Session, error) {
 		},
 	)
 
-	if region == "" { // user didn't set region
-		region = os.Getenv("AWS_DEFAULT_REGION") // aws cli checks this
-		if region == "" {
-			region = os.Getenv("AWS_REGION") // aws sdk checks this
+	if isRegionEmpty(region) { // user didn't set region
+		region = getRegionFromEnv()
+		if isRegionEmpty(region) {
+			err = fmt.Errorf("Empty region provided")
+			return ss, err
 		}
 	}
 
-	s, err := session.NewSession(&aws.Config{
+	ss, err = session.NewSession(&aws.Config{
 		Credentials: creds,
 		Region:      aws.String(region),
 		CredentialsChainVerboseErrors: aws.Bool(true),
@@ -42,5 +42,5 @@ func getSession(region string) (*session.Session, error) {
 		return nil, fmt.Errorf("failed to create AWS session: %v", err)
 	}
 
-	return s, nil
+	return ss, nil
 }

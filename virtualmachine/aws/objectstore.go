@@ -15,12 +15,12 @@ type S3 struct {
 	// TODO Add support for user details
 }
 
-func (bkt *S3) GetS3BucketsList() ([]string, error) {
+func (s3Obj *S3) GetS3BucketsList() ([]string, error) {
 	// 1. Get s3 service client
 	// 2. Fetch the list
 	var bucketList []string
 
-	s3Svc, err := getS3Client(bkt.Region)
+	s3Svc, err := getS3Client(s3Obj.Region)
 	if err != nil {
 		aoerr := fmt.Errorf("Failed to create s3 client: %v", err)
 		return bucketList, aoerr
@@ -39,19 +39,21 @@ func (bkt *S3) GetS3BucketsList() ([]string, error) {
 	return bucketList, nil
 }
 
-func (bkt *S3) CreateBucket() error {
+func (s3Obj *S3) CreateBucket() error {
 
-	svc, err := getS3Client(bkt.Region)
+	svc, err := getS3Client(s3Obj.Region)
 	if err != nil {
 		aoerr := fmt.Errorf("Failed to create s3 client: %v", err)
 		return aoerr
 	}
 
 	s3Input := new(s3.CreateBucketInput)
-	s3Input.Bucket = aws.String(bkt.Name)
+	s3Input.Bucket = aws.String(s3Obj.Name)
 
-	if bkt.Region != "us-east-1" {
-		s3Input.CreateBucketConfiguration.LocationConstraint = aws.String(bkt.Region)
+	// us-east-1 region is not supported as a location constrain. More details
+	// at https://github.com/boto/boto3/issues/125
+	if s3Obj.Region != "us-east-1" {
+		s3Input.CreateBucketConfiguration.LocationConstraint = aws.String(s3Obj.Region)
 	}
 
 	_, err = svc.CreateBucket(s3Input)
@@ -73,16 +75,16 @@ func (bkt *S3) CreateBucket() error {
 	return nil
 }
 
-func (bkt *S3) DeleteBucket() error {
+func (s3Obj *S3) DeleteBucket() error {
 
-	svc, err := getS3Client(bkt.Region)
+	svc, err := getS3Client(s3Obj.Region)
 	if err != nil {
 		aoerr := fmt.Errorf("Failed to create s3 client: %v", err)
 		return aoerr
 	}
 
 	input := &s3.DeleteBucketInput{
-		Bucket: aws.String(bkt.Name),
+		Bucket: aws.String(s3Obj.Name),
 	}
 
 	_, err = svc.DeleteBucket(input)
@@ -93,15 +95,15 @@ func (bkt *S3) DeleteBucket() error {
 	return nil
 }
 
-func (bkt *S3) BucketExist() (bool, error) {
-	list, err := bkt.GetS3BucketsList()
+func (s3Obj *S3) BucketExist() (bool, error) {
+	list, err := s3Obj.GetS3BucketsList()
 	if err != nil {
 		aoerr := fmt.Errorf("Unable to fetch bucket list: %v", err)
 		return false, aoerr
 	}
 
 	for _, s3bkt := range list {
-		if s3bkt == bkt.Name {
+		if s3bkt == s3Obj.Name {
 			return true, nil
 		}
 	}

@@ -430,7 +430,8 @@ func getVMAWSImage(image *ec2.Image) Image {
 func getRegionFromEnv() string {
 	region := ""
 	region = os.Getenv("AWS_DEFAULT_REGION") // aws cli checks this
-	if region == "" {
+
+	if isRegionEmpty(region) {
 		region = os.Getenv("AWS_REGION") // aws sdk checks this
 	}
 

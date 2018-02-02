@@ -10,18 +10,18 @@ func getS3Client(region string) (svc *s3.S3, err error) {
 		region = getRegionFromEnv()
 		if isRegionEmpty(region) {
 			err = fmt.Errorf("Empty region provided")
-			return svc, err
+			return
 		}
 	}
 
 	sess, err := getSession(region)
 	if err != nil {
-		return svc, err
+		return
 	}
 
 	svc = s3.New(sess)
 
-	return svc, err
+	return
 }
 
 func isRegionEmpty(region string) bool {
