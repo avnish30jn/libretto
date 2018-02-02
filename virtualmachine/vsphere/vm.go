@@ -1284,12 +1284,9 @@ func GetNetworkInHost(vm *VM) ([]map[string]string, error) {
 
 func getNetworks(vm *VM, networkMo []types.ManagedObjectReference) ([]map[string]string, error) {
 	var (
-		networkMap     map[string]string
-		network        mo.Network
-		portGroup      mo.DistributedVirtualPortgroup
-		opNetwork      mo.OpaqueNetwork
-		dvSwitch       mo.DistributedVirtualSwitch
-		vmwareDvSwitch mo.VmwareDistributedVirtualSwitch
+		networkMap map[string]string
+		network    mo.Network
+		portGroup  mo.DistributedVirtualPortgroup
 	)
 	networkList := make([]map[string]string, 0)
 
@@ -1297,37 +1294,25 @@ func getNetworks(vm *VM, networkMo []types.ManagedObjectReference) ([]map[string
 	for _, networkMor := range networkMo {
 		switch networkMor.Type {
 		case "Network":
-			err := vm.collector.RetrieveOne(vm.ctx, networkMor, []string{"name"}, &network)
+			err := vm.collector.RetrieveOne(vm.ctx, networkMor,
+				[]string{"name"}, &network)
 			if err != nil {
 				return nil, err
 			}
-			networkMap = map[string]string{"name": network.Name, "id": network.Self.Value}
+			networkMap = map[string]string{"name": network.Name,
+				"id": network.Self.Value}
 		case "DistributedVirtualPortgroup":
-			err := vm.collector.RetrieveOne(vm.ctx, networkMor, []string{"name"}, &portGroup)
+			err := vm.collector.RetrieveOne(vm.ctx, networkMor,
+				[]string{"name", "config"}, &portGroup)
 			if err != nil {
 				return nil, err
 			}
-			networkMap = map[string]string{"name": portGroup.Name, "id": network.Self.Value}
-		case "OpaqueNetwork":
-			err := vm.collector.RetrieveOne(vm.ctx, networkMor, []string{"name"}, &opNetwork)
-			if err != nil {
-				return nil, err
+			if portGroup.Config.Uplink == nil ||
+				*portGroup.Config.Uplink {
+				continue
 			}
-			networkMap = map[string]string{"name": opNetwork.Name, "id": network.Self.Value}
-		case "DistributedVirtualSwitch":
-			err := vm.collector.RetrieveOne(vm.ctx, networkMor, []string{"name"}, &dvSwitch)
-			if err != nil {
-				return nil, err
-			}
-			networkMap = map[string]string{"name": dvSwitch.Name, "id": network.Self.Value}
-		case "VmwareDistributedVirtualSwitch":
-			err := vm.collector.RetrieveOne(vm.ctx, networkMor, []string{"name"}, &vmwareDvSwitch)
-			if err != nil {
-				return nil, err
-			}
-			networkMap = map[string]string{"name": vmwareDvSwitch.Name, "id": network.Self.Value}
-		default:
-			return nil, fmt.Errorf("Unknown network type : %s", networkMor.Type)
+			networkMap = map[string]string{"name": portGroup.Name,
+				"id": network.Self.Value}
 		}
 		networkList = append(networkList, networkMap)
 	}
