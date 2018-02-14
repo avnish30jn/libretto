@@ -1177,7 +1177,7 @@ func DeleteTemplate(vm *VM) error {
 	return nil
 }
 
-// GetDatastores : Returns the datastores in a host/cluster in a cluster
+// GetDatastores : Returns the datastores in a host/cluster
 func GetDatastores(vm *VM, listSharedDatastore bool) ([]Datastore, error) {
 	var (
 		datastore mo.Datastore

@@ -2127,7 +2127,7 @@ func getDatastoreInHost(vm *VM, crMo *mo.ClusterComputeResource) ([]types.Manage
 }
 
 // getSharedDatastoreInCluster: get the datastores shared accross all the
-// datastores in cluster
+// hosts in cluster
 func getSharedDatastoreInCluster(vm *VM, crMo *mo.ClusterComputeResource) (
 	[]types.ManagedObjectReference, error) {
 	var (
