@@ -2107,3 +2107,57 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 	}
 	return allVms, nil
 }
+
+// getDatastoreInHost: lists datastores in a host in a cluster
+func getDatastoreInHost(vm *VM, crMo *mo.ClusterComputeResource) ([]types.ManagedObjectReference, error) {
+	var (
+		err  error
+		hsMo mo.HostSystem
+	)
+	for _, host := range crMo.Host {
+		err = vm.collector.RetrieveOne(vm.ctx, host, []string{"name", "datastore"}, &hsMo)
+		if err != nil {
+			return nil, err
+		}
+		if hsMo.Name == vm.Destination.HostSystem {
+			return hsMo.Datastore, nil
+		}
+	}
+	return nil, fmt.Errorf("Host: %s not found in cluster: %s", vm.Destination.HostSystem, crMo.Name)
+}
+
+// getSharedDatastoreInCluster: get the datastores shared accross all the
+// hosts in cluster
+func getSharedDatastoreInCluster(vm *VM, crMo *mo.ClusterComputeResource) (
+	[]types.ManagedObjectReference, error) {
+	var (
+		hsMos  []mo.HostSystem
+		dsMors []types.ManagedObjectReference
+		err    error
+	)
+
+	dsList := make(map[types.ManagedObjectReference]int)
+	err = vm.collector.Retrieve(vm.ctx, crMo.Host, []string{
+		"name", "datastore"}, &hsMos)
+	if err != nil {
+		return nil, err
+	}
+	for _, hsMo := range hsMos {
+		for _, ds := range hsMo.Datastore {
+			_, ok := dsList[ds]
+			if ok {
+				dsList[ds]++
+			} else {
+				dsList[ds] = 1
+			}
+		}
+	}
+
+	nHosts := len(hsMos)
+	for key, value := range dsList {
+		if value == nHosts {
+			dsMors = append(dsMors, key)
+		}
+	}
+	return dsMors, nil
+}

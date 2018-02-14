@@ -1177,11 +1177,10 @@ func DeleteTemplate(vm *VM) error {
 	return nil
 }
 
-// GetDatastores : Returns the datastores in a host/cluster in a cluster
-func GetDatastores(vm *VM) ([]Datastore, error) {
+// GetDatastores : Returns the datastores in a host/cluster
+func GetDatastores(vm *VM, listSharedDatastore bool) ([]Datastore, error) {
 	var (
 		datastore mo.Datastore
-		hsMo      mo.HostSystem
 		dsMoList  []types.ManagedObjectReference
 	)
 
@@ -1223,18 +1222,14 @@ func GetDatastores(vm *VM) ([]Datastore, error) {
 
 	if vm.Destination.HostSystem != "" {
 		// find the host in Destination.HostSystem
-		for _, host := range crMo.Host {
-			err = vm.collector.RetrieveOne(vm.ctx, host, []string{"name", "datastore"}, &hsMo)
-			if err != nil {
-				return nil, err
-			}
-			if hsMo.Name == vm.Destination.HostSystem {
-				dsMoList = hsMo.Datastore
-				break
-			}
-		}
+		dsMoList, err = getDatastoreInHost(vm, crMo)
+	} else if listSharedDatastore {
+		dsMoList, err = getSharedDatastoreInCluster(vm, crMo)
 	} else {
 		dsMoList = crMo.Datastore
+	}
+	if err != nil {
+		return nil, err
 	}
 
 	// Add all the datastores in host to datastore list
@@ -1596,7 +1591,7 @@ func GetHostList(vm *VM) ([]HostSystem, error) {
 		}
 		hs := HostSystem{}
 		vm.Destination.HostSystem = hsMo.Name
-		datastores, err := GetDatastores(vm)
+		datastores, err := GetDatastores(vm, false)
 		if err != nil {
 			return nil, err
 		}
