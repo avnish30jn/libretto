@@ -661,11 +661,8 @@ func (vm *VM) Provision() (err error) {
 				return fmt.Errorf("Unsupported value for SkipExisting parameter %d", vm.SkipExisting)
 			}
 		} else {
-			// Upload the template if  it does not exist. If it exists and SkipExisting is '2',
-			// use the existing template
-			if err := uploadTemplate(vm, dcMo, d); err != nil {
-				return err
-			}
+			return NewErrorObjectNotFound(errors.New(
+				"Template not found"), vm.Template.Name)
 		}
 		// Upload successful or the template was found with the SkipExisting flag set to true
 		usableDatastores = append(usableDatastores, d)
