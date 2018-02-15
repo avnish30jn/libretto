@@ -513,6 +513,7 @@ type VMInfo struct {
 	InstanceId         string
 	IpAddress          []net.IP
 	ToolsRunningStatus bool
+	ToolsInstalled     bool
 	OverallCpuUsage    int64
 	GuestMemoryUsage   int64
 	MaxCpuUsage        int32
@@ -932,12 +933,19 @@ func (vm *VM) Destroy() (err error) {
 	return nil
 }
 
-//getToolsRunningStatus returns ToolsRunningState as true/false
-func getToolsRunningStatus(status string) bool {
-	if string(types.VirtualMachineToolsRunningStatusGuestToolsRunning) == status {
-		return true
+//getToolsStatus returns ToolsRunningState/ToolsInstalled as true/false
+func getToolsStatus(vmMo *mo.VirtualMachine) (bool, bool) {
+	var (
+		toolsRunning   bool
+		toolsInstalled bool
+	)
+	if string(types.VirtualMachineToolsRunningStatusGuestToolsRunning) == vmMo.Guest.ToolsRunningStatus {
+		toolsRunning = true
 	}
-	return false
+	if types.VirtualMachineToolsStatusToolsNotInstalled != vmMo.Guest.ToolsStatus {
+		toolsInstalled = true
+	}
+	return toolsRunning, toolsInstalled
 }
 
 //getDisksInfo  returns the disks info of this VM.
@@ -995,9 +1003,10 @@ func (vm *VM) GetVMInfo() (VMInfo, error) {
 	}
 
 	vmInfo, err = vm.GetIPsAndIds()
-	toolsRunningStatus := getToolsRunningStatus(vmMo.Guest.ToolsRunningStatus)
+	toolsRunningStatus, toolsInstalled := getToolsStatus(vmMo)
 
 	vmInfo.ToolsRunningStatus = toolsRunningStatus
+	vmInfo.ToolsInstalled = toolsInstalled
 	vmInfo.OverallCpuUsage = int64(vmMo.Summary.QuickStats.OverallCpuUsage)
 	vmInfo.GuestMemoryUsage = int64(vmMo.Summary.QuickStats.GuestMemoryUsage)
 	vmInfo.MaxCpuUsage = vmMo.Runtime.MaxCpuUsage
@@ -1650,7 +1659,8 @@ func getOsDetails(vmMo mo.VirtualMachine) map[string]interface{} {
 // getVmInfo : get vm info from vm managed object
 func getVmInfo(vmMo mo.VirtualMachine, vmPath string) map[string]interface{} {
 	var (
-		toolsStatus bool
+		toolsStatus    bool
+		toolsInstalled bool
 	)
 	// fetching disk info
 	diskInfo := make([]map[string]interface{}, 0)
@@ -1675,22 +1685,22 @@ func getVmInfo(vmMo mo.VirtualMachine, vmPath string) map[string]interface{} {
 		})
 	}
 	if vmMo.Guest != nil {
-		toolsStatus = getToolsRunningStatus(
-			vmMo.Guest.ToolsRunningStatus)
+		toolsStatus, toolsInstalled = getToolsStatus(&vmMo)
 	}
 
 	return map[string]interface{}{
-		"name":          vmPath, // full name/path of vm
-		"path":          vmPath, // TODO set full inventory path of vm/template
-		"id":            vmMo.Self.Value,
-		"instance_uuid": vmMo.Summary.Config.InstanceUuid,
-		"memory":        vmMo.Summary.Config.MemorySizeMB,
-		"cpu":           vmMo.Summary.Config.NumCpu,
-		"disks":         diskInfo,
-		"ip_addresses":  getIpFromVmMo(&vmMo),
-		"nic_info":      getNicInfo(vmMo),
-		"os_details":    getOsDetails(vmMo),
-		"tool_status":   toolsStatus,
+		"name":            vmPath, // full name/path of vm
+		"path":            vmPath, // TODO set full inventory path of vm/template
+		"id":              vmMo.Self.Value,
+		"instance_uuid":   vmMo.Summary.Config.InstanceUuid,
+		"memory":          vmMo.Summary.Config.MemorySizeMB,
+		"cpu":             vmMo.Summary.Config.NumCpu,
+		"disks":           diskInfo,
+		"ip_addresses":    getIpFromVmMo(&vmMo),
+		"nic_info":        getNicInfo(vmMo),
+		"os_details":      getOsDetails(vmMo),
+		"tool_status":     toolsStatus,
+		"tools_installed": toolsInstalled,
 	}
 }
 
