@@ -115,6 +115,7 @@ func (v VMwareLease) Complete() error {
 type Datastore struct {
 	Name               string `json:"name"`
 	Type               string `json:"type"`
+	Shared             bool   `json:"shared"`
 	Url                string `json:"url"`
 	VirtualCapacity    int64  `json:"virtual_capacity"`
 	Capacity           int64  `json:"capacity"`
@@ -126,8 +127,9 @@ type Datastore struct {
 	Accessible         bool   `json:"accessible"`
 }
 
-func (ds *Datastore) init(dsMo mo.Datastore) {
+func (ds *Datastore) init(dsMo mo.Datastore, shared bool) {
 	ds.Name = dsMo.Name
+	ds.Shared = shared
 	ds.Type = dsMo.Summary.Type
 	ds.Url = dsMo.Summary.Url
 	ds.FreeSpace = dsMo.Summary.FreeSpace
@@ -1184,10 +1186,11 @@ func DeleteTemplate(vm *VM) error {
 }
 
 // GetDatastores : Returns the datastores in a host/cluster
-func GetDatastores(vm *VM, listSharedDatastore bool) ([]Datastore, error) {
+func GetDatastores(vm *VM) ([]Datastore, error) {
 	var (
-		datastore mo.Datastore
-		dsMoList  []types.ManagedObjectReference
+		datastore       mo.Datastore
+		dsMoList        []types.ManagedObjectReference
+		sharedDsMorList []types.ManagedObjectReference
 	)
 
 	datastoreList := []Datastore{}
@@ -1226,11 +1229,18 @@ func GetDatastores(vm *VM, listSharedDatastore bool) ([]Datastore, error) {
 		return nil, err
 	}
 
+	sharedDsMorList, err = getSharedDatastoreInCluster(vm, crMo)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"error getting shared datastore list : %v", err)
+	}
+	sharedDsLookup := make(map[types.ManagedObjectReference]bool)
+	for _, dsMor := range sharedDsMorList {
+		sharedDsLookup[dsMor] = true
+	}
 	if vm.Destination.HostSystem != "" {
 		// find the host in Destination.HostSystem
 		dsMoList, err = getDatastoreInHost(vm, crMo)
-	} else if listSharedDatastore {
-		dsMoList, err = getSharedDatastoreInCluster(vm, crMo)
 	} else {
 		dsMoList = crMo.Datastore
 	}
@@ -1240,12 +1250,13 @@ func GetDatastores(vm *VM, listSharedDatastore bool) ([]Datastore, error) {
 
 	// Add all the datastores in host to datastore list
 	for _, datastoreMor := range dsMoList {
+		_, shared := sharedDsLookup[datastoreMor]
 		err = vm.collector.RetrieveOne(vm.ctx, datastoreMor, []string{"name", "summary", "info", "vm"}, &datastore)
 		if err != nil {
 			return nil, err
 		}
 		ds := Datastore{}
-		ds.init(datastore)
+		ds.init(datastore, shared)
 		datastoreList = append(datastoreList, ds)
 	}
 	return datastoreList, nil
@@ -1597,7 +1608,7 @@ func GetHostList(vm *VM) ([]HostSystem, error) {
 		}
 		hs := HostSystem{}
 		vm.Destination.HostSystem = hsMo.Name
-		datastores, err := GetDatastores(vm, false)
+		datastores, err := GetDatastores(vm)
 		if err != nil {
 			return nil, err
 		}
