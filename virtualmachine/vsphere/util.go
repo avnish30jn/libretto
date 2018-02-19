@@ -1200,15 +1200,21 @@ var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) error {
 
 var waitForIP = func(vm *VM, vmMo *mo.VirtualMachine) error {
 	vmObj := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
-	ipString, err := vmObj.WaitForIP(vm.ctx)
+	// second parameter is to list v4 ips only and ignore v6 ips
+	ipMap, err := vmObj.WaitForNetIP(vm.ctx, true)
 	if err != nil {
 		return fmt.Errorf("failed to wait for VM to boot up: %v", err)
 	}
 
 	// Parse the IP to make sure tools was running
-	ip := net.ParseIP(ipString)
-	if ip == nil {
-		return fmt.Errorf("failed to parse the ip returned by the api: %s", ip)
+	for _, ips := range ipMap {
+		if len(ips) == 0 {
+			continue
+		}
+		ip := net.ParseIP(ips[0])
+		if ip == nil {
+			return fmt.Errorf("failed to parse the ip returned by the api: %s", ip)
+		}
 	}
 	return nil
 }
