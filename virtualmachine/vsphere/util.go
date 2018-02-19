@@ -1203,7 +1203,7 @@ var waitForIP = func(vm *VM, vmMo *mo.VirtualMachine) error {
 	// second parameter is to list v4 ips only and ignore v6 ips
 	ipMap, err := vmObj.WaitForNetIP(vm.ctx, true)
 	if err != nil {
-		return fmt.Errorf("failed to wait for VM to boot up: %v", err)
+		return fmt.Errorf("failed to wait for VM to get ips: %v", err)
 	}
 
 	// Parse the IP to make sure tools was running
@@ -1212,11 +1212,11 @@ var waitForIP = func(vm *VM, vmMo *mo.VirtualMachine) error {
 			continue
 		}
 		ip := net.ParseIP(ips[0])
-		if ip == nil {
-			return fmt.Errorf("failed to parse the ip returned by the api: %s", ip)
+		if ip != nil {
+			return nil
 		}
 	}
-	return nil
+	return fmt.Errorf("no valid ip assigned: %v", ipMap)
 }
 
 var halt = func(vm *VM) error {
