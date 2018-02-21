@@ -37,6 +37,7 @@ const (
 	RETRY_COUNT                = 20
 	GRAY_STATUS_CHECK_TIMEOUT  = 1 * time.Minute
 	GREEN_STATUS_CHECK_TIMEOUT = 10 * time.Minute
+	IPWAIT_TIMEOUT             = 1 * time.Hour
 )
 
 /*
@@ -1201,7 +1202,17 @@ var reconfigureVM = func(vm *VM, vmMo *mo.VirtualMachine) error {
 var waitForIP = func(vm *VM, vmMo *mo.VirtualMachine) error {
 	vmObj := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
 	// second parameter is to list v4 ips only and ignore v6 ips
-	ipMap, err := vmObj.WaitForNetIP(vm.ctx, true)
+	timeout := IPWAIT_TIMEOUT
+	if value := os.Getenv("IPWAIT_TIMEOUT"); value != "" {
+		// valid time units are "ns", "us", "ms", "s", "m", "h"
+		duration, err := time.ParseDuration(value)
+		if err == nil {
+			timeout = duration
+		}
+	}
+	ctx, cancel := context.WithTimeout(vm.ctx, timeout)
+	defer cancel()
+	ipMap, err := vmObj.WaitForNetIP(ctx, true)
 	if err != nil {
 		return fmt.Errorf("failed to wait for VM to get ips: %v", err)
 	}
