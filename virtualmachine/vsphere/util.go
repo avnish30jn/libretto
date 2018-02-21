@@ -871,6 +871,9 @@ func findResourcePoolListAtPath(vm *VM, path string, properties []string) ([]mo.
 		rpMor = append(rpMor, rp.Reference())
 	}
 
+	if len(rpMor) == 0 {
+		return allRpMo, nil
+	}
 	err = vm.collector.Retrieve(vm.ctx, rpMor, properties, &allRpMo)
 	if err != nil {
 		return nil, err
@@ -1110,6 +1113,9 @@ var getDatastoreForVm = func(vm *VM, vmMo *mo.VirtualMachine) ([]string,
 		err        error
 	)
 	dsMors := vmMo.Datastore
+	if len(dsMors) == 0 {
+		return datastores, nil
+	}
 	err = vm.collector.Retrieve(vm.ctx, dsMors, []string{"info"}, &dsMos)
 	if err != nil {
 		return nil, fmt.Errorf(
@@ -1971,6 +1977,9 @@ func getHostsLookup(vm *VM) (map[string]bool, error) {
 			return nil, err
 		}
 		// get the hosts in cluster
+		if len(crMo.Host) == 0 {
+			return hostsLookup, nil
+		}
 		err = vm.collector.Retrieve(vm.ctx, crMo.Host, []string{"name"},
 			&hsMos)
 		if err != nil {
@@ -2154,6 +2163,9 @@ func getSharedDatastoreInCluster(vm *VM, crMo *mo.ClusterComputeResource) (
 	)
 
 	dsList := make(map[types.ManagedObjectReference]int)
+	if len(crMo.Host) == 0 {
+		return dsMors, nil
+	}
 	err = vm.collector.Retrieve(vm.ctx, crMo.Host, []string{
 		"name", "datastore"}, &hsMos)
 	if err != nil {

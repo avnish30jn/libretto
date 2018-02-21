@@ -1453,6 +1453,9 @@ func GetDcClusterList(vm *VM) ([]ClusterComputeResource, error) {
 	}
 	// get the cluster names
 	var allClustersMo []mo.ClusterComputeResource
+	if len(clustersMor) == 0 {
+		return dcClusterList, nil
+	}
 	err = vm.collector.Retrieve(vm.ctx, clustersMor, []string{"name",
 		"summary", "configuration", "host", "datastore", "network"},
 		&allClustersMo)
@@ -1560,6 +1563,9 @@ func GetDatacenterList(vm *VM) ([]map[string]string, error) {
 	}
 
 	// get the datacenter names
+	if len(dcMor) == 0 {
+		return dcList, nil
+	}
 	err = vm.collector.Retrieve(vm.ctx, dcMor, []string{"name"}, &allDcMo)
 	if err != nil {
 		return nil, err
