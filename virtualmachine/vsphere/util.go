@@ -324,30 +324,32 @@ var findHostSystem = func(vm *VM, hsMors []types.ManagedObjectReference, name st
 
 var findMob func(*VM, types.ManagedObjectReference, string) (*types.ManagedObjectReference, error)
 
-var createNetworkMapping = func(vm *VM, networks []map[string]string, networkMors []types.ManagedObjectReference) ([]types.OvfNetworkMapping, error) {
+var createNetworkMapping = func(vm *VM, networks []Network,
+	networkMors []types.ManagedObjectReference) ([]types.OvfNetworkMapping,
+	map[string]types.ManagedObjectReference, error) {
 	nwMap := map[string]types.ManagedObjectReference{}
 	// Create a map between network name and mor for lookup
 	for _, network := range networkMors {
 		name, err := getNetworkName(vm, network)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		if name == "" {
-			return nil, fmt.Errorf("Network name empty for: %s", network.Value)
+			return nil, nil, fmt.Errorf("Network name empty for: %s", network.Value)
 		}
 		nwMap[name] = network
 	}
 
 	var mappings []types.OvfNetworkMapping
 	for _, mapping := range networks {
-		nwName := mapping["name"]
+		nwName := mapping.Name
 		mor, ok := nwMap[nwName]
 		if !ok {
-			return nil, NewErrorObjectNotFound(errors.New("Could not find the network mapping"), nwName)
+			return nil, nwMap, NewErrorObjectNotFound(errors.New("Could not find the network mapping"), nwName)
 		}
 		mappings = append(mappings, types.OvfNetworkMapping{Name: nwName, Network: mor})
 	}
-	return mappings, nil
+	return mappings, nwMap, nil
 }
 
 var resetUnitNumbers = func(spec *types.OvfCreateImportSpecResult) {
@@ -584,7 +586,7 @@ func searchTree(vm *VM, mor *types.ManagedObjectReference, name string) (
 					[]string{"name", "config", "datastore",
 						"guest",
 						"snapshot.currentSnapshot",
-						"summary", "runtime"}, &vmMo)
+						"summary", "runtime", "resourcePool"}, &vmMo)
 				if err != nil {
 					if isObjectDeleted(err) {
 						continue
@@ -648,7 +650,8 @@ func searchVmByUuid(vm *VM, searchFilter VMSearchFilter) (
 			"Invalid object with uuid found"), searchFilter.InstanceUuid)
 	}
 	err = vm.collector.RetrieveOne(vm.ctx, vmObj.Reference(), []string{
-		"name", "config", "runtime", "summary", "guest"}, &vmMo)
+		"name", "config", "runtime", "summary", "guest",
+		"resourcePool"}, &vmMo)
 	if err != nil {
 		return nil, err
 	}
@@ -712,8 +715,10 @@ func addNetworkDeviceSpec(vm *VM, nwMor types.ManagedObjectReference, name strin
 // reconfigureNetworks : reconfigureNetworks configures the vm and attach it to the
 // networks in the vm structure
 func reconfigureNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirtualDeviceConfigSpec, error) {
-	var deviceSpecs []types.BaseVirtualDeviceConfigSpec
-	var nw map[string]string
+	var (
+		deviceSpecs []types.BaseVirtualDeviceConfigSpec
+		nw          Network
+	)
 	dcMo, err := GetDatacenter(vm)
 	if err != nil {
 		return nil, err
@@ -724,7 +729,7 @@ func reconfigureNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirt
 		return nil, err
 	}
 	// Create mapping of network managed object and network name
-	networkMapping, err := createNetworkMapping(vm, vm.Networks, l.Networks)
+	networkMapping, _, err := createNetworkMapping(vm, vm.Networks, l.Networks)
 	if err != nil {
 		return nil, err
 	}
@@ -752,7 +757,7 @@ func reconfigureNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirt
 			// Edit device
 			nw = vm.Networks[idx]
 			for _, nwMappingObj := range networkMapping {
-				if nwMappingObj.Name != nw["name"] {
+				if nwMappingObj.Name != nw.Name {
 					continue
 				}
 				backing, err := getEthernetBacking(vm,
@@ -775,7 +780,7 @@ func reconfigureNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirt
 	// Add extra networks if any
 	for _, nw = range vm.Networks[idx:] {
 		for _, mapping := range networkMapping {
-			if mapping.Name == nw["name"] {
+			if mapping.Name == nw.Name {
 				spec, err := addNetworkDeviceSpec(vm, mapping.Network, mapping.Name)
 				if err != nil {
 					return nil, err
@@ -787,25 +792,6 @@ func reconfigureNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirt
 		}
 	}
 	return deviceSpecs, nil
-}
-
-func removeExistingNetworks(vm *VM, vmObj *object.VirtualMachine) ([]types.BaseVirtualDeviceConfigSpec, error) {
-	devices, err := vmObj.Device(vm.ctx)
-	if err != nil {
-		return nil, err
-	}
-	var removeSpecs []types.BaseVirtualDeviceConfigSpec
-	for _, device := range devices {
-		switch device.(type) {
-		case *types.VirtualE1000, *types.VirtualE1000e, *types.VirtualVmxnet3:
-			spec := &types.VirtualDeviceConfigSpec{
-				Operation: types.VirtualDeviceConfigSpecOperationRemove,
-				Device:    device,
-			}
-			removeSpecs = append(removeSpecs, spec)
-		}
-	}
-	return removeSpecs, nil
 }
 
 // Function to search disk in disks array with its name
@@ -1707,7 +1693,7 @@ func validateHost(vm *VM, hsMor types.ManagedObjectReference) (bool, error) {
 		hostNetworks[name] = struct{}{}
 	}
 	for _, v := range vm.Networks {
-		if _, ok := hostNetworks[v["name"]]; !ok {
+		if _, ok := hostNetworks[v.Name]; !ok {
 			nwValid = false
 			break
 		}
@@ -2121,7 +2107,7 @@ func getVmsInFolder(vm *VM, folder *object.Folder, path string) (
 			vmMo := mo.VirtualMachine{}
 			err := vm.collector.RetrieveOne(vm.ctx, mor, []string{
 				"name", "guest", "config", "runtime",
-				"summary"}, &vmMo)
+				"summary", "resourcePool"}, &vmMo)
 			if err != nil {
 				if isObjectDeleted(err) {
 					continue
@@ -2239,4 +2225,84 @@ func tagsHasKey(tags []types.Tag, key string) bool {
 		}
 	}
 	return false
+}
+
+// networkDeviceChangeSpec: returns network device change spec based on vm.Networks
+func networkDeviceChangeSpec(vm *VM, vmMo *mo.VirtualMachine) (
+	[]types.BaseVirtualDeviceConfigSpec, error) {
+	var (
+		deviceChangeSpec []types.BaseVirtualDeviceConfigSpec
+	)
+
+	// get host associated with the vm
+	hsMo := mo.HostSystem{}
+	if vmMo.Runtime.Host == nil {
+		return nil, errors.New("host associated with vm not found")
+	}
+	err := vm.collector.RetrieveOne(vm.ctx, *vmMo.Runtime.Host,
+		[]string{"name", "network"}, &hsMo)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"error while fetching host info: %v", err)
+	}
+
+	// create map of network name and network mors
+	_, nwMap, err := createNetworkMapping(vm, vm.Networks, hsMo.Network)
+	devices := vmMo.Config.Hardware.Device
+
+	for _, nw := range vm.Networks {
+		spec := new(types.VirtualDeviceConfigSpec)
+		switch nw.Operation {
+		case "":
+			fallthrough
+		case "add":
+			spec, err = addNetworkDeviceSpec(vm, nwMap[nw.Name],
+				nw.Name)
+		case "remove":
+			if nw.DeviceKey == nil {
+				return nil, fmt.Errorf(
+					"Device key not specified for network: %v",
+					nw.Name)
+			}
+			spec, err = removeNetworkDeviceSpec(vm, nwMap[nw.Name],
+				nw.Name, *nw.DeviceKey, devices)
+		default:
+			err = fmt.Errorf(
+				"invalid network device operation: %v for "+
+					"network: %v", nw.Operation, nw.Name)
+			return nil, err
+		}
+		if err != nil {
+			return nil, fmt.Errorf(
+				"error creating spec for network:%v, error: %v",
+				nw.Name, err)
+		}
+		deviceChangeSpec = append(deviceChangeSpec, spec)
+	}
+	return deviceChangeSpec, nil
+}
+
+// removeNetworkDeviceSpec: returns the device config spec for removing network
+func removeNetworkDeviceSpec(vm *VM, nwMor types.ManagedObjectReference,
+	name string, deviceKey int32, devices object.VirtualDeviceList) (
+	*types.VirtualDeviceConfigSpec, error) {
+	backing, err := getEthernetBacking(vm, nwMor, name)
+	if err != nil {
+		return nil, err
+	}
+	nwDevices := devices.SelectByBackingInfo(backing)
+	if len(nwDevices) == 0 {
+		return nil, NewErrorObjectNotFound(fmt.Errorf(
+			"device with network:%v not found", name), name)
+	}
+	device := nwDevices.FindByKey(deviceKey)
+	if device == nil {
+		return nil, fmt.Errorf("Network: %v device with key: %v not found",
+			name, deviceKey)
+	}
+	spec := &types.VirtualDeviceConfigSpec{
+		Operation: types.VirtualDeviceConfigSpecOperationRemove,
+		Device:    device,
+	}
+	return spec, nil
 }

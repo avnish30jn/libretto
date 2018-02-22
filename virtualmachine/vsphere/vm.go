@@ -24,6 +24,7 @@ import (
 	"github.com/vmware/govmomi/find"
 	"github.com/vmware/govmomi/object"
 	"github.com/vmware/govmomi/property"
+	"github.com/vmware/govmomi/vim25/methods"
 	"github.com/vmware/govmomi/vim25/mo"
 	"github.com/vmware/govmomi/vim25/soap"
 	"github.com/vmware/govmomi/vim25/types"
@@ -61,6 +62,10 @@ type vmwareFinder struct {
 
 func (v vmwareFinder) SetDatacenter(dc *object.Datacenter) *find.Finder {
 	return v.finder.SetDatacenter(dc)
+}
+
+func (v vmwareFinder) ObjectReference(ctx context.Context, mor types.ManagedObjectReference) (object.Reference, error) {
+	return v.finder.ObjectReference(ctx, mor)
 }
 
 func (v vmwareFinder) DatacenterList(c context.Context, p string) ([]*object.Datacenter, error) {
@@ -327,7 +332,7 @@ type ErrorParsingURL struct {
 type ErrorInvalidHost struct {
 	host string
 	ds   string
-	nw   []map[string]string
+	nw   []Network
 }
 
 func (e ErrorInvalidHost) Error() string {
@@ -390,7 +395,7 @@ func NewErrorParsingURL(u string, e error) ErrorParsingURL {
 }
 
 // NewErrorInvalidHost returns an ErrorInvalidHost error.
-func NewErrorInvalidHost(h string, d string, n []map[string]string) ErrorInvalidHost {
+func NewErrorInvalidHost(h string, d string, n []Network) ErrorInvalidHost {
 	return ErrorInvalidHost{host: h, ds: d, nw: n}
 }
 
@@ -464,6 +469,7 @@ type finder interface {
 	NetworkList(context.Context, string) ([]object.NetworkReference, error)
 	ResourcePoolList(context.Context, string) ([]*object.ResourcePool, error)
 	SetDatacenter(*object.Datacenter) *find.Finder
+	ObjectReference(context.Context, types.ManagedObjectReference) (object.Reference, error)
 }
 
 type vmwareCollector struct {
@@ -509,6 +515,7 @@ type VirtualEthernetCard struct {
 	NetworkName string `json:"network_name"`
 	MacAddress  string `json:"mac_address"`
 	NicName     string `json:"nic_name"`
+	DeviceKey   int32  `json:"device_key"`
 }
 
 type VMInfo struct {
@@ -542,6 +549,13 @@ type Template struct {
 	InstanceUuid string `json:"instance_uuid"`
 }
 
+type Network struct {
+	Name        string
+	Description string
+	Operation   string
+	DeviceKey   *int32 `json:"device_key"`
+}
+
 var _ lvm.VirtualMachine = (*VM)(nil)
 
 // VM represents a vSphere VM.
@@ -568,7 +582,7 @@ type VM struct {
 	OvaPathUrl string
 	// Networks defines a slice of networks to be attached to the VM
 	// They must be available on the host or deploy will fail.
-	Networks []map[string]string
+	Networks []Network
 	// Name is the name to use for the VM on vSphere and internally.
 	Name string
 	// InstanceUuids is the list of instance uuids for the VMs on vcenter server
@@ -770,17 +784,102 @@ func (vm *VM) RemoveDisk() error {
 	return nil
 }
 
+// dvsFromMOID locates a DVS by its managed object reference ID.
+func dvsFromMOID(vm *VM, id string) (*object.VmwareDistributedVirtualSwitch, error) {
+	// finder := find.NewFinder(client.Client, false)
+
+	ref := types.ManagedObjectReference{
+		Type:  "VmwareDistributedVirtualSwitch",
+		Value: id,
+	}
+
+	ds, err := vm.finder.ObjectReference(vm.ctx, ref)
+	if err != nil {
+		return nil, err
+	}
+	// Should be safe to return here. If our reference returned here and is not a
+	// VmwareDistributedVirtualSwitch, then we have bigger problems and to be
+	// honest we should be panicking anyway.
+	return ds.(*object.VmwareDistributedVirtualSwitch), nil
+}
+
+// dvsFromUUID gets a DVS object from its UUID.
+func dvsFromUUID(vm *VM, uuid string) (*object.VmwareDistributedVirtualSwitch,
+	error) {
+	dvsm := types.ManagedObjectReference{
+		Type: "DistributedVirtualSwitchManager", Value: "DVSManager"}
+	req := &types.QueryDvsByUuid{
+		This: dvsm,
+		Uuid: uuid,
+	}
+	resp, err := methods.QueryDvsByUuid(vm.ctx, vm.client.Client,
+		req)
+	if err != nil {
+		return nil, err
+	}
+
+	return dvsFromMOID(vm, resp.Returnval.Reference().Value)
+}
+
+// getDvpGroupName: returns the distributed port group name
+func getDvpGroupName(vm *VM,
+	b *types.VirtualEthernetCardDistributedVirtualPortBackingInfo) (
+	*mo.DistributedVirtualPortgroup, error) {
+	pgKey := b.Port.PortgroupKey
+	dvsUuid := b.Port.SwitchUuid
+
+	dvsObj, err := dvsFromUUID(vm, dvsUuid)
+	if err != nil {
+		return nil, err
+	}
+	req := &types.LookupDvPortGroup{
+		This:         dvsObj.Reference(),
+		PortgroupKey: pgKey,
+	}
+
+	res, err := methods.LookupDvPortGroup(vm.ctx, vm.client.Client, req)
+	if err != nil {
+		return nil, err
+	}
+	if res.Returnval == nil {
+		return nil, errors.New("error looking up dv port group")
+	}
+
+	dvpMo := new(mo.DistributedVirtualPortgroup)
+	err = vm.collector.RetrieveOne(vm.ctx, *res.Returnval, []string{"name"},
+		dvpMo)
+	if err != nil {
+		return nil, err
+	}
+	return dvpMo, nil
+}
+
 // getNicInfo returns the nic info of this VM.
-func getNicInfo(vmMo mo.VirtualMachine) []VirtualEthernetCard {
+func getNicInfo(vm *VM, vmMo mo.VirtualMachine) []VirtualEthernetCard {
 	nicInfo := make([]VirtualEthernetCard, 0)
 	for _, dev := range vmMo.Config.Hardware.Device {
-		if c, ok := dev.(types.BaseVirtualEthernetCard); ok {
-			var nic VirtualEthernetCard
-			nwcard := c.GetVirtualEthernetCard()
-			nic.MacAddress = nwcard.MacAddress
-			nic.NicName = nwcard.DeviceInfo.GetDescription().Label
-			nicInfo = append(nicInfo, nic)
+		var nic VirtualEthernetCard
+		c, ok := dev.(types.BaseVirtualEthernetCard)
+		if !ok {
+			continue
 		}
+		nwcard := c.GetVirtualEthernetCard()
+		nic.MacAddress = nwcard.MacAddress
+		nic.DeviceKey = nwcard.Key
+		switch backing := nwcard.Backing.(type) {
+		case *types.VirtualEthernetCardNetworkBackingInfo:
+			nic.NicName = nwcard.DeviceInfo.GetDescription().Label
+			fmt.Println("standard network hai")
+		case *types.VirtualEthernetCardDistributedVirtualPortBackingInfo:
+			dvpMo, err := getDvpGroupName(vm, backing)
+			if err == nil {
+				nic.NicName = dvpMo.Name
+			}
+			fmt.Println("Dvpg hai")
+		default:
+			fmt.Println("Alag hi network hai")
+		}
+		nicInfo = append(nicInfo, nic)
 	}
 
 	return nicInfo
@@ -1659,7 +1758,8 @@ func getOsDetails(vmMo mo.VirtualMachine) map[string]interface{} {
 }
 
 // getVmInfo : get vm info from vm managed object
-func getVmInfo(vmMo mo.VirtualMachine, vmPath string) map[string]interface{} {
+func getVmInfo(vm *VM, vmMo mo.VirtualMachine,
+	vmPath string) map[string]interface{} {
 	var (
 		toolsStatus    bool
 		toolsInstalled bool
@@ -1699,7 +1799,7 @@ func getVmInfo(vmMo mo.VirtualMachine, vmPath string) map[string]interface{} {
 		"cpu":             vmMo.Summary.Config.NumCpu,
 		"disks":           diskInfo,
 		"ip_addresses":    getIpFromVmMo(&vmMo),
-		"nic_info":        getNicInfo(vmMo),
+		"nic_info":        getNicInfo(vm, vmMo),
 		"os_details":      getOsDetails(vmMo),
 		"tool_status":     toolsStatus,
 		"tools_installed": toolsInstalled,
@@ -1783,7 +1883,7 @@ func GetVmList(vm *VM, markedTemplate bool, markedVisor bool) (
 			continue
 		}
 
-		vminfo := getVmInfo(vmo, vmProp.Name)
+		vminfo := getVmInfo(vm, vmo, vmProp.Name)
 		vmList = append(vmList, vminfo)
 	}
 	return vmList, nil
@@ -1848,5 +1948,55 @@ func (vm *VM) ValidateAuth() error {
 		return err
 	}
 	defer vm.cancel()
+	return nil
+}
+
+// ReconfigureVm: reconfigure's vm CPU, memory, network
+func (vm *VM) Reconfigure() error {
+	var (
+		err error
+	)
+	if err = SetupSession(vm); err != nil {
+		return err
+	}
+	defer vm.cancel()
+
+	hotAddMemory := true
+	hotAddCpu := true
+	config := types.VirtualMachineConfigSpec{
+		MemoryHotAddEnabled: &hotAddMemory,
+		CpuHotAddEnabled:    &hotAddCpu,
+	}
+	if vm.Flavor.NumCPUs > 0 {
+		config.NumCPUs = vm.Flavor.NumCPUs
+	}
+	if vm.Flavor.MemoryMB > 0 {
+		config.MemoryMB = vm.Flavor.MemoryMB
+	}
+
+	vmMo, err := findVM(vm, getVMSearchFilter(vm.Name))
+	if err != nil {
+		return err
+	}
+	deviceChange, err := networkDeviceChangeSpec(vm, vmMo)
+	if err != nil {
+		return err
+	}
+	config.DeviceChange = deviceChange
+
+	vmObj := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
+	reconfigTask, err := vmObj.Reconfigure(vm.ctx, config)
+	if err != nil {
+		return err
+	}
+	tInfo, err := reconfigTask.WaitForResult(vm.ctx, nil)
+	if err != nil {
+		return fmt.Errorf(
+			"error waiting for reconfig task to finish: %v", err)
+	}
+	if tInfo.Error != nil {
+		return fmt.Errorf("reconfig task finished with error: %v",
+			tInfo.Error)
+	}
 	return nil
 }
