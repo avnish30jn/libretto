@@ -1731,8 +1731,9 @@ func GetVmList(vm *VM, markedTemplate bool, markedVisor bool) (
 	defer vm.cancel()
 
 	if len(vm.InstanceUuids) != 0 {
-		searchFilter := VMSearchFilter{
-			SearchInDC: true,
+		searchFilter := VMSearchFilter{}
+		if vm.Datacenter != "" {
+			searchFilter.SearchInDC = true
 		}
 		for _, instanceUuid := range vm.InstanceUuids {
 			searchFilter.InstanceUuid = instanceUuid
