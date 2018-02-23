@@ -996,7 +996,18 @@ func (vm *VM) GetVMInfo() (VMInfo, error) {
 	}
 	defer vm.cancel()
 
-	vmMo, err := findVM(vm, getVMSearchFilter(vm.Name))
+	searchFilter := VMSearchFilter{}
+	if len(vm.InstanceUuids) != 0 {
+		searchFilter.InstanceUuid = vm.InstanceUuids[0]
+	} else {
+		searchFilter.Name = vm.Name
+	}
+	if vm.Datacenter != "" {
+		searchFilter.SearchInDC = true
+	} else {
+		searchFilter.SearchInDC = false
+	}
+	vmMo, err := findVM(vm, searchFilter)
 	if err != nil {
 		return vmInfo, err
 	}
