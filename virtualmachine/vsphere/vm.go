@@ -1783,6 +1783,10 @@ func GetVmList(vm *VM, markedTemplate bool, markedVisor bool) (
 
 	for _, vmProp := range vmPropList {
 		vmo := vmProp.Properties
+		// skipping if the vm/template is orphaned
+		if vmo.Runtime.ConnectionState == types.VirtualMachineConnectionStateOrphaned {
+			continue
+		}
 		// Filter out the templates
 		if vmo.Config == nil {
 			continue
