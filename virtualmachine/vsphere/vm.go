@@ -532,6 +532,7 @@ type VMInfo struct {
 	PowerState         string
 	MemorySizeMB       int32
 	DisksInfo          []Disk
+	NicInfo            []VirtualEthernetCard `json:"nic_info"`
 }
 
 type Flavor struct {
@@ -793,8 +794,9 @@ func dvsFromMOID(vm *VM, id string) (*object.VmwareDistributedVirtualSwitch, err
 		Value: id,
 	}
 
-	ds, err := vm.finder.ObjectReference(vm.ctx, ref)
+	ds, err := vm.finder.ObjectReference(context.TODO(), ref)
 	if err != nil {
+		err = fmt.Errorf("error finding virtual switch: %v", err)
 		return nil, err
 	}
 	// Should be safe to return here. If our reference returned here and is not a
@@ -812,9 +814,10 @@ func dvsFromUUID(vm *VM, uuid string) (*object.VmwareDistributedVirtualSwitch,
 		This: dvsm,
 		Uuid: uuid,
 	}
-	resp, err := methods.QueryDvsByUuid(vm.ctx, vm.client.Client,
+	resp, err := methods.QueryDvsByUuid(context.TODO(), vm.client.Client,
 		req)
 	if err != nil {
+		err = fmt.Errorf("error querying dvs by uuid: %v", err)
 		return nil, err
 	}
 
@@ -830,6 +833,7 @@ func getDvpGroupName(vm *VM,
 
 	dvsObj, err := dvsFromUUID(vm, dvsUuid)
 	if err != nil {
+		err = fmt.Errorf("error getting dvs object: %v", err)
 		return nil, err
 	}
 	req := &types.LookupDvPortGroup{
@@ -837,8 +841,10 @@ func getDvpGroupName(vm *VM,
 		PortgroupKey: pgKey,
 	}
 
-	res, err := methods.LookupDvPortGroup(vm.ctx, vm.client.Client, req)
+	res, err := methods.LookupDvPortGroup(context.TODO(), vm.client.Client,
+		req)
 	if err != nil {
+		err = fmt.Errorf("error looking up dv port group: %v", err)
 		return nil, err
 	}
 	if res.Returnval == nil {
@@ -846,9 +852,10 @@ func getDvpGroupName(vm *VM,
 	}
 
 	dvpMo := new(mo.DistributedVirtualPortgroup)
-	err = vm.collector.RetrieveOne(vm.ctx, *res.Returnval, []string{"name"},
+	err = vm.collector.RetrieveOne(context.TODO(), *res.Returnval, []string{"name"},
 		dvpMo)
 	if err != nil {
+		err = fmt.Errorf("error retrieving port group object: %v", err)
 		return nil, err
 	}
 	return dvpMo, nil
@@ -865,19 +872,16 @@ func getNicInfo(vm *VM, vmMo mo.VirtualMachine) []VirtualEthernetCard {
 		}
 		nwcard := c.GetVirtualEthernetCard()
 		nic.MacAddress = nwcard.MacAddress
+		nic.NicName = nwcard.DeviceInfo.GetDescription().Label
 		nic.DeviceKey = nwcard.Key
 		switch backing := nwcard.Backing.(type) {
 		case *types.VirtualEthernetCardNetworkBackingInfo:
-			nic.NicName = nwcard.DeviceInfo.GetDescription().Label
-			fmt.Println("standard network hai")
+			nic.NetworkName = backing.DeviceName
 		case *types.VirtualEthernetCardDistributedVirtualPortBackingInfo:
 			dvpMo, err := getDvpGroupName(vm, backing)
 			if err == nil {
-				nic.NicName = dvpMo.Name
+				nic.NetworkName = dvpMo.Name
 			}
-			fmt.Println("Dvpg hai")
-		default:
-			fmt.Println("Alag hi network hai")
 		}
 		nicInfo = append(nicInfo, nic)
 	}
@@ -1102,6 +1106,7 @@ func (vm *VM) GetVMInfo() (VMInfo, error) {
 	vmInfo.NumCpu = vmMo.Summary.Config.NumCpu
 	vmInfo.MemorySizeMB = vmMo.Summary.Config.MemorySizeMB
 	vmInfo.DisksInfo = getDisksInfo(*vmMo)
+	vmInfo.NicInfo = getNicInfo(vm, *vmMo)
 	return vmInfo, nil
 }
 
