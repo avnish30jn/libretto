@@ -870,11 +870,7 @@ func (vm *VM) Destroy() (err error) {
 	for powerState != "poweredOff" {
 		// Only possible states are poweredOff, poweredOn, suspended
 		if !isTaskInProgress(vm, vmMo) {
-			// wait for tasks to finish
-			for _, task := range vmMo.RecentTask {
-				tObj := object.NewTask(vm.client.Client, task)
-				tObj.Wait(vm.ctx)
-			}
+			waitForTasksToFinish(vm, vmMo.RecentTask)
 		} else {
 			e := halt(vm)
 			if e != nil {
