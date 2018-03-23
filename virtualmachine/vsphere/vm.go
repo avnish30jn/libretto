@@ -856,84 +856,52 @@ func (vm *VM) Destroy() (err error) {
 		return nil
 	}
 
-	state, err := getState(vm)
-	if err != nil {
-		return err
-	}
-
-	// Can't destroy a suspended VM, power it on and update the state
-	if state == "standby" {
-		err = start(vm)
-		if err != nil {
-			return err
-		}
-	}
-
-	if state != "notRunning" {
-		// Only possible states are running, shuttingDown, resetting or notRunning
-		timer := time.NewTimer(time.Second * 90)
-		wg := sync.WaitGroup{}
-		wg.Add(1)
-
-		go func() {
-			defer timer.Stop()
-			defer wg.Done()
-
-			powerState := "unInitialized"
-		Outerloop:
-			for {
-				state, e := getState(vm)
-				if e != nil {
-					err = e
-					break
-				}
-
-				if state == "notRunning" {
-					powerState, e = getPowerState(vm)
-					if e != nil {
-						err = e
-						break
-					}
-
-					if powerState == "poweredOff" {
-						break
-					}
-				}
-
-				if state == "running" {
-					e = halt(vm)
-					if e != nil {
-						err = e
-						break
-					}
-				}
-
-				select {
-				case <-timer.C:
-					err = fmt.Errorf("timed out waiting for VM to power off."+
-						"Current GuestState: %s and PowerState: %s", state, powerState)
-					break Outerloop
-				default:
-					// No action
-				}
-				time.Sleep(time.Second)
-			}
-		}()
-		wg.Wait()
-		if err != nil {
-			return err
-		}
-	}
-
 	vmMo, err := findVM(vm, getVMSearchFilter(vm.Name))
 	if err != nil {
 		return err
 	}
 	vmo := object.NewVirtualMachine(vm.client.Client, vmMo.Reference())
 
+	powerState, err := getPowerState(vm)
+	if err != nil {
+		return err
+	}
+
+	for powerState != "poweredOff" {
+		// Only possible states are poweredOff, poweredOn, suspended
+		if !isTaskInProgress(vm, vmMo) {
+			// wait for tasks to finish
+			for _, task := range vmMo.RecentTask {
+				tObj := object.NewTask(vm.client.Client, task)
+				tObj.Wait(vm.ctx)
+			}
+		} else {
+			e := halt(vm)
+			if e != nil {
+				err = e
+				break
+			}
+			err = vmo.WaitForPowerState(vm.ctx,
+				types.VirtualMachinePowerStatePoweredOff)
+			if err != nil {
+				break
+			}
+		}
+
+		time.Sleep(time.Second)
+		powerState, err = getPowerState(vm)
+		if err != nil {
+			break
+		}
+	}
+	if err != nil {
+		return err
+	}
+
 	destroyTask, err := vmo.Destroy(vm.ctx)
 	if err != nil {
-		return fmt.Errorf("error creating a destroy task on the vm: %v", err)
+		return fmt.Errorf("error creating a destroy task on the vm: %v",
+			err)
 	}
 	tInfo, err := destroyTask.WaitForResult(vm.ctx, nil)
 	if err != nil {
