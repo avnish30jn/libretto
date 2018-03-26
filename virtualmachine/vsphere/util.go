@@ -2230,3 +2230,13 @@ func waitForTasksToFinish(vm *VM, tasks []types.ManagedObjectReference) {
 		tObj.Wait(vm.ctx)
 	}
 }
+
+// tagsHasKey: returns true if any of the tags has 'key'
+func tagsHasKey(tags []types.Tag, key string) bool {
+	for _, tag := range tags {
+		if tag.Key == key {
+			return true
+		}
+	}
+	return false
+}
