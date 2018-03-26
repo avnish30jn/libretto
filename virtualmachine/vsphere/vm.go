@@ -42,6 +42,7 @@ const (
 	VISOR_FIELD = "template_type"
 	VISOR_VALUE = "visor"
 	MO_TYPE_VM  = "VirtualMachine"
+	UPLINK_TAG  = "SYSTEM/DVS.UPLINKPG"
 
 	// Constants for supproted values for Flavor:Name
 	FlavorSmall   = "small"
@@ -1305,12 +1306,11 @@ func getNetworks(vm *VM, networkMo []types.ManagedObjectReference) ([]map[string
 				"id": network.Self.Value}
 		case "DistributedVirtualPortgroup":
 			err := vm.collector.RetrieveOne(vm.ctx, networkMor,
-				[]string{"name", "config"}, &portGroup)
+				[]string{"name", "tag"}, &portGroup)
 			if err != nil {
 				return nil, err
 			}
-			if portGroup.Config.Uplink == nil ||
-				*portGroup.Config.Uplink {
+			if tagsHasKey(portGroup.Tag, UPLINK_TAG) {
 				continue
 			}
 			networkMap = map[string]string{"name": portGroup.Name,
