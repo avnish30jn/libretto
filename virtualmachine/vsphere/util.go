@@ -2200,3 +2200,33 @@ func getSharedDatastoreInCluster(vm *VM, crMo *mo.ClusterComputeResource) (
 	}
 	return dsMors, nil
 }
+
+// existActiveTasks: returns true if any active tasks done on vm are active
+func isTaskInProgress(vm *VM, vmMo *mo.VirtualMachine) bool {
+	var (
+		taskMo mo.Task
+		err    error
+	)
+	for _, task := range vmMo.RecentTask {
+		err = vm.collector.RetrieveOne(vm.ctx, task, []string{
+			"info"}, &taskMo)
+		if err != nil {
+			continue
+		}
+		switch taskMo.Info.State {
+		// available states queued, running, success, error
+		case types.TaskInfoStateQueued, types.TaskInfoStateRunning:
+			return false
+		}
+	}
+	return true
+}
+
+// waitForTasksToFinish: waits for any active tasks on vm
+func waitForTasksToFinish(vm *VM, tasks []types.ManagedObjectReference) {
+	// wait for tasks to finish
+	for _, task := range tasks {
+		tObj := object.NewTask(vm.client.Client, task)
+		tObj.Wait(vm.ctx)
+	}
+}
