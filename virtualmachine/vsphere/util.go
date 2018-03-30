@@ -2231,7 +2231,9 @@ func tagsHasKey(tags []types.Tag, key string) bool {
 func networkDeviceChangeSpec(vm *VM, vmMo *mo.VirtualMachine) (
 	[]types.BaseVirtualDeviceConfigSpec, error) {
 	var (
-		deviceChangeSpec []types.BaseVirtualDeviceConfigSpec
+		addDeviceSpecs    []types.BaseVirtualDeviceConfigSpec
+		removeDeviceSpecs []types.BaseVirtualDeviceConfigSpec
+		deviceChangeSpec  []types.BaseVirtualDeviceConfigSpec
 	)
 
 	// get host associated with the vm
@@ -2253,11 +2255,10 @@ func networkDeviceChangeSpec(vm *VM, vmMo *mo.VirtualMachine) (
 	for _, nw := range vm.Networks {
 		spec := new(types.VirtualDeviceConfigSpec)
 		switch nw.Operation {
-		case "":
-			fallthrough
-		case "add":
+		case "", "add":
 			spec, err = addNetworkDeviceSpec(vm, nwMap[nw.Name],
 				nw.Name)
+			addDeviceSpecs = append(addDeviceSpecs, spec)
 		case "remove":
 			if nw.DeviceKey == nil {
 				return nil, fmt.Errorf(
@@ -2266,6 +2267,7 @@ func networkDeviceChangeSpec(vm *VM, vmMo *mo.VirtualMachine) (
 			}
 			spec, err = removeNetworkDeviceSpec(vm, nwMap[nw.Name],
 				nw.Name, *nw.DeviceKey, devices)
+			removeDeviceSpecs = append(removeDeviceSpecs, spec)
 		default:
 			err = fmt.Errorf(
 				"invalid network device operation: %v for "+
@@ -2277,8 +2279,9 @@ func networkDeviceChangeSpec(vm *VM, vmMo *mo.VirtualMachine) (
 				"error creating spec for network:%v, error: %v",
 				nw.Name, err)
 		}
-		deviceChangeSpec = append(deviceChangeSpec, spec)
 	}
+	deviceChangeSpec = append(deviceChangeSpec, addDeviceSpecs...)
+	deviceChangeSpec = append(deviceChangeSpec, removeDeviceSpecs...)
 	return deviceChangeSpec, nil
 }
 

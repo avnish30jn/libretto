@@ -787,8 +787,6 @@ func (vm *VM) RemoveDisk() error {
 
 // dvsFromMOID locates a DVS by its managed object reference ID.
 func dvsFromMOID(vm *VM, id string) (*object.VmwareDistributedVirtualSwitch, error) {
-	// finder := find.NewFinder(client.Client, false)
-
 	ref := types.ManagedObjectReference{
 		Type:  "VmwareDistributedVirtualSwitch",
 		Value: id,
@@ -820,7 +818,10 @@ func dvsFromUUID(vm *VM, uuid string) (*object.VmwareDistributedVirtualSwitch,
 		err = fmt.Errorf("error querying dvs by uuid: %v", err)
 		return nil, err
 	}
-
+	if resp == nil {
+		return nil, errors.New("error querying dvs by uuid: " +
+			"nil response returned")
+	}
 	return dvsFromMOID(vm, resp.Returnval.Reference().Value)
 }
 
@@ -864,6 +865,9 @@ func getDvpGroupName(vm *VM,
 // getNicInfo returns the nic info of this VM.
 func getNicInfo(vm *VM, vmMo mo.VirtualMachine) []VirtualEthernetCard {
 	nicInfo := make([]VirtualEthernetCard, 0)
+	if vmMo.Config == nil {
+		return nicInfo
+	}
 	for _, dev := range vmMo.Config.Hardware.Device {
 		var nic VirtualEthernetCard
 		c, ok := dev.(types.BaseVirtualEthernetCard)
@@ -1956,7 +1960,7 @@ func (vm *VM) ValidateAuth() error {
 	return nil
 }
 
-// ReconfigureVm: reconfigure's vm CPU, memory, network
+// Reconfigure: reconfigures vm CPU, memory, network
 func (vm *VM) Reconfigure() error {
 	var (
 		err error
