@@ -462,9 +462,9 @@ func TestFindComputeResourcePropertyError(t *testing.T) {
 }
 
 func TestCreateNetworkMapping(t *testing.T) {
-	nwMap := map[string]string{
-		"nw1": "mapping1",
-		"nw3": "mapping2",
+	nws := []Network{
+		Network{Name: "mapping1"},
+		Network{Name: "mapping2"},
 	}
 	networkMors := []types.ManagedObjectReference{{Type: "Network"}, {Type: "Network"}}
 	callCount := 1 //First call
@@ -485,7 +485,7 @@ func TestCreateNetworkMapping(t *testing.T) {
 		Password:  "test",
 		collector: c,
 	}
-	mappings, err := createNetworkMapping(vm, nwMap, networkMors)
+	mappings, _, err := createNetworkMapping(vm, nws, networkMors)
 	if err != nil {
 		t.Fatalf("Expected to a nil err. Got: %s", err)
 	}
@@ -495,9 +495,9 @@ func TestCreateNetworkMapping(t *testing.T) {
 }
 
 func TestCreateNetworkMappingPropertyFailed(t *testing.T) {
-	nwMap := map[string]string{
-		"nw1": "mapping1",
-		"nw3": "mapping2",
+	nws := []Network{
+		Network{Name: "mapping1"},
+		Network{Name: "mapping2"},
 	}
 	networkMors := []types.ManagedObjectReference{{Type: "Network"}, {Type: "Network"}}
 	c := mockCollector{}
@@ -511,16 +511,16 @@ func TestCreateNetworkMappingPropertyFailed(t *testing.T) {
 		Password:  "test",
 		collector: c,
 	}
-	_, err := createNetworkMapping(vm, nwMap, networkMors)
+	_, _, err := createNetworkMapping(vm, nws, networkMors)
 	if err.Error() != expectedError {
 		t.Fatalf("Expected to get err %s, got: %s", expectedError, err)
 	}
 }
 
 func TestCreateObjectError(t *testing.T) {
-	nwMap := map[string]string{
-		"nw1": "mapping1",
-		"nw3": "mapping2",
+	nws := []Network{
+		Network{Name: "mapping1"},
+		Network{Name: "mapping2"},
 	}
 	networkMors := []types.ManagedObjectReference{{Type: "Network"}, {Type: "Network"}}
 	c := mockCollector{}
@@ -535,7 +535,7 @@ func TestCreateObjectError(t *testing.T) {
 		Password:  "test",
 		collector: c,
 	}
-	_, err := createNetworkMapping(vm, nwMap, networkMors)
+	_, _, err := createNetworkMapping(vm, nws, networkMors)
 	if _, ok := err.(ErrorObjectNotFound); !ok {
 		t.Fatalf("Expected to get an ErrorObjectNotFound got: %s", err)
 	}
