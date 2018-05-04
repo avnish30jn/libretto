@@ -1,5 +1,19 @@
 package mocks
 
+// Copyright 2017 Microsoft Corporation
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
 import (
 	"fmt"
 	"net/http"
@@ -42,6 +56,17 @@ func NewRequest() *http.Request {
 // NewRequestWithContent instantiates a new request using the passed string for the body content.
 func NewRequestWithContent(c string) *http.Request {
 	r, _ := http.NewRequest("GET", "https://microsoft.com/a/b/c/", NewBody(c))
+	return r
+}
+
+// NewRequestWithCloseBody instantiates a new request.
+func NewRequestWithCloseBody() *http.Request {
+	return NewRequestWithCloseBodyContent("request body")
+}
+
+// NewRequestWithCloseBodyContent instantiates a new request using the passed string for the body content.
+func NewRequestWithCloseBodyContent(c string) *http.Request {
+	r, _ := http.NewRequest("GET", "https://microsoft.com/a/b/c/", NewBodyClose(c))
 	return r
 }
 

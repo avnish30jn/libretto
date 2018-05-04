@@ -49,7 +49,6 @@ type clone struct {
 	template      bool
 	customization string
 	waitForIP     bool
-	annotation    string
 
 	Client         *vim25.Client
 	Datacenter     *object.Datacenter
@@ -100,7 +99,6 @@ func (cmd *clone) Register(ctx context.Context, f *flag.FlagSet) {
 	f.BoolVar(&cmd.template, "template", false, "Create a Template")
 	f.StringVar(&cmd.customization, "customization", "", "Customization Specification Name")
 	f.BoolVar(&cmd.waitForIP, "waitip", false, "Wait for VM to acquire IP address")
-	f.StringVar(&cmd.annotation, "annotation", "", "VM description")
 }
 
 func (cmd *clone) Usage() string {
@@ -228,7 +226,6 @@ func (cmd *clone) Run(ctx context.Context, f *flag.FlagSet) error {
 		if cmd.memory > 0 {
 			vmConfigSpec.MemoryMB = int64(cmd.memory)
 		}
-		vmConfigSpec.Annotation = cmd.annotation
 		task, err := vm.Reconfigure(ctx, vmConfigSpec)
 		if err != nil {
 			return err
